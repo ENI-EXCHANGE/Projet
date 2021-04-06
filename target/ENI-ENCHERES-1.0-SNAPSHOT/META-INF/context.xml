@@ -6,9 +6,9 @@
 		
 		driverClassName="com.mysql.cj.jdbc.Driver"
 				
-		url="jdbc:mysql://localhost:3306/liste_courses"
-		username="toto"
-		password="Pa$$w0rd"
+		url="mysql-encheres.alwaysdata.net"
+		username="encheres"
+		password="ENI-encheres2021"
 		
 		maxTotal="100"
 		maxIdle="30"
