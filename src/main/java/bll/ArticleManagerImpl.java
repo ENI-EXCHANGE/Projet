@@ -2,34 +2,41 @@ package bll;
 
 import bo.Article;
 import dal.ArticleDAO;
+import dal.DALException;
 import dal.DAOFactory;
 
-import java.sql.Date;
 import java.util.List;
 
 public class ArticleManagerImpl implements ArticleManager{
 
-    private ArticleDAO articleDAO ;
+    private final ArticleDAO articleDAO ;
 
     public ArticleManagerImpl() { articleDAO = DAOFactory.getArticleDAO(); }
 
-    public List<Article> selectAll() throws Exception {
-        return ArticleDAO.selectAll();
-    }
 
-    public Article selectById(int id) throws Exception {
-        return ArticleDAO.selectById(id);
-    }
-
-    public void supprimerArticle(int id) throws Exception{
-        ArticleDAO.delete(id);
-    }
-
-    public Article ajouterArticle(String nom, String description, Date dateDebut, int prixInit, int noUtil, int noCategorie){
-        Article nouvelArticle = new Article(nom, description, dateDebut, prixInit, noUtil, noCategorie);
-
-        ArticleDAO.insert(nouvelArticle);
+    @Override
+    public Article ajouterArticle(Article nouvelArticle) throws DALException {
+        articleDAO.insert(nouvelArticle);
 
         return nouvelArticle;
+    }
+
+    @Override
+    public List<Article> selectAll() throws Exception {
+        List<Article> articles = null;
+
+        articleDAO.selectAll();
+
+        return articles;
+    }
+
+    @Override
+    public Article selectById(int id) throws Exception {
+        return  articleDAO.selectById(id);
+    }
+
+    @Override
+    public void supprimerArticle(int id) throws Exception {
+        articleDAO.delete(id);
     }
 }

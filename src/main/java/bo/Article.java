@@ -41,7 +41,7 @@ public class Article {
                 '}';
     }
 
-    public int getNo_article() {
+    public int getNo_article(int anInt) {
         return no_article;
     }
 

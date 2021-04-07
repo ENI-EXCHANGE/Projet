@@ -10,6 +10,7 @@ public class Utilisateur {
     private String telephone;
     private String rue;
     private Integer codePostal;
+    private String ville;
     private String motDePasse;
     private Integer credit;
     private boolean administrateur;
@@ -19,7 +20,7 @@ public class Utilisateur {
 
     public Utilisateur(Integer noUtilisateur, String pseudo,
                        String nom, String prenom, String email, String telephone,
-                       String rue, Integer codePostal, String motDePasse, Integer credit, boolean administrateur) {
+                       String rue, Integer codePostal, String ville, String motDePasse, Integer credit, boolean administrateur) {
         this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
         this.nom = nom;
@@ -28,6 +29,7 @@ public class Utilisateur {
         this.telephone = telephone;
         this.rue = rue;
         this.codePostal = codePostal;
+        this.ville = ville;
         this.motDePasse = motDePasse;
         this.credit = credit;
         this.administrateur = administrateur;
@@ -121,6 +123,14 @@ public class Utilisateur {
         this.administrateur = administrateur;
     }
 
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
     @Override
     public String toString() {
         return "Utilisateur{" +
@@ -132,6 +142,7 @@ public class Utilisateur {
                 ", telephone='" + telephone + '\'' +
                 ", rue='" + rue + '\'' +
                 ", codePostal=" + codePostal +
+                ", ville='"+ville + '\''+
                 ", motDePasse='" + motDePasse + '\'' +
                 ", credit=" + credit +
                 ", administrateur=" + administrateur +

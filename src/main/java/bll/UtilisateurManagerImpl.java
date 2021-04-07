@@ -36,7 +36,7 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
     @Override
     public void addUser(Utilisateur user) throws BLLException {
         try {
-            dao.instert(user);
+            dao.insert(user);
 
         } catch (DALException e) {
             throw new BLLException(" l'insertion de l'utilisateur à échoué !");

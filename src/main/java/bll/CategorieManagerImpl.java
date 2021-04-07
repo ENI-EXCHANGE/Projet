@@ -1,3 +1,4 @@
+
 package bll;
 
 import bo.Categorie;
@@ -52,3 +53,4 @@ public class CategorieManagerImpl implements CategorieManager{
 
     }
 }
+
