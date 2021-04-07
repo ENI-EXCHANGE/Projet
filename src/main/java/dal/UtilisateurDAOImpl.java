@@ -4,7 +4,7 @@ import bo.Utilisateur;
 
 import java.util.List;
 
-public class UtilisateurDAOImpl implements UtilisateurDAO{
+public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 
     @Override
