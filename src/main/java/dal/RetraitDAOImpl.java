@@ -1,32 +1,106 @@
 package dal;
 
+import bo.Categorie;
 import bo.Retrait;
 
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RetraitDAOImpl implements RetraitDAO {
+
+    private static final String sqlInsert = "INSERT INTO Retrait(no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
+    private static final String sqlSelectAll = "SELECT no_article,rue,code_postal,ville FROM Retrait";
+    private static final String sqlDelete = "DELETE from Retrait where no_article=?";
+    private static final String sqlUpdate = "UPDATE Retrait set rue=?,code_postal=?,ville=? where no_article=?";
+    private static final String sqlSelectById = "SELECT rue,code_postal,ville from Retrait where no_article = ?";
+
+
     @Override
-    public Retrait insert(Retrait categorie) throws DALException {
-        return null;
+    public Retrait insert(Retrait retrait) throws DALException {
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(2, retrait.getRue());
+            stmt.setInt(3, retrait.getCp());
+            stmt.setString(4, retrait.getVille());
+
+            int nbRows = stmt.executeUpdate();
+            if (nbRows == 1) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    retrait.setNoArticle(rs.getInt(1));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("Le retrait" + retrait + " n'a pas été inséré");
+        }
+        return retrait;
     }
 
     @Override
     public List<Retrait> selectAll() throws DALException {
-        return null;
+        List<Retrait> lesRetraits = new ArrayList<Retrait>();
+        Retrait retrait = null;
+        try (Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlSelectAll);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                retrait = new Retrait(rs.getInt("no_article"), rs.getString("rue"),
+                    rs.getInt("cp"), rs.getString("ville"));
+                lesRetraits.add(retrait);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("impossible de récuperer la liste des retraits");
+        }
+        return lesRetraits;
     }
 
     @Override
     public void delete(Integer id) throws DALException {
+        try (Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlDelete, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("Le retrait avec l'id " + id + " n'a pas été effacé ..");
+        }
     }
 
     @Override
-    public void update(Retrait user) throws DALException {
+    public void update(Retrait retrait) throws DALException {
+        try (Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlUpdate);
+            stmt.setString(1, retrait.getRue());
+            stmt.setInt(2, retrait.getCp());
+            stmt.setString(3, retrait.getVille());
+            stmt.setInt(4,retrait.getNoArticle());
+            stmt.executeUpdate();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DALException("probleme dans la modification d'un retrait");
+        }
     }
 
     @Override
     public Retrait selectById(Integer id) throws DALException {
-        return null;
+        Retrait leRetrait = null;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlSelectById);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            leRetrait = new Retrait(id,rs.getString("rue"),rs.getInt("code_postal"),rs.getString("ville"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("probleme dans la sélection d'un retrait par l'id");
+        }
+        return leRetrait;
     }
 }
