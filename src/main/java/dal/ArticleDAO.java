@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ArticleDAO {
 
-    static void insert(Article nouvelArticle) { }
+    public void insert(Article nouvelArticle) throws DALException;
 
-    static List<Article> selectAll() throws Exception { return null; }
+    public List<Article> selectAll() throws DALException ;
 
-    static Article selectById(int id) throws Exception { return null; }
+    public Article selectById(int id) throws DALException ;
 
-    static void delete(int id) throws Exception { }
+    public void delete(int id) throws DALException ;
 }
