@@ -4,7 +4,7 @@ import bo.Categorie;
 
 import java.util.List;
 
-public class CategorieManagerImpl {
+public class CategorieManagerImpl implements CategorieManager{
 
     private CategorieDao categorieDao;
 

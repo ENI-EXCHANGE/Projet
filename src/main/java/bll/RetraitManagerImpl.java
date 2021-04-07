@@ -3,7 +3,7 @@ package bll;
 import bo.Retrait;
 import java.util.List;
 
-public class RetraitManagerImpl {
+public class RetraitManagerImpl implements RetraitManager{
 
     private RetraitDao retraitDao;
 
