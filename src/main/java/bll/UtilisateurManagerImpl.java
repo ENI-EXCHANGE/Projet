@@ -1,13 +1,14 @@
 package bll;
 
 import bo.Utilisateur;
+import dal.DAOFactory;
+import dal.UtilisateurDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UtilisateurManagerImpl  implements UtilisateurManager {
 
-    private UtilisateurDAO =  UtilisateurDAOFact.getUtilisateurDAO();
+    public UtilisateurDAO =  DAOFactory.getUtilisateurDAO();
     /*List<Utilisateur> users = new ArrayList<>();*/
 
     @Override
