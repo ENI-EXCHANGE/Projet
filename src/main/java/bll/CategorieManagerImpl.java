@@ -34,7 +34,7 @@ public class CategorieManagerImpl implements CategorieManager{
         }
     }
 
-    public void supprimerCategorie(int id) throws BLLException {
+    public void delete(int id) throws BLLException {
         try {
             categorieDao.delete(id);
         }
@@ -45,7 +45,7 @@ public class CategorieManagerImpl implements CategorieManager{
 
     }
 
-    public Categorie ajouterNouvelleCategorie(String libelle) throws BLLException {
+    public Categorie insert(String libelle) throws BLLException {
         try {
             Categorie nouvelleCategorie = new Categorie(libelle);
 

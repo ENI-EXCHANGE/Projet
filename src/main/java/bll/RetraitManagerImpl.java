@@ -28,7 +28,6 @@ public class RetraitManagerImpl implements RetraitManager{
 
     public Retrait selectById(int id) throws BLLException {
 
-
         try {
             return retraitDao.selectById(id);
         } catch (DALException e) {
@@ -36,7 +35,7 @@ public class RetraitManagerImpl implements RetraitManager{
         }
     }
 
-    public void supprimerRetrait(int id) throws BLLException {
+    public void delete(int id) throws BLLException {
 
         try {
             retraitDao.delete(id);
@@ -46,7 +45,7 @@ public class RetraitManagerImpl implements RetraitManager{
 
     }
 
-    public Retrait ajouterNouveauRetrait(Retrait retrait) throws BLLException {
+    public Retrait insert(Retrait retrait) throws BLLException {
 
         try {
             return retraitDao.insert(retrait);

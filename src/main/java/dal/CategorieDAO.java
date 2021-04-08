@@ -12,7 +12,7 @@ public interface CategorieDAO {
 
     public void delete(Integer id) throws DALException;
 
-    public void update(Categorie user) throws DALException;
+    public void update(Categorie categorie) throws DALException;
 
     public Categorie selectById(Integer id) throws DALException;
 }
