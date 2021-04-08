@@ -35,13 +35,13 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                 pStmt.setInt(11, user.getAdministrateur());
 
 
-                int nbRows = pStmt.executeUpdate();
-                if (nbRows == 1) {
-                    ResultSet rs = pStmt.getGeneratedKeys();
-                    if (rs.next()) {
-                        user.setNoUtilisateur(rs.getInt(1));
-                    }
+                pStmt.executeUpdate();
+                ResultSet rs = pStmt.getGeneratedKeys();
+
+                if (rs.next()) {
+                    user.setNoUtilisateur(rs.getInt(1));
                 }
+
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -53,13 +53,29 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     @Override
     public List<Utilisateur> selectAll() throws DALException {
-        ArrayList lesUsers = new ArrayList();
-        Utilisateur user = new Utilisateur();
+        List<Utilisateur> lesUsers = new ArrayList<>();
+        Utilisateur user = null;
+
         try ( Connection cnx = ConnectionProvider.getConnection();){
 
             PreparedStatement pStmt = cnx.prepareStatement(SELECTALL, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = pStmt.executeQuery();
-            lesUsers.add(user);
+            while (rs.next()){
+                user = new Utilisateur(rs.getInt("no_utilisateurs"),
+                        rs.getString("pseudo"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("email"),
+                        rs.getString("telephone"),
+                        rs.getString("rue"),
+                        rs.getString("code_postal"),
+                        rs.getString("ville"),
+                        rs.getString("mot_de_passe"),
+                        rs.getInt("credit"),
+                        rs.getByte("administrateur"));
+
+                lesUsers.add(user);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,6 +87,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     @Override
     public void delete(Utilisateur user) throws DALException {
+
         try (Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(DELETE, Statement.RETURN_GENERATED_KEYS);
 

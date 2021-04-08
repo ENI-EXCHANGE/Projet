@@ -35,6 +35,12 @@ public class Utilisateur {
         this.administrateur = administrateur;
     }
 
+    public Utilisateur(Integer noUtilisateur, String nom, String prenom) {
+        this.noUtilisateur = noUtilisateur;
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
     public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, Integer credit, int administrateur) {
         this.pseudo = pseudo;
         this.nom = nom;
