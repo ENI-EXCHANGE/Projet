@@ -16,10 +16,8 @@ public class ConnectionProvider {
         try {
             Context context = new InitialContext();
             dataSource = (DataSource)context.lookup("java:comp/env/jdbc/pool_cnx");
-            System.out.println("connexion provider réussie");
         } catch (NamingException e) {
             e.printStackTrace();
-            System.out.println("connexion provider ne fonctionne pas");
         }
     }
     public ConnectionProvider() {
