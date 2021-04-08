@@ -8,10 +8,10 @@ import java.util.List;
 
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-    private static final String DELETE = "DELETE FROM utilisateurs WHERE no_utilisateurs=? ";
-    private static final String INSERT = "INSERT INTO utilisateurs(no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SELECBYID = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM utilisateurs WHERE no_utilisateurs = ? ";
-    private static final String SELECTALL = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM utilisateurs";
+    private static final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateurs=? ";
+    private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SELECBYID = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateurs = ? ";
+    private static final String SELECTALL = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
 
     public UtilisateurDAOImpl(){
 
@@ -22,18 +22,17 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         try ( Connection cnx = ConnectionProvider.getConnection();){
 
                 PreparedStatement pStmt = cnx.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-                pStmt.setInt(1, user.getNoUtilisateur());
-                pStmt.setString(2, user.getPseudo());
-                pStmt.setString(3, user.getNom());
-                pStmt.setString(4, user.getPrenom());
-                pStmt.setString(5, user.getEmail());
-                pStmt.setString(6, user.getTelephone());
-                pStmt.setString(7, user.getRue());
-                pStmt.setInt(8, user.getCodePostal());
-                pStmt.setString(9, user.getVille());
-                pStmt.setString(10, user.getMotDePasse());
-                pStmt.setInt(11, user.getCredit());
-                pStmt.setBoolean(12, user.isAdministrateur());
+                pStmt.setString(1, user.getPseudo());
+                pStmt.setString(2, user.getNom());
+                pStmt.setString(3, user.getPrenom());
+                pStmt.setString(4, user.getEmail());
+                pStmt.setString(5, user.getTelephone());
+                pStmt.setString(6, user.getRue());
+                pStmt.setString(7, user.getCodePostal());
+                pStmt.setString(8, user.getVille());
+                pStmt.setString(9, user.getMotDePasse());
+                pStmt.setInt(10, user.getCredit());
+                pStmt.setInt(11, user.getAdministrateur());
 
 
                 int nbRows = pStmt.executeUpdate();

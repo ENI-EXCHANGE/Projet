@@ -36,7 +36,7 @@ public class testCo {
         try (Connection cnx = getConnection()){
             System.out.println("Connexion OK !!");
 
-            Article ArticleTest = new Article("Plouf2", "ddesc", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 1,  2, 1, 1);
+            Article ArticleTest = new Article("artiTest", "ARtde", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 1,  2, 1, 1);
             System.out.println("on se prepare a ajouter l'article");
 
 

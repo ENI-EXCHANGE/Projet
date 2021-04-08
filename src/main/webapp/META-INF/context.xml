@@ -6,7 +6,7 @@
 		
 		driverClassName="com.mysql.cj.jdbc.Driver"
 				
-		url="mysql-encheres.alwaysdata.net"
+		url="jdbc:mysql://mysql-encheres.alwaysdata.net/encheres_db"
 		username="encheres"
 		password="ENI-encheres2021"
 		

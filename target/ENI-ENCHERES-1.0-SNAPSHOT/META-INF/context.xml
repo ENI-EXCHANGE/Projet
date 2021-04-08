@@ -6,7 +6,7 @@
 		
 		driverClassName="com.mysql.cj.jdbc.Driver"
 				
-		url="mysql://encheres:ENI-encheres2021@mysql-encheres.alwaysdata.net/encheres_db?mariadb-serverVersion=10.5"
+		url="jdbc:mysql://mysql-encheres.alwaysdata.net/encheres_db"
 		username="encheres"
 		password="ENI-encheres2021"
 		

@@ -9,18 +9,18 @@ public class Utilisateur {
     private String email;
     private String telephone;
     private String rue;
-    private Integer codePostal;
+    private String codePostal;
     private String ville;
     private String motDePasse;
     private Integer credit;
-    private boolean administrateur;
+    private int administrateur;
 
 
     public Utilisateur() {   }
 
     public Utilisateur(Integer noUtilisateur, String pseudo,
                        String nom, String prenom, String email, String telephone,
-                       String rue, Integer codePostal, String ville, String motDePasse, Integer credit, boolean administrateur) {
+                       String rue, String codePostal, String ville, String motDePasse, Integer credit, int administrateur) {
         this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
         this.nom = nom;
@@ -35,11 +35,25 @@ public class Utilisateur {
         this.administrateur = administrateur;
     }
 
-    public int getNoUtilisateur() {
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, Integer credit, int administrateur) {
+        this.pseudo = pseudo;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.telephone = telephone;
+        this.rue = rue;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.motDePasse = motDePasse;
+        this.credit = credit;
+        this.administrateur = administrateur;
+    }
+
+    public Integer getNoUtilisateur() {
         return noUtilisateur;
     }
 
-    public void setNoUtilisateur(int noUtilisateur) {
+    public void setNoUtilisateur(Integer noUtilisateur) {
         this.noUtilisateur = noUtilisateur;
     }
 
@@ -91,12 +105,20 @@ public class Utilisateur {
         this.rue = rue;
     }
 
-    public int getCodePostal() {
+    public String getCodePostal() {
         return codePostal;
     }
 
-    public void setCodePostal(int codePostal) {
+    public void setCodePostal(String codePostal) {
         this.codePostal = codePostal;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
     }
 
     public String getMotDePasse() {
@@ -107,28 +129,20 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
-    public int getCredit() {
+    public Integer getCredit() {
         return credit;
     }
 
-    public void setCredit(int credit) {
+    public void setCredit(Integer credit) {
         this.credit = credit;
     }
 
-    public boolean isAdministrateur() {
+    public int getAdministrateur() {
         return administrateur;
     }
 
-    public void setAdministrateur(boolean administrateur) {
+    public void setAdministrateur(int administrateur) {
         this.administrateur = administrateur;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-    public void setVille(String ville) {
-        this.ville = ville;
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 public class ArticleDAOImpl implements ArticleDAO{
 
 
-    private static final String sqlInsert ="INSERT INTO articles_vendus(nom_article,description,dete_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie) VALUES(?,?,?,?,?,?,?,?)";
+    private static final String sqlInsert ="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?)";
     private static final String sqlSelectAll ="SELECT no_article,nom_article,description,dete_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM articles_vendus";
     private static final String sqlSelectById ="SELECT no_article,nom_article,description,dete_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM articles_vendus WHERE no_article=?";
     private static final String sqlDelete = "DELETE FROM articles_vendus WHERE no_article=?" ;
@@ -20,7 +20,7 @@ public class ArticleDAOImpl implements ArticleDAO{
     @Override
     public void insert(Article nouvelArticle) throws DALException {
 
-        try(Connection cnx = JdbcTools.getConnection()) {
+        try(Connection cnx = ConnectionProvider.getConnection()) {
 
             PreparedStatement pStmtArticle = cnx.prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
             pStmtArticle.setString(1, nouvelArticle.getNom_article());
