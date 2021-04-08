@@ -26,6 +26,17 @@ public class Article {
     public Article() {
     }
 
+    public Article(String nom, String ddesc, Date valueOf, Date valueOf1, int i, int i1, int i2, int i3) {
+        this.nom_article = nom;
+        this.description = ddesc;
+        this.date_debut_encheres = valueOf;
+        this.date_fin_encheres = valueOf1;
+        this.prix_initial = i;
+        this.prix_vente = i1;
+        this.no_utilisateur = i2;
+        this.no_categorire = i3;
+    }
+
     @Override
     public String toString() {
         return "Article{" +

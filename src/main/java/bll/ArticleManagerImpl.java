@@ -9,16 +9,20 @@ import java.util.List;
 
 public class ArticleManagerImpl implements ArticleManager{
 
-    private final ArticleDAO articleDAO ;
+    private ArticleManager articleManager ;
+    //public ArticleManagerImpl() { articleManager = BLLFactory.getArticleBLL(); }
 
-    public ArticleManagerImpl() { articleDAO = DAOFactory.getArticleDAO(); }
+    private ArticleDAO articleDAO =  DAOFactory.getArticleDAO();
 
+    private ArticleDAO dao;
+
+    public ArticleManagerImpl() {
+        dao = DAOFactory.getArticleDAO();
+    }
 
     @Override
-    public Article ajouterArticle(Article nouvelArticle) throws DALException {
-        articleDAO.insert(nouvelArticle);
-
-        return nouvelArticle;
+    public void ajouterArticle(Article nouvelArticle) throws DALException {
+        dao.insert(nouvelArticle);
     }
 
     @Override

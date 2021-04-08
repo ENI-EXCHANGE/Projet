@@ -17,7 +17,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 
     @Override
     public Categorie insert(Categorie categorie) throws DALException {
-        try(Connection cnx = ConnectionProvider.getConnection()) {
+        try(Connection cnx = JdbcTools.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(2, categorie.getLibelle());
 
