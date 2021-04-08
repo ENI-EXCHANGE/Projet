@@ -49,7 +49,7 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
             dao.update(user);
 
         } catch (DALException e) {
-            throw new BLLException("Echec update Utilisateur :"+user);
+            throw new BLLException("Echec update Utilisateur : "+user);
         }
     }
 

@@ -14,23 +14,24 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 @WebServlet(name = "ServletTest", value = "/accueil")
 
 public class ServletTest extends HttpServlet {
+
+    UtilisateurManagerImpl userTest = new UtilisateurManagerImpl();
+    ArticleManagerImpl artTest = new ArticleManagerImpl();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Article ArticleTest = new Article("artiTest", "ARtde", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 1,  2, 1, 1);
-
-        //Utilisateur user1 = new Utilisateur( "user1", "dupond", "jean", "test@email.fr", "0299010203", "rue montjoie", "35400", "st malo", "password", 0, 1);
-
-        UtilisateurManagerImpl userTest = new UtilisateurManagerImpl();
-        ArticleManagerImpl artTest = new ArticleManagerImpl();
 
         try {
-            artTest.ajouterArticle(ArticleTest);
-        } catch (DALException e) {
+            List<Utilisateur> lesUtilisateurs = userTest.getListUsers();
+            request.setAttribute("lesUtilisateurs",lesUtilisateurs );
+
+        } catch (BLLException e) {
             e.printStackTrace();
         }
 
@@ -41,6 +42,29 @@ public class ServletTest extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            System.out.println("dans do post");
+            String pseudo = request.getParameter("pseudo");
+            String nom =  request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String email =request.getParameter("email");
+            String telephone =request.getParameter("telephone");
+            String rue =request.getParameter("rue");
+            String code_postal =request.getParameter("code_postal");
+            String ville =request.getParameter("ville");
+            String mot_de_passe =request.getParameter("mot_de_passe");
+            int credit = Integer.parseInt(request.getParameter("credit"));
+            int admin = Integer.parseInt(request.getParameter("admin"));
+            Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, admin);
+            userTest.addUser(user);
+
+
+        } catch (BLLException e) {
+            e.printStackTrace();
+        }
+
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+        rd.forward(request, response);
 
     }
 }
