@@ -1,16 +1,12 @@
 package bll;
 
 import bo.Article;
-import bo.Utilisateur;
-import dal.ArticleDAO;
 import dal.DALException;
-
-import java.sql.Date;
 import java.util.List;
 
 public interface ArticleManager {
 
-    Article ajouterArticle(Article nouvelArticle) throws BLLException, DALException;
+    public void ajouterArticle(Article nouvelArticle) throws Exception;
 
     public List<Article> selectAll() throws Exception ;
 

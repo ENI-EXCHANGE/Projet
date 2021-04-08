@@ -20,7 +20,7 @@ public class ArticleDAOImpl implements ArticleDAO{
     @Override
     public void insert(Article nouvelArticle) throws DALException {
 
-        try(Connection cnx = ConnectionProvider.getConnection()) {
+        try(Connection cnx = JdbcTools.getConnection()) {
 
             PreparedStatement pStmtArticle = cnx.prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
             pStmtArticle.setString(1, nouvelArticle.getNom_article());

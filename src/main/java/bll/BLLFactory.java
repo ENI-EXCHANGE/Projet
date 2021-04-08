@@ -9,4 +9,7 @@ public class BLLFactory {
     public static RetraitManager getRetraitManager(){ return new RetraitManagerImpl();}
 
     public static CategorieManager getCategorieManager(){ return new CategorieManagerImpl();}
+
+    public static EnchereManager getEnchereManager(){ return new EnchereManagerImpl();}
 }
+

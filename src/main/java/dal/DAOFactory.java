@@ -12,4 +12,6 @@ public class DAOFactory {
 
     public static  CategorieDAO getCategorieDAO() { return new CategorieDAOImpl() ; }
 
+    public static  EnchereDAO getEnchereDAO() { return new EnchereDAOImpl() ; }
+
 }

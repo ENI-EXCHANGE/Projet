@@ -45,5 +45,10 @@
                 <version>3.3.0</version>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/webapp</directory>
+            </resource>
+        </resources>
     </build>
 </project>
