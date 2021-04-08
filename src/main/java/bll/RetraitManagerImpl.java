@@ -1,8 +1,10 @@
 
 package bll;
 
+import bo.Categorie;
 import bo.Retrait;
 import dal.DALException;
+import dal.DAOFactory;
 import dal.RetraitDAO;
 
 import java.util.List;
@@ -10,6 +12,10 @@ import java.util.List;
 public class RetraitManagerImpl implements RetraitManager{
 
     private RetraitDAO retraitDao;
+
+    public RetraitManagerImpl() {
+        retraitDao = DAOFactory.getRetraitDAO();
+    }
 
     public List<Retrait> selectAll() throws BLLException {
 
@@ -40,15 +46,21 @@ public class RetraitManagerImpl implements RetraitManager{
 
     }
 
-    public Retrait ajouterNouveauRetrait(int noArticle, String rue, int cp, String ville) throws BLLException {
+    public Retrait ajouterNouveauRetrait(Retrait retrait) throws BLLException {
 
         try {
-            Retrait nouveauRetrait = new Retrait(noArticle, rue,cp, ville);
-            retraitDao.insert(nouveauRetrait);
-            return nouveauRetrait;
+            return retraitDao.insert(retrait);
 
         } catch (DALException e) {
             throw new BLLException("Erreur lors du ajouterNouveauRetrait dans BLL");
+        }
+    }
+
+    public void update(Retrait retrait) throws BLLException {
+        try {
+            retraitDao.update(retrait);
+        } catch (DALException e) {
+            throw new BLLException("Erreur lors de la modif d'un retrait dans BLL");
         }
     }
 }

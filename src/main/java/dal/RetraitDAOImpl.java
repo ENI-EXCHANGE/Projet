@@ -9,19 +9,20 @@ import java.util.List;
 
 public class RetraitDAOImpl implements RetraitDAO {
 
-    private static final String sqlInsert = "INSERT INTO Retrait(no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
-    private static final String sqlSelectAll = "SELECT no_article,rue,code_postal,ville FROM Retrait";
-    private static final String sqlDelete = "DELETE from Retrait where no_article=?";
-    private static final String sqlUpdate = "UPDATE Retrait set rue=?,code_postal=?,ville=? where no_article=?";
-    private static final String sqlSelectById = "SELECT rue,code_postal,ville from Retrait where no_article = ?";
+    private static final String sqlInsert = "INSERT INTO RETRAITS(no_article,rue,code_postale,ville) VALUES(?,?,?,?)";
+    private static final String sqlSelectAll = "SELECT no_article,rue,code_postale,ville FROM RETRAITS";
+    private static final String sqlDelete = "DELETE from RETRAITS where no_article=?";
+    private static final String sqlUpdate = "UPDATE RETRAITS set rue=?,code_postale=?,ville=? where no_article=?";
+    private static final String sqlSelectById = "SELECT rue,code_postale,ville from RETRAITS where no_article = ?";
 
 
     @Override
     public Retrait insert(Retrait retrait) throws DALException {
         try(Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, retrait.getNoArticle());
             stmt.setString(2, retrait.getRue());
-            stmt.setInt(3, retrait.getCp());
+            stmt.setString(3, retrait.getCp());
             stmt.setString(4, retrait.getVille());
 
             int nbRows = stmt.executeUpdate();
@@ -49,8 +50,9 @@ public class RetraitDAOImpl implements RetraitDAO {
             while (rs.next()) {
 
                 retrait = new Retrait(rs.getInt("no_article"), rs.getString("rue"),
-                    rs.getInt("cp"), rs.getString("ville"));
+                    rs.getString("code_postale"), rs.getString("ville"));
                 lesRetraits.add(retrait);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,7 +79,7 @@ public class RetraitDAOImpl implements RetraitDAO {
         try (Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlUpdate);
             stmt.setString(1, retrait.getRue());
-            stmt.setInt(2, retrait.getCp());
+            stmt.setString(2, retrait.getCp());
             stmt.setString(3, retrait.getVille());
             stmt.setInt(4,retrait.getNoArticle());
             stmt.executeUpdate();
@@ -95,12 +97,15 @@ public class RetraitDAOImpl implements RetraitDAO {
             PreparedStatement stmt = cnx.prepareStatement(sqlSelectById);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            leRetrait = new Retrait(id,rs.getString("rue"),rs.getInt("code_postal"),rs.getString("ville"));
+            while (rs.next()) {
+                leRetrait = new Retrait(id, rs.getString("rue"), rs.getString("code_postale"), rs.getString("ville"));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DALException("probleme dans la sélection d'un retrait par l'id");
         }
+        System.out.println(leRetrait);
         return leRetrait;
     }
 }

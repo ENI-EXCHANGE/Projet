@@ -2,14 +2,20 @@
 package bll;
 
 import bo.Categorie;
+import dal.ArticleDAO;
 import dal.CategorieDAO;
 import dal.DALException;
+import dal.DAOFactory;
 
 import java.util.List;
 
 public class CategorieManagerImpl implements CategorieManager{
 
     private CategorieDAO categorieDao;
+
+    public CategorieManagerImpl() {
+        categorieDao = DAOFactory.getCategorieDAO();
+    }
 
     public List<Categorie> selectAll() throws BLLException {
 
@@ -39,9 +45,10 @@ public class CategorieManagerImpl implements CategorieManager{
 
     }
 
-    public Categorie ajouterNouvelleCategorie(int noCategorie, String libelle) throws BLLException {
+    public Categorie ajouterNouvelleCategorie(String libelle) throws BLLException {
         try {
-            Categorie nouvelleCategorie = new Categorie(noCategorie, libelle);
+            Categorie nouvelleCategorie = new Categorie(libelle);
+
             categorieDao.insert(nouvelleCategorie);
             return nouvelleCategorie;
         }
@@ -50,6 +57,17 @@ public class CategorieManagerImpl implements CategorieManager{
             throw new BLLException("Erreur lors du ajouterNouvelleCategorie dans BLL");
         }
 
+
+    }
+
+    public void update(Categorie laCat) throws BLLException {
+        try {
+             categorieDao.update(laCat);
+        }
+        catch (DALException e)
+        {
+            throw new BLLException("Erreur lors de la modif de la categorie dans BLL");
+        }
 
     }
 }
