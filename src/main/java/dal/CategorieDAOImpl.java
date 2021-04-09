@@ -51,7 +51,6 @@ public class CategorieDAOImpl implements CategorieDAO {
                 cat = new Categorie(rs.getInt("no_categories"), rs.getString("libelle"));
 
                 lesCategories.add(cat);
-                System.out.println(cat);
             }
         } catch (SQLException e) {
             e.printStackTrace();

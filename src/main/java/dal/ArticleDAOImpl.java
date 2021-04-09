@@ -12,9 +12,9 @@ public class ArticleDAOImpl implements ArticleDAO{
 
 
     private static final String sqlInsert ="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?)";
-    private static final String sqlSelectAll ="SELECT no_article,nom_article,description,dete_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM articles_vendus";
-    private static final String sqlSelectById ="SELECT no_article,nom_article,description,dete_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM articles_vendus WHERE no_article=?";
-    private static final String sqlDelete = "DELETE FROM articles_vendus WHERE no_article=?" ;
+    private static final String sqlSelectAll ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS";
+    private static final String sqlSelectById ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article=?";
+    private static final String sqlDelete = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?" ;
     private static final String sqlUpdate = "UPDATE ARTICLES_VENDUS SET nom_article=?,description=?,date_debut_encheres=?,date_fin_encheres=?,prix_initial=?,prix_vente=?,no_utilisateur=?, no_categorie=? WHERE no_article=?";
 
 
@@ -73,7 +73,9 @@ public class ArticleDAOImpl implements ArticleDAO{
             PreparedStatement stmt = cnx.prepareStatement(sqlSelectById);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"),rs.getInt("no_categorie"));
+            while (rs.next()){
+                art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"),rs.getInt("no_categorie"));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
