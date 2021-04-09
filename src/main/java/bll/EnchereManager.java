@@ -6,11 +6,14 @@ import dal.DALException;
 import java.util.List;
 
 public interface EnchereManager {
-    public Enchere addEnchere(Enchere enchere) throws BLLException, DALException;
+
+    public Enchere insert(Enchere enchere) throws BLLException;
 
     public List<Enchere> selectAll() throws BLLException;
 
-    public Enchere SelectById (int id) throws BLLException, DALException;
+    public Enchere selectById (Integer noUtilisateurs, Integer noArticle) throws BLLException;
 
-    public void deleteEnchere( int id) throws BLLException;
+    public void delete( Integer noUtilisateurs, Integer noArticle) throws BLLException;
+
+    public void update(Enchere enchere) throws BLLException;
 }
