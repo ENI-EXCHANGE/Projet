@@ -15,6 +15,29 @@ public class Utilisateur {
     private Integer credit;
     private int administrateur;
 
+    /**
+     * vérifie si l'adresse email est correcte
+     */
+    public void validationEmail( String email ) throws Exception {
+        if ( email != null && !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
+            throw new Exception( "Merci de saisir une adresse mail valide." );
+        }
+    }
+
+    /**
+     * vérifie si le mot de passe saisi et correct.
+     */
+    public void validationMotDePasse( String motDePasse ) throws Exception {
+        if ( motDePasse != null ) {
+            if ( motDePasse.length() < 3 ) {
+                throw new Exception( "Le mot de passe doit contenir au moins 3 caractères." );
+            }
+        } else {
+            throw new Exception( "Merci de saisir votre mot de passe." );
+        }
+    }
+
+
 
     public Utilisateur() {   }
 
@@ -33,6 +56,23 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
         this.credit = credit;
         this.administrateur = administrateur;
+    }
+
+    public Utilisateur(String pseudo, String motDePasse) {
+        this.pseudo = pseudo;
+        this.motDePasse = motDePasse;
+    }
+
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) {
+        this.pseudo = pseudo;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.telephone = telephone;
+        this.rue = rue;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.motDePasse = motDePasse;
     }
 
     public Utilisateur(Integer noUtilisateur, String nom, String prenom) {

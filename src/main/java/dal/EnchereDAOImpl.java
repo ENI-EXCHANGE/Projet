@@ -53,7 +53,7 @@ public class EnchereDAOImpl implements EnchereDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
 
-            //    Timestamp dateTime = rs.getObject("date_enchere",LocalDateTime.class);
+                //    Timestamp dateTime = rs.getObject("date_enchere",LocalDateTime.class);
                 // si besoin LocalDateTime
                 enchere = new Enchere(rs.getInt("no_utilisateur"), rs.getInt("no_article"),
                         rs.getTimestamp("date_enchere"), rs.getInt("montant_enchere"));
@@ -111,7 +111,7 @@ public class EnchereDAOImpl implements EnchereDAO {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                 enchere = new Enchere(noUtilisateurs,noArticle, rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"));
+                enchere = new Enchere(noUtilisateurs,noArticle, rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"));
             }
 
         } catch (SQLException e) {

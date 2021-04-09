@@ -1,9 +1,8 @@
 package servlet;
 
-import bll.ArticleManager;
-import bll.ArticleManagerImpl;
-import bll.BLLException;
+import bll.*;
 import bo.Article;
+import bo.Categorie;
 import bo.Utilisateur;
 
 import javax.servlet.*;
@@ -16,13 +15,21 @@ import java.util.List;
 public class ServletArticle extends HttpServlet {
 
     ArticleManager art = new ArticleManagerImpl();
+    UtilisateurManager usr = new UtilisateurManagerImpl();
+    CategorieManager cat = new CategorieManagerImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
             Article ArticleSelectionne = art.selectById(2);
+            Categorie CategorieArticle = cat.selectById(ArticleSelectionne.getNo_article());
+            System.out.println("cat :" +CategorieArticle.getLibelle());
+            Utilisateur UtilisateurArticle = usr.selectById(ArticleSelectionne.getNo_article());
+            System.out.println("nom : "+UtilisateurArticle.getNom());
             request.setAttribute("ArticleSelectionne",ArticleSelectionne );
+            request.setAttribute("CategorieArticle", CategorieArticle);
+            request.setAttribute("UtilisateurArticle", UtilisateurArticle);
 
         } catch (Exception e) {
             e.printStackTrace();

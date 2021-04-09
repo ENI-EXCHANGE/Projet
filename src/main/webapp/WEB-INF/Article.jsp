@@ -1,4 +1,6 @@
-<%@ page import="bo.Article" %><%--
+<%@ page import="bo.Article" %>
+<%@ page import="bo.Categorie" %>
+<%@ page import="bo.Utilisateur" %><%--
   Created by IntelliJ IDEA.
   User: micha
   Date: 08/04/2021
@@ -12,10 +14,11 @@
     <%@include file="/head.html" %>
 </head>
 <body>
-    <h1>Article</h1>
     <div>
         <%
             Article ArticleSelectionne = (Article) request.getAttribute("ArticleSelectionne");
+            Categorie CategorieArticle = (Categorie) request.getAttribute("CategorieArticle");
+            Utilisateur UtilisateurArticle = (Utilisateur) request.getAttribute("UtilisateurArticle");
             if(ArticleSelectionne == null) {
         %>
         <p>Erreur : L'article n'éxiste pas !</p>
@@ -23,20 +26,21 @@
         <%
         } else {
         %>
-        <p>Attributs de L'article Selectionné</p>
+        <h1>Fiche de l'article : <%= ArticleSelectionne.getNom_article() %></h1>
         <ul class="list-group">
 
-            <li class="list-group-item"> <%= ArticleSelectionne.getNo_article() %></li>
-            <li class="list-group-item"> <%= ArticleSelectionne.getNom_article() %></li>
-            <li class="list-group-item"> <%= ArticleSelectionne.getDescription() %></li>
-            <li class="list-group-item"> <%= ArticleSelectionne.getDate_debut_encheres() %></li>
-            <li class="list-group-item"> <%= ArticleSelectionne.getDate_fin_encheres() %></li>
-            <li class="list-group-item"> <%= ArticleSelectionne.getPrix_initial() %></li>
-            <li class="list-group-item"> <%= ArticleSelectionne.getPrix_vente() %></li>
-            <li class="list-group-item"> <%= ArticleSelectionne.getNo_categorire() %></li>
-            <li class="list-group-item"> <%= ArticleSelectionne.getNo_utilisateur() %></li>
+            <li type="hidden" class="list-group-item">Numéro d'identification de l'article <%= ArticleSelectionne.getNo_article() %></li>
+            <li class="list-group-item">Nom : <%= ArticleSelectionne.getNom_article() %></li>
+            <li class="list-group-item">Description : <%= ArticleSelectionne.getDescription() %></li>
+            <li class="list-group-item">Date de mise aux enchères : <%= ArticleSelectionne.getDate_debut_encheres() %></li>
+            <li class="list-group-item">Date de fin de l'enchère : <%= ArticleSelectionne.getDate_fin_encheres() %></li>
+            <li class="list-group-item">Prix de départ : <%= ArticleSelectionne.getPrix_initial() %></li>
+            <li class="list-group-item">Prix : <%= ArticleSelectionne.getPrix_vente() %></li>
+            <li class="list-group-item">Catégorie : <%= CategorieArticle.getLibelle() %></li>
+            <li class="list-group-item">Vendeur : <%= UtilisateurArticle.getNom() %></li>
 
         </ul>
+        <p><%= UtilisateurArticle.getNom() %><%= CategorieArticle.getLibelle() %><%= ArticleSelectionne.getNo_article() %></p>
         <%
             }
         %>

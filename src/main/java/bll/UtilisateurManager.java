@@ -1,6 +1,7 @@
 package bll;
 
 import bo.Utilisateur;
+import dal.DALException;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ public interface UtilisateurManager {
     public List<Utilisateur> getListUsers() throws BLLException;
 
     public void addUser(Utilisateur user) throws BLLException;
+
+    public Utilisateur selectById(int id) throws BLLException, DALException;
+
+    Utilisateur selectByPseudo(String pseudo) throws BLLException, DALException;
 
     public void updateUser(Utilisateur user) throws BLLException;
 

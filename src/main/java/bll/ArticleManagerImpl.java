@@ -27,9 +27,7 @@ public class ArticleManagerImpl implements ArticleManager{
 
     @Override
     public List<Article> selectAll() throws Exception {
-        List<Article> articles = null;
-
-        articleDAO.selectAll();
+        List<Article> articles = articleDAO.selectAll();
 
         return articles;
     }

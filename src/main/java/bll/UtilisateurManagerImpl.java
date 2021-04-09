@@ -31,7 +31,7 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
     }
 
     /*
-     * TODO : mettre en place un try catch qui verifie si l'utilisateur existe déjà
+     * TODO : mettre en place un try catch qui verifie si l'utilisateur existe déjà via son email
      * */
     @Override
     public void addUser(Utilisateur user) throws BLLException {
@@ -41,6 +41,17 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
         } catch (DALException e) {
             throw new BLLException(" l'insertion de l'utilisateur à échoué !");
         }
+    }
+
+    @Override
+    public Utilisateur selectById(int id) throws BLLException, DALException {
+        return dao.selectById(id);
+
+    }
+
+    @Override
+    public Utilisateur selectByPseudo(String pseudo) throws BLLException, DALException {
+        return dao.selectByPseudo(pseudo);
     }
 
     @Override
