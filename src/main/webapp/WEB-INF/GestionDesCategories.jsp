@@ -14,51 +14,59 @@
 </head>
 <body>
 
-<div class="wrapper">
-    <%
-        List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("listeCategories");
-        if(listeCategories == null || listeCategories.isEmpty()) {
-    %>
-    <p>Aucune Catégories pour l'instant</p>
-
-    <%
-    } else {
-    %>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Liste des Catégories</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%for(Categorie cat : listeCategories) { %>
-        <tr>
-        <th scope="row"><%= cat.getNoCategorie() %></th>
-        <td><%= cat.getLibelle() %></td>
-        <td><form action="<%=request.getContextPath() %>/Categories" method="post"><input type="hidden" id="no_categorie" name="no_categorie" value=<%= cat.getNoCategorie() %>><input class="btn btn-primary" type="submit" value="Supprimer" ></form></td>
-        <% } %>
-        </tr>
-        </tbody>
-    </table>
-
-    <%
-        }
-    %>
+<c:if test="${ !empty sessionScope.utilisateurConnecté.pseudo && !empty sessionScope.utilisateurConnecté.motDePasse }">
+    <p>Vous êtes ${ sessionScope.utilisateurConnecté.pseudo } !</p>
+</c:if>
     <div class="wrapper">
-    <h2>Ajouter une catégorie</h2>
-    <form class="form-horizontal" action="<%=request.getContextPath() %>/Categories" method="POST">
-        <div class="form-group">
+        <%
+            List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("listeCategories");
+            if(listeCategories == null || listeCategories.isEmpty()) {
+        %>
+        <p>Aucune Catégories pour l'instant</p>
 
-        <label for="libelle">Nom de la Catégorie :</label>
-        <input type="text" id="libelle" name="libelle" >
+        <%
+        } else {
+        %>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Liste des Catégories</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(Categorie cat : listeCategories) { %>
+                <tr>
+                    <th scope="row"><%= cat.getNoCategorie() %></th>
+                    <td><%= cat.getLibelle() %></td>
+                    <td>
+                        <form action="<%=request.getContextPath() %>/Categories"
+                              method="post">
+                            <input type="hidden" id="no_categorie" name="no_categorie" value=<%= cat.getNoCategorie() %>>
+                            <input class="btn btn-primary" type="submit" value="Supprimer" >
+                        </form>
+                    </td>
+                    <% } %>
+                </tr>
+            </tbody>
+        </table>
+
+        <%
+            }
+        %>
+        <div class="wrapper">
+            <h2>Ajouter une catégorie</h2>
+            <form class="form-horizontal" action="<%=request.getContextPath() %>/Categories" method="POST">
+                <div class="form-group">
+                    <label for="libelle">Nom de la Catégorie :</label>
+                    <input type="text" id="libelle" name="libelle" >
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Ajouter" >
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-        <input class="btn btn-primary" type="submit" value="Ajouter" >
-        </div>
-    </form>
     </div>
-</div>
 
 </body>
 </html>

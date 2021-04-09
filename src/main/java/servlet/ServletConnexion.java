@@ -1,6 +1,8 @@
 package servlet;
 
+import bll.ArticleManagerImpl;
 import bll.BLLException;
+import bean.ConnexionForm;
 import bll.UtilisateurManagerImpl;
 import bo.Utilisateur;
 import dal.DALException;
@@ -19,6 +21,8 @@ TODO : gérer les sessions User/admin
   */
     UtilisateurManagerImpl userTest = new UtilisateurManagerImpl();
 
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch(request.getServletPath()) {
@@ -28,6 +32,15 @@ TODO : gérer les sessions User/admin
                 break;
 
             case "/connexion":
+
+                ArticleManagerImpl article = new ArticleManagerImpl();
+                try {
+                    System.out.println(article.selectAll());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
                 rd2.forward(request, response);
                 break;
@@ -56,6 +69,12 @@ TODO : gérer les sessions User/admin
                     //int credit = Integer.parseInt(request.getParameter("credit"));
                     //int admin = Integer.parseInt(request.getParameter("admin"));
                     Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, admin);
+                    try {
+                        user.validationEmail(email);
+                        user.validationMotDePasse(mot_de_passe);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     userTest.addUser(user);
 
 
@@ -68,14 +87,16 @@ TODO : gérer les sessions User/admin
 
             case "/connexion":
                 try {
-
                     String pseudo = request.getParameter("pseudo");
-                    String mot_de_passe =request.getParameter("mot_de_passe");
+                    String mot_de_passe = request.getParameter("mot_de_passe");
+                    Utilisateur user = userTest.selectByPseudo(pseudo);
 
-                    //Utilisateur user = new Utilisateur(pseudo, mot_de_passe );
+                    // Création de la session utilisateur
+                    HttpSession session = request.getSession();
+                    session.setAttribute("utilisateurConnecté", user);
 
-                    userTest.selectByPseudo(pseudo);
-                    System.out.println(userTest.selectByPseudo(pseudo));
+                    //System.out.println(user);
+
 
                 } catch (DALException | BLLException e) {
                     e.printStackTrace();

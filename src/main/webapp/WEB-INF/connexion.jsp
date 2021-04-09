@@ -13,8 +13,11 @@
 </head>
 <body>
 <h1>Se connecter :</h1>
-<form action="<%=request.getContextPath() %>/connexion" method="POST">
 
+<form action="<%=request.getContextPath() %>/connexion" method="POST">
+    <c:if test="${ !empty sessionScope.utilisateurConnecté.pseudo && !empty sessionScope.utilisateurConnecté.motDePasse }">
+        <p>Vous êtes ${ sessionScope.utilisateurConnecté.pseudo } !</p>
+    </c:if>
     <label for="pseudo">Identifiant :</label>
     <input type="text" id="pseudo" name="pseudo" ><br>
 
@@ -34,6 +37,7 @@
 <form action="<%=request.getContextPath() %>/profil" method="POST">
     <input type="submit" value="Créer un compte" >
 </form>
+
 
 </body>
 </html>
