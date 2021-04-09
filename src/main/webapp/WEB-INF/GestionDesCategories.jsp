@@ -13,6 +13,7 @@
     <%@include file="/head.html" %>
 </head>
 <body>
+
 <div class="wrapper">
     <%
         List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("listeCategories");

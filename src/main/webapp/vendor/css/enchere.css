@@ -4,10 +4,6 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
  */
 
-body {
-  padding-top: 54px;
-}
-
 .wrapper {
     display: flex;
     align-items: center;
@@ -15,28 +11,5 @@ body {
     justify-content: center;
     width: 100%;
     min-height: 100%;
-    padding: 20px;
 }
 
-@media (min-width: 992px) {
-  body {
-    padding-top: 56px;
-  }
-}
-
-.portfolio-item {
-  margin-bottom: 30px;
-}
-
-.pagination {
-  margin-bottom: 30px;
-}
-
-.footer-demodule
-{
-	margin-top: 15px;
-}
-.demo
-{
-	margin-top: 15px;
-}

@@ -1,6 +1,5 @@
 package dal;
 
-import bo.Article;
 import bo.Utilisateur;
 
 import java.sql.*;
@@ -11,8 +10,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     private static final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateurs=? ";
     private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SELECBYID = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? ";
+    private static final String SELECBYID = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateurs = ? ";
     private static final String SELECTALL = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
+    private static final String SELECBYPSEUDO = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? ";
 
     public UtilisateurDAOImpl(){
 
@@ -109,10 +109,38 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     }
 
     @Override
-    public Utilisateur selectById(String pseudo ) throws DALException {
+    public Utilisateur selectById(int id ) throws DALException {
         Utilisateur user = null;
         try(Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(SELECBYID);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                user = new Utilisateur(rs.getInt("no_utilisateurs"),
+                        rs.getString("pseudo"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("email"),
+                        rs.getString("telephone"),
+                        rs.getString("rue"),
+                        rs.getString("code_postal"),
+                        rs.getString("ville"),
+                        rs.getString("mot_de_passe"),
+                        rs.getInt("credit"),
+                        rs.getByte("administrateur"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("impossible de récupérer l'utilisateur par le pseudo");
+        }
+        return user;
+    }
+
+    @Override
+    public Utilisateur selectByPseudo(String pseudo) throws DALException {
+        Utilisateur user = null;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(SELECBYPSEUDO);
             stmt.setString(1, pseudo);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

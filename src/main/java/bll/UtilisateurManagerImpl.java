@@ -44,9 +44,14 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
     }
 
     @Override
-    public Utilisateur selectById(String pseudo) throws BLLException, DALException {
-        return dao.selectById(pseudo);
+    public Utilisateur selectById(int id) throws BLLException, DALException {
+        return dao.selectById(id);
 
+    }
+
+    @Override
+    public Utilisateur selectByPseudo(String pseudo) throws BLLException, DALException {
+        return dao.selectByPseudo(pseudo);
     }
 
     @Override

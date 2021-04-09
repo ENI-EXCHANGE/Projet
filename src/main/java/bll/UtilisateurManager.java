@@ -26,7 +26,9 @@ public interface UtilisateurManager {
 
     public void addUser(Utilisateur user) throws BLLException;
 
-    public Utilisateur selectById(String pseudo) throws BLLException, DALException;
+    public Utilisateur selectById(int id) throws BLLException, DALException;
+
+    Utilisateur selectByPseudo(String pseudo) throws BLLException, DALException;
 
     public void updateUser(Utilisateur user) throws BLLException;
 

@@ -68,13 +68,14 @@ TODO : gérer les sessions User/admin
 
             case "/connexion":
                 try {
+
                     String pseudo = request.getParameter("pseudo");
                     String mot_de_passe =request.getParameter("mot_de_passe");
 
                     //Utilisateur user = new Utilisateur(pseudo, mot_de_passe );
 
-                    userTest.selectById(pseudo);
-                    System.out.println(userTest.selectById(pseudo));
+                    userTest.selectByPseudo(pseudo);
+                    System.out.println(userTest.selectByPseudo(pseudo));
 
                 } catch (DALException | BLLException e) {
                     e.printStackTrace();
