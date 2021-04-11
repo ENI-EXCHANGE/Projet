@@ -12,6 +12,8 @@
     <%@include file="/head.html" %>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
+<div class="wrapper">
 <h1>Se connecter :</h1>
 
 <form action="<%=request.getContextPath() %>/connexion" method="POST">
@@ -37,7 +39,7 @@
 <form action="<%=request.getContextPath() %>/profil" method="POST">
     <input type="submit" value="Créer un compte" >
 </form>
-
+</div>
 
 </body>
 </html>

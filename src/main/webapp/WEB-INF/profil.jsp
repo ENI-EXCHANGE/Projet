@@ -13,6 +13,7 @@
     <%@include file="/head.html" %>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
 <div class="wrapper">
     <h1> Créer mon profil :</h1>
 

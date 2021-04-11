@@ -14,7 +14,8 @@
     <%@include file="/head.html" %>
 </head>
 <body>
-    <div>
+<%@include file="navbar.jsp" %>
+    <div class="wrapper">
         <%
             Article ArticleSelectionne = (Article) request.getAttribute("ArticleSelectionne");
             Categorie CategorieArticle = (Categorie) request.getAttribute("CategorieArticle");
@@ -37,17 +38,13 @@
             <li class="list-group-item">Prix de départ : <%= ArticleSelectionne.getPrix_initial() %></li>
             <li class="list-group-item">Prix : <%= ArticleSelectionne.getPrix_vente() %></li>
             <li class="list-group-item">Catégorie : <%= CategorieArticle.getLibelle() %></li>
-            <li class="list-group-item">Vendeur : <%= UtilisateurArticle.getNom() %></li>
+            <li class="list-group-item">Vendeur : <a href="<%=request.getContextPath() %>/Compte?pseudo=<%= UtilisateurArticle.getPseudo() %>"> <%= UtilisateurArticle.getPseudo() %></a></li>
 
         </ul>
-        <p><%= UtilisateurArticle.getNom() %><%= CategorieArticle.getLibelle() %><%= ArticleSelectionne.getNo_article() %></p>
         <%
             }
         %>
     </div>
-
-
-
 
 </body>
 

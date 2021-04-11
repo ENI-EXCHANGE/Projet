@@ -18,15 +18,15 @@ public class ServletArticle extends HttpServlet {
     UtilisateurManager usr = new UtilisateurManagerImpl();
     CategorieManager cat = new CategorieManagerImpl();
 
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
             Article ArticleSelectionne = art.selectById(2);
-            Categorie CategorieArticle = cat.selectById(ArticleSelectionne.getNo_article());
-            System.out.println("cat :" +CategorieArticle.getLibelle());
+            Categorie CategorieArticle = cat.selectById(ArticleSelectionne.getNo_categorire());
             Utilisateur UtilisateurArticle = usr.selectById(ArticleSelectionne.getNo_article());
-            System.out.println("nom : "+UtilisateurArticle.getNom());
             request.setAttribute("ArticleSelectionne",ArticleSelectionne );
             request.setAttribute("CategorieArticle", CategorieArticle);
             request.setAttribute("UtilisateurArticle", UtilisateurArticle);
@@ -41,6 +41,7 @@ public class ServletArticle extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 
     }
 }

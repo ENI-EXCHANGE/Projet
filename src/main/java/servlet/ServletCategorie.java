@@ -18,9 +18,13 @@ public class ServletCategorie extends HttpServlet {
 
     CategorieManager cat = new CategorieManagerImpl();
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+        Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecté");
+        request.setAttribute("usr",usr);
         try {
             List<Categorie> listeCatégorie = cat.selectAll();
             request.setAttribute("listeCategories",listeCatégorie );
@@ -38,6 +42,10 @@ public class ServletCategorie extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
+            HttpSession session = request.getSession();
+            Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecté");
+            request.setAttribute("usr",usr);
+
             if (request.getParameter("no_categorie") != null){
                 int no =Integer.parseInt(request.getParameter("no_categorie"));
                 cat.delete(no);
@@ -50,7 +58,6 @@ public class ServletCategorie extends HttpServlet {
             List<Categorie> listeCatégorie = cat.selectAll();
             request.setAttribute("listeCategories",listeCatégorie );
 
-
         } catch (BLLException e) {
             e.printStackTrace();
         }
@@ -59,4 +66,5 @@ public class ServletCategorie extends HttpServlet {
         rd.forward(request, response);
 
     }
+
 }

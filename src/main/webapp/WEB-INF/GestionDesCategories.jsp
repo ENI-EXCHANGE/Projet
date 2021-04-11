@@ -14,9 +14,8 @@
 </head>
 <body>
 
-<c:if test="${ !empty sessionScope.utilisateurConnecté.pseudo && !empty sessionScope.utilisateurConnecté.motDePasse }">
-    <p>Vous êtes ${ sessionScope.utilisateurConnecté.pseudo } !</p>
-</c:if>
+<%@include file="navbar.jsp" %>
+
     <div class="wrapper">
         <%
             List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("listeCategories");

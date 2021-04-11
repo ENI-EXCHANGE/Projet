@@ -2,7 +2,7 @@ package servlet;
 
 import bll.ArticleManagerImpl;
 import bll.BLLException;
-import bean.ConnexionForm;
+
 import bll.UtilisateurManagerImpl;
 import bo.Utilisateur;
 import dal.DALException;
@@ -12,7 +12,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "ServletConnexion", value = {"/connexion", "/profil"})
+@WebServlet(name = "ServletConnexion", value = {"/connexion", "/profil", "/deconnexion"})
 public class ServletConnexion extends HttpServlet {
 /*
 TODO : mettre en place les cookies pour se souvenir de moi
@@ -43,6 +43,16 @@ TODO : gérer les sessions User/admin
 
                 RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
                 rd2.forward(request, response);
+                break;
+            case "/deconnexion" :
+                try{
+                    HttpSession session = request.getSession();
+                    session.invalidate();
+                }catch ( Exception e) {
+                    e.printStackTrace();
+                }
+                RequestDispatcher rd3 = request.getRequestDispatcher("/index.jsp");
+                rd3.forward(request, response);
                 break;
         }
 
@@ -104,6 +114,17 @@ TODO : gérer les sessions User/admin
                 RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
                 rd2.forward(request, response);
                 break;
+            case "/deconnexion" :
+                try{
+                    HttpSession session = request.getSession();
+                    session.invalidate();
+                }catch ( Exception e) {
+                    e.printStackTrace();
+                }
+                RequestDispatcher rd3 = request.getRequestDispatcher("/index.jsp");
+                rd3.forward(request, response);
+                break;
+
         }
     }
 }
