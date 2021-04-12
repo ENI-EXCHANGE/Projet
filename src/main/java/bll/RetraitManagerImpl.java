@@ -14,7 +14,7 @@ public class RetraitManagerImpl implements RetraitManager{
 
     private RetraitDAO retraitDao;
 
-    public RetraitManagerImpl() {
+    public RetraitManagerImpl() throws BLLException, DALException {
 
         retraitDao = DAOFactory.getRetraitDAO();
     }

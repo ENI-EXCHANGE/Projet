@@ -4,6 +4,7 @@ import bll.ArticleManagerImpl;
 import bll.BLLException;
 import bo.Article;
 import bo.Utilisateur;
+import dal.DALException;
 
 
 import javax.servlet.*;
@@ -18,6 +19,9 @@ public class ServletIndex extends HttpServlet {
 
     ArticleManagerImpl article = new ArticleManagerImpl();
     List<Article> listeArticles = new ArrayList<>();
+
+    public ServletIndex() throws BLLException, DALException {
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

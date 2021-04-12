@@ -17,4 +17,5 @@ public interface CategorieManager {
 
     public void update(Categorie laCat) throws BLLException;
 
+    Categorie selectByLibelle(String categorie) throws BLLException;
 }

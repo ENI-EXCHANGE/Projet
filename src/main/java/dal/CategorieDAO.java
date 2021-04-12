@@ -15,4 +15,6 @@ public interface CategorieDAO {
     public void update(Categorie categorie) throws DALException;
 
     public Categorie selectById(Integer id) throws DALException;
+
+    Categorie selectByLibelle(String categorie) throws DALException;
 }

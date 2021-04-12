@@ -8,14 +8,14 @@ public class Enchere {
 
     private Utilisateur utilisateur;
     private Article article;
-    private Timestamp dateEnchere;
+    private Date dateEnchere;
     private int montantEnchere;
 
     public Enchere(){
 
     }
 
-    public Enchere(Utilisateur utilisateur, Article article, Timestamp dateEnchere, int montantEnchere) {
+    public Enchere(Utilisateur utilisateur, Article article, Date dateEnchere, int montantEnchere) {
         this.utilisateur = utilisateur;
         this.article = article;
         this.dateEnchere = dateEnchere;
@@ -38,11 +38,11 @@ public class Enchere {
         this.article = article;
     }
 
-    public Timestamp getDateEnchere() {
+    public Date getDateEnchere() {
         return dateEnchere;
     }
 
-    public void setDateEnchere(Timestamp dateEnchere) {
+    public void setDateEnchere(Date dateEnchere) {
         this.dateEnchere = dateEnchere;
     }
 

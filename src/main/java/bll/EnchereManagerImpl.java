@@ -12,7 +12,7 @@ public class EnchereManagerImpl implements EnchereManager {
     private final EnchereDAO enchereDAO ;
 
 
-    public EnchereManagerImpl(){ enchereDAO= DAOFactory.getEnchereDAO(); }
+    public EnchereManagerImpl() throws BLLException, DALException { enchereDAO= DAOFactory.getEnchereDAO(); }
 
     @Override
     public Enchere insert(Enchere enchere) throws BLLException {

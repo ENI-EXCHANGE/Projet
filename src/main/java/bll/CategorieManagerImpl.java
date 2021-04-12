@@ -13,7 +13,7 @@ public class CategorieManagerImpl implements CategorieManager{
 
     private CategorieDAO categorieDao;
 
-    public CategorieManagerImpl() {
+    public CategorieManagerImpl() throws BLLException, DALException {
         categorieDao = DAOFactory.getCategorieDAO();
     }
 
@@ -27,6 +27,7 @@ public class CategorieManagerImpl implements CategorieManager{
     }
 
     public Categorie selectById(int id) throws BLLException {
+
         try {
             return categorieDao.selectById(id);
         } catch (DALException e) {
@@ -69,6 +70,15 @@ public class CategorieManagerImpl implements CategorieManager{
             throw new BLLException("Erreur lors de la modif de la categorie dans BLL");
         }
 
+    }
+
+    @Override
+    public Categorie selectByLibelle(String categorie) throws BLLException {
+        try {
+            return categorieDao.selectByLibelle(categorie);
+        } catch (DALException e) {
+            throw new BLLException("Erreur lors du selectById categorie dans BLL");
+        }
     }
 }
 

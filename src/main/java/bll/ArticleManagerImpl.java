@@ -16,7 +16,7 @@ public class ArticleManagerImpl implements ArticleManager{
 
     private ArticleDAO dao;
 
-    public ArticleManagerImpl() {
+    public ArticleManagerImpl() throws BLLException, DALException {
         dao = DAOFactory.getArticleDAO();
     }
 

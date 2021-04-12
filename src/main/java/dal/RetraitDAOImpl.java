@@ -1,6 +1,7 @@
 package dal;
 
 import bll.ArticleManagerImpl;
+import bll.BLLException;
 import bo.Article;
 import bo.Retrait;
 
@@ -16,6 +17,9 @@ public class RetraitDAOImpl implements RetraitDAO {
     private static final String sqlUpdate = "UPDATE RETRAITS set rue=?,code_postale=?,ville=? where no_article=?";
     private static final String sqlSelectById = "SELECT rue,code_postale,ville from RETRAITS where no_article = ?";
     ArticleManagerImpl articleM = new ArticleManagerImpl();
+
+    public RetraitDAOImpl() throws BLLException, DALException {
+    }
 
     @Override
     public Retrait insert(Retrait retrait) throws DALException {

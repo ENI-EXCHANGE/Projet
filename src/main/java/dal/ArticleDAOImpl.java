@@ -20,6 +20,9 @@ public class ArticleDAOImpl implements ArticleDAO{
     private UtilisateurManager usr = new UtilisateurManagerImpl();
     private CategorieManager cat = new CategorieManagerImpl();
 
+    public ArticleDAOImpl() throws BLLException, DALException {
+    }
+
     @Override
     public Article insert(Article nouvelArticle) throws DALException {
 

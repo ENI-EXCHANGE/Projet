@@ -23,6 +23,17 @@ public class Article {
         this.categorie = categorie;
     }
 
+    public Article(String nom, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+        this.nomArticle = nom;
+        this.description = description;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.dateFinEncheres = dateFinEncheres;
+        this.prixInitial = prixInitial;
+        this.prixVente = prixVente;
+        this.utilisateur = utilisateur;
+        this.categorie = categorie;
+    }
+
     public Article(int no_article, String nom, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
         this.noArticle = no_article;
         this.nomArticle = nom;
@@ -38,16 +49,6 @@ public class Article {
     public Article() {
     }
 
-    public Article(String nom, String ddesc, Date valueOf, Date valueOf1, int i, int i1, Utilisateur i2, Categorie i3) {
-        this.nomArticle = nom;
-        this.description = ddesc;
-        this.dateDebutEncheres = valueOf;
-        this.dateFinEncheres = valueOf1;
-        this.prixInitial = i;
-        this.prixVente = i1;
-        this.utilisateur = i2;
-        this.categorie = i3;
-    }
 
     @Override
     public String toString() {

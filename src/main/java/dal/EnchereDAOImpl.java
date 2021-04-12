@@ -23,6 +23,9 @@ public class EnchereDAOImpl implements EnchereDAO {
     private UtilisateurManager usr = new UtilisateurManagerImpl();
     private ArticleManager art = new ArticleManagerImpl();
 
+    public EnchereDAOImpl() throws BLLException, DALException {
+    }
+
     @Override
     public Enchere insert(Enchere enchere) throws DALException {
 
@@ -30,7 +33,7 @@ public class EnchereDAOImpl implements EnchereDAO {
             PreparedStatement stmt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, enchere.getUtilisateur().getNoUtilisateur());
             stmt.setInt(2, enchere.getArticle().getNoArticle());
-            stmt.setTimestamp(3, enchere.getDateEnchere());
+            stmt.setDate(3, enchere.getDateEnchere());
             stmt.setInt(4, enchere.getMontantEnchere());
 
             int nbRows = stmt.executeUpdate();
@@ -64,7 +67,7 @@ public class EnchereDAOImpl implements EnchereDAO {
                 // si besoin LocalDateTime
                 enchere = new Enchere(user,
                         article,
-                        rs.getTimestamp("date_enchere"), rs.getInt("montant_enchere"));
+                        rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
                 lesEncheres.add(enchere);
 
             }
@@ -95,7 +98,7 @@ public class EnchereDAOImpl implements EnchereDAO {
         try (Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlUpdate);
 
-            stmt.setTimestamp(1, enchere.getDateEnchere());
+            stmt.setDate(1, enchere.getDateEnchere());
             stmt.setInt(2, enchere.getMontantEnchere());
             stmt.setInt(3, enchere.getUtilisateur().getNoUtilisateur());
             stmt.setInt(4, enchere.getArticle().getNoArticle());
@@ -121,7 +124,7 @@ public class EnchereDAOImpl implements EnchereDAO {
             while (rs.next()) {
                 Utilisateur idUser1 = usr.selectById(idUser);
                 Article idArticle1 = art.selectById(idArticle);
-                enchere = new Enchere(idUser1,idArticle1, rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"));
+                enchere = new Enchere(idUser1,idArticle1, rs.getDate("date_enchere"),rs.getInt("montant_enchere"));
             }
 
         } catch (SQLException e) {

@@ -32,6 +32,7 @@ TODO : gérer les sessions User/admin
                 break;
 
             case "/connexion":
+
                 RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
                 rd2.forward(request, response);
                 break;

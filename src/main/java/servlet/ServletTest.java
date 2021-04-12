@@ -4,6 +4,7 @@ import bll.ArticleManagerImpl;
 import bll.BLLException;
 import bll.UtilisateurManagerImpl;
 import bo.Utilisateur;
+import dal.DALException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -17,6 +18,9 @@ public class ServletTest extends HttpServlet {
 
     UtilisateurManagerImpl userTest = new UtilisateurManagerImpl();
     ArticleManagerImpl artTest = new ArticleManagerImpl();
+
+    public ServletTest() throws BLLException, DALException {
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

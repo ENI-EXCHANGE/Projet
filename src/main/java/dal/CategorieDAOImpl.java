@@ -14,6 +14,7 @@ public class CategorieDAOImpl implements CategorieDAO {
     private static final String sqlDelete = "DELETE from CATEGORIES where no_categories=?";
     private static final String sqlUpdate = "UPDATE CATEGORIES set libelle=? where no_categories=?";
     private static final String sqlSelectById = "SELECT libelle from CATEGORIES where no_categories = ?";
+    private static final String sqlSelectByLibelle = "SELECT no_categories from CATEGORIES where libelle = ?";
 
     @Override
     public Categorie insert(Categorie categorie) throws DALException {
@@ -99,6 +100,26 @@ public class CategorieDAOImpl implements CategorieDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 laCategorie = new Categorie(id,rs.getString("libelle"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("probleme dans la sélection d'une catégorie par l'id");
+        }
+        return laCategorie;
+    }
+
+    @Override
+    public Categorie selectByLibelle(String categorie) throws DALException {
+        Categorie laCategorie = null;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+
+            PreparedStatement stmt = cnx.prepareStatement(sqlSelectByLibelle);
+            stmt.setString(1, categorie);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                laCategorie = new Categorie(rs.getInt(1),categorie);
             }
 
         } catch (SQLException e) {

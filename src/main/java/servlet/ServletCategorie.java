@@ -6,6 +6,7 @@ import bll.CategorieManagerImpl;
 import bo.Article;
 import bo.Categorie;
 import bo.Utilisateur;
+import dal.DALException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -18,6 +19,9 @@ public class ServletCategorie extends HttpServlet {
 
     CategorieManager cat = new CategorieManagerImpl();
 
+    public ServletCategorie() throws BLLException, DALException {
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,8 +30,8 @@ public class ServletCategorie extends HttpServlet {
         Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecté");
         request.setAttribute("usr",usr);
         try {
-            List<Categorie> listeCatégorie = cat.selectAll();
-            request.setAttribute("listeCategories",listeCatégorie );
+            List<Categorie> listeCategorie = cat.selectAll();
+            request.setAttribute("listeCategories",listeCategorie );
 
         } catch (Exception e) {
             e.printStackTrace();
