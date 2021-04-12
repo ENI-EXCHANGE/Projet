@@ -22,7 +22,7 @@ public class ServletArticle extends HttpServlet {
 
         try {
             Article ArticleSelectionne = art.selectById(2);
-            Categorie CategorieArticle = cat.selectById(ArticleSelectionne.getCategorire().getNoCategorie());
+            Categorie CategorieArticle = cat.selectById(ArticleSelectionne.getCategorie().getNoCategorie());
             Utilisateur UtilisateurArticle = usr.selectById(ArticleSelectionne.getUtilisateur().getNoUtilisateur());
             request.setAttribute("ArticleSelectionne",ArticleSelectionne );
             request.setAttribute("CategorieArticle", CategorieArticle);
