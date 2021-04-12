@@ -17,9 +17,17 @@
 <h1>Se connecter :</h1>
 
 <form action="<%=request.getContextPath() %>/connexion" method="POST">
-    <c:if test="${ !empty sessionScope.utilisateurConnecté.pseudo && !empty sessionScope.utilisateurConnecté.motDePasse }">
-        <p>Vous êtes ${ sessionScope.utilisateurConnecté.pseudo } !</p>
-    </c:if>
+    <%
+        Utilisateur auth = ((Utilisateur) session.getAttribute("utilisateurConnecte"));
+        if ( auth != null ){
+
+    %>
+    <a>Bienvenue, ${sessionScope.utilisateurConnecté.prenom}</a><br><br>
+    <%
+
+        }
+
+    %>
     <label for="pseudo">Identifiant :</label>
     <input type="text" id="pseudo" name="pseudo" ><br>
 
@@ -36,7 +44,7 @@
 
 </form>
 
-<form action="<%=request.getContextPath() %>/creation_compte" method="get">
+<form action="<%=request.getContextPath() %>/creationCompte" method="get">
     <input type="submit" value="Créer un compte" >
 </form>
 

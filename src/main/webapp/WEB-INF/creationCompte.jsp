@@ -17,7 +17,7 @@
 <div class="wrapper">
     <h1> Créer mon profil :</h1>
 
-    <form action="<%=request.getContextPath() %>/creation_compte" method="POST">
+    <form action="<%=request.getContextPath() %>/creationCompte" method="POST">
 
         <label for="pseudo">Pseudo :</label>
         <input type="text" id="pseudo" name="pseudo" ><br>

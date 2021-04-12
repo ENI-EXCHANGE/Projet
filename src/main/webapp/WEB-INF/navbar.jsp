@@ -1,4 +1,8 @@
-<%@ page import="bo.Utilisateur" %><%--
+<%@ page import="bo.Utilisateur" %>
+<%@ page pageEncoding="UTF-8" %>
+
+
+<%--
   Created by IntelliJ IDEA.
   User: micha
   Date: 09/04/2021
@@ -13,7 +17,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
         <%
-            Utilisateur resu = ((Utilisateur) session.getAttribute("utilisateurConnecté"));
+            Utilisateur resu = ((Utilisateur) request.getSession().getAttribute("utilisateurConnecte"));
             if ( resu != null ){
                 if( resu.getAdministrateur() ==0) {
         %>
@@ -24,7 +28,7 @@
                 <a class="nav-link" href="<%=request.getContextPath() %>/Article">Vendre un Article</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/creation_compte">Mon profil</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/creationCompte">Mon profil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
@@ -36,7 +40,7 @@
                 <a class="nav-link" href="<%=request.getContextPath() %>/Categories">Gestion des Categories</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/creation_compte">Mon profil</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/creationCompte">Mon profil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>

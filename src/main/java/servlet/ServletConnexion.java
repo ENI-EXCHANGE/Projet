@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "ServletConnexion", value = {"/connexion", "/creation_compte", "/deconnexion"})
+@WebServlet(name = "ServletConnexion", value = {"/connexion", "/creationCompte", "/deconnexion"})
 public class ServletConnexion extends HttpServlet {
 /*
 TODO : mettre en place les cookies pour se souvenir de moi
@@ -26,14 +26,24 @@ TODO : gérer les sessions User/admin
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch(request.getServletPath()) {
-            case "/creation_compte":
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/creation_compte.jsp");
+            case "/creationCompte":
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/creationCompte.jsp");
                 rd.forward(request, response);
                 break;
 
             case "/connexion":
                 RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
                 rd2.forward(request, response);
+                break;
+            case "/deconnexion":
+                HttpSession session = request.getSession(false);
+                if (session != null) {
+                    session.removeAttribute("utilisateurConnecte");
+                    String message = "Vous êtes maintenant déconnecté";
+                    request.setAttribute("message", message);
+                    RequestDispatcher rd3 = request.getRequestDispatcher("/index.jsp");
+                    rd3.forward(request, response);
+                }
                 break;
         }
 
@@ -43,7 +53,7 @@ TODO : gérer les sessions User/admin
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         switch(request.getServletPath()) {
-            case "/creation_compte":
+            case "/creationCompte":
                 try {
                     //System.out.println("dans do post");
                     String pseudo = request.getParameter("pseudo");
@@ -62,14 +72,14 @@ TODO : gérer les sessions User/admin
                     Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, admin);
                     if ( user.checkuser()==true){
                         HttpSession session = request.getSession();
-                        session.setAttribute("utilisateurConnecté", user);
+                        session.setAttribute("utilisateurConnecte", user);
                         userTest.addUser(user);
 
                         destPage = "/index.jsp";
                     }else {
                         String message = "champs vides ou incomplets, veuillez recommencer";
                         request.setAttribute("message", message);
-                        destPage = "/WEB-INF/creation_compte.jsp";
+                        destPage = "/WEB-INF/creationCompte.jsp";
                     }
 
                 } catch (BLLException e) {
@@ -84,13 +94,11 @@ TODO : gérer les sessions User/admin
                     String login = request.getParameter("pseudo");
                     String mot_de_passe = request.getParameter("mot_de_passe");
                     Utilisateur user = userTest.selectByPseudo(login);
-                    //System.out.println(user);
                     Utilisateur checkuser = userTest.checkLogin(login,mot_de_passe);
-                    //System.out.println(checkuser);
 
                     if (checkuser != null ){
                         HttpSession session = request.getSession();
-                        session.setAttribute("utilisateurConnecté", user);
+                        session.setAttribute("utilisateurConnecte", user);
                         destPage = "/index.jsp";
                     } else {
                         String message = "la connexion à votre compte a échoué, vérifiez votre login et/ou mot de passe";
@@ -109,7 +117,7 @@ TODO : gérer les sessions User/admin
             case "/deconnexion":
                 HttpSession session = request.getSession(false);
                 if (session != null) {
-                    session.removeAttribute("utilisateurConnecté");
+                    session.removeAttribute("utilisateurConnecte");
                     String message = "Vous êtes maintenant déconnecté";
                     request.setAttribute("message", message);
                     RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/index.jsp");

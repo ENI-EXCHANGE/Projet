@@ -13,7 +13,7 @@
 <div class="wrapper">
     <div class="container">
         <div class="row">
-            <form action="<%=request.getContextPath() %>/" method="POST">
+            <form method="POST">
                 <div class="form-group">
                     <label for="filtres">Filtres :</label>
                     <input type="text" class="form-control" id="filtres" name="filtres" placeholder="Le nom de l'article contient">

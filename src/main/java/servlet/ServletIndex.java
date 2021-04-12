@@ -22,16 +22,12 @@ public class ServletIndex extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            HttpSession session = request.getSession();
-            Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecté");
-            listeArticles = article.selectAll();
-            request.setAttribute("listeArticles",listeArticles );
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
 
     }
