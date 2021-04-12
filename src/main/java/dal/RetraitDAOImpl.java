@@ -1,6 +1,7 @@
 package dal;
 
-import bo.Categorie;
+import bll.ArticleManagerImpl;
+import bo.Article;
 import bo.Retrait;
 
 import java.sql.*;
@@ -14,13 +15,13 @@ public class RetraitDAOImpl implements RetraitDAO {
     private static final String sqlDelete = "DELETE from RETRAITS where no_article=?";
     private static final String sqlUpdate = "UPDATE RETRAITS set rue=?,code_postale=?,ville=? where no_article=?";
     private static final String sqlSelectById = "SELECT rue,code_postale,ville from RETRAITS where no_article = ?";
-
+    ArticleManagerImpl articleM = new ArticleManagerImpl();
 
     @Override
     public Retrait insert(Retrait retrait) throws DALException {
         try(Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, retrait.getNoArticle());
+            stmt.setInt(1, retrait.getArticle().getNoArticle());
             stmt.setString(2, retrait.getRue());
             stmt.setString(3, retrait.getCp());
             stmt.setString(4, retrait.getVille());
@@ -29,7 +30,7 @@ public class RetraitDAOImpl implements RetraitDAO {
             if (nbRows == 1) {
                 ResultSet rs = stmt.getGeneratedKeys();
                 if (rs.next()) {
-                    retrait.setNoArticle(rs.getInt(1));
+                    retrait.getArticle().setNoArticle(rs.getInt(1));
                 }
             }
 
@@ -41,15 +42,15 @@ public class RetraitDAOImpl implements RetraitDAO {
     }
 
     @Override
-    public List<Retrait> selectAll() throws DALException {
+    public List<Retrait> selectAll() throws Exception {
         List<Retrait> lesRetraits = new ArrayList<Retrait>();
         Retrait retrait = null;
         try (Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlSelectAll);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-
-                retrait = new Retrait(rs.getInt("no_article"), rs.getString("rue"),
+                Article article = articleM.selectById(rs.getInt("no_article"));
+                retrait = new Retrait(article, rs.getString("rue"),
                     rs.getString("code_postale"), rs.getString("ville"));
                 lesRetraits.add(retrait);
 
@@ -81,7 +82,7 @@ public class RetraitDAOImpl implements RetraitDAO {
             stmt.setString(1, retrait.getRue());
             stmt.setString(2, retrait.getCp());
             stmt.setString(3, retrait.getVille());
-            stmt.setInt(4,retrait.getNoArticle());
+            stmt.setInt(4,retrait.getArticle().getNoArticle());
             stmt.executeUpdate();
 
         } catch (Exception e) {
@@ -91,14 +92,15 @@ public class RetraitDAOImpl implements RetraitDAO {
     }
 
     @Override
-    public Retrait selectById(Integer id) throws DALException {
+    public Retrait selectById(Integer id) throws Exception {
         Retrait leRetrait = null;
         try(Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlSelectById);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                leRetrait = new Retrait(id, rs.getString("rue"), rs.getString("code_postale"), rs.getString("ville"));
+                Article article = articleM.selectById(id);
+                leRetrait = new Retrait(article, rs.getString("rue"), rs.getString("code_postale"), rs.getString("ville"));
             }
 
         } catch (SQLException e) {

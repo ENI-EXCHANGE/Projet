@@ -3,6 +3,7 @@ package bll;
 
 import bo.Categorie;
 import bo.Retrait;
+import dal.ArticleDAO;
 import dal.DALException;
 import dal.DAOFactory;
 import dal.RetraitDAO;
@@ -14,10 +15,11 @@ public class RetraitManagerImpl implements RetraitManager{
     private RetraitDAO retraitDao;
 
     public RetraitManagerImpl() {
+
         retraitDao = DAOFactory.getRetraitDAO();
     }
 
-    public List<Retrait> selectAll() throws BLLException {
+    public List<Retrait> selectAll() throws Exception {
 
         try {
             return retraitDao.selectAll();
@@ -26,7 +28,7 @@ public class RetraitManagerImpl implements RetraitManager{
         }
     }
 
-    public Retrait selectById(int id) throws BLLException {
+    public Retrait selectById(int id) throws Exception {
 
         try {
             return retraitDao.selectById(id);

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface RetraitManager {
 
-    public List<Retrait> selectAll() throws BLLException;
+    public List<Retrait> selectAll() throws Exception;
 
-    public Retrait selectById(int id) throws BLLException;
+    public Retrait selectById(int id) throws Exception;
 
     public void delete(int id) throws BLLException;
 

@@ -2,13 +2,13 @@ package bo;
 
 public class Retrait {
 
-    int noArticle;
+    Article article;
     String rue;
     String cp;
     String ville;
 
-    public Retrait(int noArticle, String rue, String cp, String ville) {
-        this.noArticle = noArticle;
+    public Retrait(Article article, String rue, String cp, String ville) {
+        this.article = article;
         this.rue = rue;
         this.cp = cp;
         this.ville = ville;
@@ -17,12 +17,12 @@ public class Retrait {
     public Retrait() {
     }
 
-    public int getNoArticle() {
-        return noArticle;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setNoArticle(int noArticle) {
-        this.noArticle = noArticle;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public String getRue() {
@@ -52,7 +52,7 @@ public class Retrait {
     @Override
     public String toString() {
         return "Retrait{" +
-                "noArticle=" + noArticle +
+                "noArticle=" + article +
                 ", rue='" + rue + '\'' +
                 ", cp='" + cp + '\'' +
                 ", ville='" + ville + '\'' +
