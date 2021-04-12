@@ -11,19 +11,19 @@ public class Article {
         Date date_fin_encheres ;
         int prix_initial ;
         int prix_vente ;
-        int no_utilisateur ;
-        int no_categorire ;
+        Utilisateur utilisateur ;
+        Categorie categorire ;
 
-    public Article(String nom_article, String description, Date date_debut_encheres, int prix_initial, int no_utilisateur, int no_categorire) {
+    public Article(String nom_article, String description, Date date_debut_encheres, int prix_initial, Utilisateur utilisateur, Categorie categorire) {
         this.nom_article = nom_article;
         this.description = description;
         this.date_debut_encheres = date_debut_encheres;
         this.prix_initial = prix_initial;
-        this.no_utilisateur = no_utilisateur;
-        this.no_categorire = no_categorire;
+        this.utilisateur = utilisateur;
+        this.categorire = categorire;
     }
 
-    public Article(int no_article, String nom_article, String description, Date date_debut_encheres, Date date_fin_encheres, int prix_initial, int prix_vente, int no_utilisateur, int no_categorire) {
+    public Article(int no_article, String nom_article, String description, Date date_debut_encheres, Date date_fin_encheres, int prix_initial, int prix_vente, Utilisateur utilisateur, Categorie categorire) {
         this.no_article = no_article;
         this.nom_article = nom_article;
         this.description = description;
@@ -31,22 +31,22 @@ public class Article {
         this.date_fin_encheres = date_fin_encheres;
         this.prix_initial = prix_initial;
         this.prix_vente = prix_vente;
-        this.no_utilisateur = no_utilisateur;
-        this.no_categorire = no_categorire;
+        this.utilisateur = utilisateur;
+        this.categorire = categorire;
     }
 
     public Article() {
     }
 
-    public Article(String nom, String ddesc, Date valueOf, Date valueOf1, int i, int i1, int i2, int i3) {
+    public Article(String nom, String ddesc, Date valueOf, Date valueOf1, int i, int i1, Utilisateur i2, Categorie i3) {
         this.nom_article = nom;
         this.description = ddesc;
         this.date_debut_encheres = valueOf;
         this.date_fin_encheres = valueOf1;
         this.prix_initial = i;
         this.prix_vente = i1;
-        this.no_utilisateur = i2;
-        this.no_categorire = i3;
+        this.utilisateur = i2;
+        this.categorire = i3;
     }
 
     @Override
@@ -59,15 +59,12 @@ public class Article {
                 ", date_fin_encheres=" + date_fin_encheres +
                 ", prix_initial=" + prix_initial +
                 ", prix_vente=" + prix_vente +
-                ", no_utilisateur=" + no_utilisateur +
-                ", no_categorire=" + no_categorire +
+                ", no_utilisateur=" + utilisateur +
+                ", no_categorire=" + categorire +
                 '}';
     }
 
     public int getNo_article(){return this.no_article; }
-    public int getNo_article(int anInt) {
-        return no_article;
-    }
 
     public void setNo_article(int no_article) {
         this.no_article = no_article;
@@ -121,19 +118,19 @@ public class Article {
         this.prix_vente = prix_vente;
     }
 
-    public int getNo_utilisateur() {
-        return no_utilisateur;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
-    public void setNo_utilisateur(int no_utilisateur) {
-        this.no_utilisateur = no_utilisateur;
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
-    public int getNo_categorire() {
-        return no_categorire;
+    public Categorie getCategorire() {
+        return categorire;
     }
 
-    public void setNo_categorire(int no_categorire) {
-        this.no_categorire = no_categorire;
+    public void setCategorire(Categorie categorire) {
+        this.categorire = categorire;
     }
 }

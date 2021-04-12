@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Création d'Enchère</title>*
+    <title>Création d'Enchère</title>
     <%@include file="/head.html" %>
 
 </head>

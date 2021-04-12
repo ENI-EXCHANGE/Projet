@@ -1,8 +1,10 @@
 package dal;
 
+import bll.*;
 import bo.Article;
 import bo.Categorie;
 import bo.Retrait;
+import bo.Utilisateur;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,12 +13,13 @@ import java.util.List;
 public class ArticleDAOImpl implements ArticleDAO{
 
 
-    private static final String sqlInsert ="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?)";
+    private static final String sqlInsert ="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
     private static final String sqlSelectAll ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS";
     private static final String sqlSelectById ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article=?";
     private static final String sqlDelete = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?" ;
     private static final String sqlUpdate = "UPDATE ARTICLES_VENDUS SET nom_article=?,description=?,date_debut_encheres=?,date_fin_encheres=?,prix_initial=?,prix_vente=?,no_utilisateur=?, no_categorie=? WHERE no_article=?";
-
+    private UtilisateurManager usr = new UtilisateurManagerImpl();
+    private CategorieManager cat = new CategorieManagerImpl();
 
     @Override
     public Article insert(Article nouvelArticle) throws DALException {
@@ -30,14 +33,14 @@ public class ArticleDAOImpl implements ArticleDAO{
             pStmtArticle.setDate(4, nouvelArticle.getDate_fin_encheres());
             pStmtArticle.setInt(5, nouvelArticle.getPrix_initial());
             pStmtArticle.setInt(6, nouvelArticle.getPrix_vente());
-            pStmtArticle.setInt(7, nouvelArticle.getNo_utilisateur());
-            pStmtArticle.setInt(8, nouvelArticle.getNo_categorire());
+            pStmtArticle.setInt(7, nouvelArticle.getUtilisateur().getNoUtilisateur());
+            pStmtArticle.setInt(8, nouvelArticle.getCategorire().getNoCategorie());
 
             pStmtArticle.executeUpdate();
 
             ResultSet rsArticle = pStmtArticle.getGeneratedKeys();
             if(rsArticle.next()) {
-                nouvelArticle.getNo_article(rsArticle.getInt(1));
+                nouvelArticle.setNo_article(rsArticle.getInt(1));
             }
 
         } catch (SQLException e) {
@@ -56,10 +59,12 @@ public class ArticleDAOImpl implements ArticleDAO{
             PreparedStatement stmt = cnx.prepareStatement(sqlSelectAll);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"),rs.getInt("no_categorie"));
+                Utilisateur user = usr.selectById(rs.getInt("no_utilisateur"));
+                Categorie cate = cat.selectById(rs.getInt("no_categorie"));
+                art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), user,cate);
                 liste.add(art);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | BLLException e) {
             e.printStackTrace();
             throw new DALException("impossible de récuperer la liste des articles");
         }
@@ -74,10 +79,12 @@ public class ArticleDAOImpl implements ArticleDAO{
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
-                art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"),rs.getInt("no_categorie"));
+                Utilisateur user = usr.selectById(rs.getInt("no_utilisateur"));
+                Categorie cate = cat.selectById(rs.getInt("no_categorie"));
+                art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), user,cate);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | BLLException e) {
             e.printStackTrace();
             throw new DALException("probleme dans la sélection d'un retrait par l'id");
         }
@@ -107,8 +114,8 @@ public class ArticleDAOImpl implements ArticleDAO{
             stmt.setDate(4, art.getDate_fin_encheres());
             stmt.setInt(5, art.getPrix_initial());
             stmt.setInt(6, art.getPrix_vente());
-            stmt.setInt(7, art.getNo_utilisateur());
-            stmt.setInt(8, art.getNo_categorire());
+            stmt.setInt(7, art.getUtilisateur().getNoUtilisateur());
+            stmt.setInt(8, art.getCategorire().getNoCategorie());
             stmt.setInt(9, art.getNo_article());
             stmt.executeUpdate();
 
