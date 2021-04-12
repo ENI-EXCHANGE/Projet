@@ -4,33 +4,33 @@ import java.sql.Date;
 
 public class Article {
 
-        int no_article;
-        String nom_article;
+        int noArticle;
+        String nomArticle;
         String description ;
-        Date date_debut_encheres ;
-        Date date_fin_encheres ;
-        int prix_initial ;
-        int prix_vente ;
+        Date dateDebutEncheres;
+        Date dateFinEncheres;
+        int prixInitial;
+        int prixVente;
         Utilisateur utilisateur ;
         Categorie categorire ;
 
     public Article(String nom_article, String description, Date date_debut_encheres, int prix_initial, Utilisateur utilisateur, Categorie categorire) {
-        this.nom_article = nom_article;
+        this.nomArticle = nom_article;
         this.description = description;
-        this.date_debut_encheres = date_debut_encheres;
-        this.prix_initial = prix_initial;
+        this.dateDebutEncheres = date_debut_encheres;
+        this.prixInitial = prix_initial;
         this.utilisateur = utilisateur;
         this.categorire = categorire;
     }
 
     public Article(int no_article, String nom_article, String description, Date date_debut_encheres, Date date_fin_encheres, int prix_initial, int prix_vente, Utilisateur utilisateur, Categorie categorire) {
-        this.no_article = no_article;
-        this.nom_article = nom_article;
+        this.noArticle = no_article;
+        this.nomArticle = nom_article;
         this.description = description;
-        this.date_debut_encheres = date_debut_encheres;
-        this.date_fin_encheres = date_fin_encheres;
-        this.prix_initial = prix_initial;
-        this.prix_vente = prix_vente;
+        this.dateDebutEncheres = date_debut_encheres;
+        this.dateFinEncheres = date_fin_encheres;
+        this.prixInitial = prix_initial;
+        this.prixVente = prix_vente;
         this.utilisateur = utilisateur;
         this.categorire = categorire;
     }
@@ -39,12 +39,12 @@ public class Article {
     }
 
     public Article(String nom, String ddesc, Date valueOf, Date valueOf1, int i, int i1, Utilisateur i2, Categorie i3) {
-        this.nom_article = nom;
+        this.nomArticle = nom;
         this.description = ddesc;
-        this.date_debut_encheres = valueOf;
-        this.date_fin_encheres = valueOf1;
-        this.prix_initial = i;
-        this.prix_vente = i1;
+        this.dateDebutEncheres = valueOf;
+        this.dateFinEncheres = valueOf1;
+        this.prixInitial = i;
+        this.prixVente = i1;
         this.utilisateur = i2;
         this.categorire = i3;
     }
@@ -52,30 +52,30 @@ public class Article {
     @Override
     public String toString() {
         return "Article{" +
-                "no_article=" + no_article +
-                ", nom_article='" + nom_article + '\'' +
+                "no_article=" + noArticle +
+                ", nom_article='" + nomArticle + '\'' +
                 ", description='" + description + '\'' +
-                ", date_debut_encheres=" + date_debut_encheres +
-                ", date_fin_encheres=" + date_fin_encheres +
-                ", prix_initial=" + prix_initial +
-                ", prix_vente=" + prix_vente +
+                ", date_debut_encheres=" + dateDebutEncheres +
+                ", date_fin_encheres=" + dateFinEncheres +
+                ", prix_initial=" + prixInitial +
+                ", prix_vente=" + prixVente +
                 ", no_utilisateur=" + utilisateur +
                 ", no_categorire=" + categorire +
                 '}';
     }
 
-    public int getNo_article(){return this.no_article; }
+    public int getNoArticle(){return this.noArticle; }
 
-    public void setNo_article(int no_article) {
-        this.no_article = no_article;
+    public void setNoArticle(int noArticle) {
+        this.noArticle = noArticle;
     }
 
-    public String getNom_article() {
-        return nom_article;
+    public String getNomArticle() {
+        return nomArticle;
     }
 
-    public void setNom_article(String nom_article) {
-        this.nom_article = nom_article;
+    public void setNomArticle(String nomArticle) {
+        this.nomArticle = nomArticle;
     }
 
     public String getDescription() {
@@ -86,36 +86,36 @@ public class Article {
         this.description = description;
     }
 
-    public Date getDate_debut_encheres() {
-        return date_debut_encheres;
+    public Date getDateDebutEncheres() {
+        return dateDebutEncheres;
     }
 
-    public void setDate_debut_encheres(Date date_debut_encheres) {
-        this.date_debut_encheres = date_debut_encheres;
+    public void setDateDebutEncheres(Date dateDebutEncheres) {
+        this.dateDebutEncheres = dateDebutEncheres;
     }
 
-    public Date getDate_fin_encheres() {
-        return date_fin_encheres;
+    public Date getDateFinEncheres() {
+        return dateFinEncheres;
     }
 
-    public void setDate_fin_encheres(Date date_fin_encheres) {
-        this.date_fin_encheres = date_fin_encheres;
+    public void setDateFinEncheres(Date dateFinEncheres) {
+        this.dateFinEncheres = dateFinEncheres;
     }
 
-    public int getPrix_initial() {
-        return prix_initial;
+    public int getPrixInitial() {
+        return prixInitial;
     }
 
-    public void setPrix_initial(int prix_initial) {
-        this.prix_initial = prix_initial;
+    public void setPrixInitial(int prixInitial) {
+        this.prixInitial = prixInitial;
     }
 
-    public int getPrix_vente() {
-        return prix_vente;
+    public int getPrixVente() {
+        return prixVente;
     }
 
-    public void setPrix_vente(int prix_vente) {
-        this.prix_vente = prix_vente;
+    public void setPrixVente(int prixVente) {
+        this.prixVente = prixVente;
     }
 
     public Utilisateur getUtilisateur() {

@@ -9,7 +9,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "ServletArticle", value = "/Article")
 public class ServletArticle extends HttpServlet {
@@ -24,7 +23,7 @@ public class ServletArticle extends HttpServlet {
         try {
             Article ArticleSelectionne = art.selectById(2);
             Categorie CategorieArticle = cat.selectById(ArticleSelectionne.getCategorire().getNoCategorie());
-            Utilisateur UtilisateurArticle = usr.selectById(ArticleSelectionne.getNo_article());
+            Utilisateur UtilisateurArticle = usr.selectById(ArticleSelectionne.getUtilisateur().getNoUtilisateur());
             request.setAttribute("ArticleSelectionne",ArticleSelectionne );
             request.setAttribute("CategorieArticle", CategorieArticle);
             request.setAttribute("UtilisateurArticle", UtilisateurArticle);

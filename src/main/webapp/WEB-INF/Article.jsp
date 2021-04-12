@@ -27,16 +27,16 @@
         <%
         } else {
         %>
-        <h1>Fiche de l'article : <%= ArticleSelectionne.getNom_article() %></h1>
+        <h1>Fiche de l'article : <%= ArticleSelectionne.getNomArticle() %></h1>
         <ul class="list-group">
 
-            <li type="hidden" class="list-group-item">Numéro d'identification de l'article <%= ArticleSelectionne.getNo_article() %></li>
-            <li class="list-group-item">Nom : <%= ArticleSelectionne.getNom_article() %></li>
+            <li type="hidden" class="list-group-item">Numéro d'identification de l'article <%= ArticleSelectionne.getNoArticle() %></li>
+            <li class="list-group-item">Nom : <%= ArticleSelectionne.getNomArticle() %></li>
             <li class="list-group-item">Description : <%= ArticleSelectionne.getDescription() %></li>
-            <li class="list-group-item">Date de mise aux enchères : <%= ArticleSelectionne.getDate_debut_encheres() %></li>
-            <li class="list-group-item">Date de fin de l'enchère : <%= ArticleSelectionne.getDate_fin_encheres() %></li>
-            <li class="list-group-item">Prix de départ : <%= ArticleSelectionne.getPrix_initial() %></li>
-            <li class="list-group-item">Prix : <%= ArticleSelectionne.getPrix_vente() %></li>
+            <li class="list-group-item">Date de mise aux enchères : <%= ArticleSelectionne.getDateDebutEncheres() %></li>
+            <li class="list-group-item">Date de fin de l'enchère : <%= ArticleSelectionne.getDateFinEncheres() %></li>
+            <li class="list-group-item">Prix de départ : <%= ArticleSelectionne.getPrixInitial() %></li>
+            <li class="list-group-item">Prix : <%= ArticleSelectionne.getPrixVente() %></li>
             <li class="list-group-item">Catégorie : <%= CategorieArticle.getLibelle() %></li>
             <li class="list-group-item">Vendeur : <a href="<%=request.getContextPath() %>/Compte?pseudo=<%= UtilisateurArticle.getPseudo() %>"> <%= UtilisateurArticle.getPseudo() %></a></li>
 

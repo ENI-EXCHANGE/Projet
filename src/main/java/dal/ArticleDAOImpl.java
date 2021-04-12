@@ -3,7 +3,6 @@ package dal;
 import bll.*;
 import bo.Article;
 import bo.Categorie;
-import bo.Retrait;
 import bo.Utilisateur;
 
 import java.sql.*;
@@ -27,12 +26,12 @@ public class ArticleDAOImpl implements ArticleDAO{
         try(Connection cnx = ConnectionProvider.getConnection()) {
 
             PreparedStatement pStmtArticle = cnx.prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
-            pStmtArticle.setString(1, nouvelArticle.getNom_article());
+            pStmtArticle.setString(1, nouvelArticle.getNomArticle());
             pStmtArticle.setString(2, nouvelArticle.getDescription());
-            pStmtArticle.setDate(3, nouvelArticle.getDate_debut_encheres());
-            pStmtArticle.setDate(4, nouvelArticle.getDate_fin_encheres());
-            pStmtArticle.setInt(5, nouvelArticle.getPrix_initial());
-            pStmtArticle.setInt(6, nouvelArticle.getPrix_vente());
+            pStmtArticle.setDate(3, nouvelArticle.getDateDebutEncheres());
+            pStmtArticle.setDate(4, nouvelArticle.getDateFinEncheres());
+            pStmtArticle.setInt(5, nouvelArticle.getPrixInitial());
+            pStmtArticle.setInt(6, nouvelArticle.getPrixVente());
             pStmtArticle.setInt(7, nouvelArticle.getUtilisateur().getNoUtilisateur());
             pStmtArticle.setInt(8, nouvelArticle.getCategorire().getNoCategorie());
 
@@ -40,7 +39,7 @@ public class ArticleDAOImpl implements ArticleDAO{
 
             ResultSet rsArticle = pStmtArticle.getGeneratedKeys();
             if(rsArticle.next()) {
-                nouvelArticle.setNo_article(rsArticle.getInt(1));
+                nouvelArticle.setNoArticle(rsArticle.getInt(1));
             }
 
         } catch (SQLException e) {
@@ -108,15 +107,15 @@ public class ArticleDAOImpl implements ArticleDAO{
     public void update(Article art) throws DALException {
         try (Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlUpdate);
-            stmt.setString(1, art.getNom_article());
+            stmt.setString(1, art.getNomArticle());
             stmt.setString(2, art.getDescription());
-            stmt.setDate(3, art.getDate_debut_encheres());
-            stmt.setDate(4, art.getDate_fin_encheres());
-            stmt.setInt(5, art.getPrix_initial());
-            stmt.setInt(6, art.getPrix_vente());
+            stmt.setDate(3, art.getDateDebutEncheres());
+            stmt.setDate(4, art.getDateFinEncheres());
+            stmt.setInt(5, art.getPrixInitial());
+            stmt.setInt(6, art.getPrixVente());
             stmt.setInt(7, art.getUtilisateur().getNoUtilisateur());
             stmt.setInt(8, art.getCategorire().getNoCategorie());
-            stmt.setInt(9, art.getNo_article());
+            stmt.setInt(9, art.getNoArticle());
             stmt.executeUpdate();
 
         } catch (Exception e) {

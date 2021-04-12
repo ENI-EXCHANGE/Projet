@@ -37,10 +37,10 @@
             <div class="card" style="width: 18rem;">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title"><% article.getNom_article();%></h5>
+                    <h5 class="card-title"><% article.getNomArticle();%></h5>
                     <p class="card-text"><% article.getDescription();%></p>
-                    <p class="card-text">Prix : <% article.getPrix_vente();%></p>
-                    <p class="card-text">Fin de l'enchère : <% article.getDate_fin_encheres();%></p>
+                    <p class="card-text">Prix : <% article.getPrixVente();%></p>
+                    <p class="card-text">Fin de l'enchère : <% article.getDateFinEncheres();%></p>
                     <p class="card-text">Vendeur : <% %>></p>
                     <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
