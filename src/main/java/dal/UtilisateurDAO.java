@@ -18,4 +18,6 @@ public interface UtilisateurDAO {
 
     public Utilisateur selectByPseudo(String pseudo) throws DALException;
 
+    public Utilisateur checkLogin(String pseudo, String mdp) ;
+
 }

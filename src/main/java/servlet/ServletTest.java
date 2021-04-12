@@ -3,20 +3,15 @@ package servlet;
 import bll.ArticleManagerImpl;
 import bll.BLLException;
 import bll.UtilisateurManagerImpl;
-import bo.Article;
 import bo.Utilisateur;
-import dal.DALException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
-@WebServlet(name = "ServletTest", value = "/accueil")
+@WebServlet(name = "ServletTest", value = "/test")
 
 public class ServletTest extends HttpServlet {
 
@@ -25,7 +20,7 @@ public class ServletTest extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+/*
 
         try {
             List<Utilisateur> lesUtilisateurs = userTest.getListUsers();
@@ -34,15 +29,15 @@ public class ServletTest extends HttpServlet {
         } catch (BLLException e) {
             e.printStackTrace();
         }
+*/
 
-
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/.jsp");
         rd.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
+       /* try {
             System.out.println("dans do post");
             String pseudo = request.getParameter("pseudo");
             String nom =  request.getParameter("nom");
@@ -61,9 +56,9 @@ public class ServletTest extends HttpServlet {
 
         } catch (BLLException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/.jsp");
         rd.forward(request, response);
 
     }

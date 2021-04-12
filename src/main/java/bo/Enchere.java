@@ -6,60 +6,61 @@ import java.sql.Date;
 
 public class Enchere {
 
-    private int no_utilisateur;
-    private int no_article;
-    private Timestamp date_enchere;
-    private int montant_enchere;
+    private Utilisateur utilisateur;
+    private Article article;
+    private Timestamp dateEnchere;
+    private int montantEnchere;
 
     public Enchere(){
 
     }
-    public Enchere(int no_utilisateur, int no_article, Timestamp date_enchere, int montant_enchere) {
-        this.no_utilisateur = no_utilisateur;
-        this.no_article = no_article;
-        this.date_enchere = date_enchere;
-        this.montant_enchere = montant_enchere;
+
+    public Enchere(Utilisateur utilisateur, Article article, Timestamp dateEnchere, int montantEnchere) {
+        this.utilisateur = utilisateur;
+        this.article = article;
+        this.dateEnchere = dateEnchere;
+        this.montantEnchere = montantEnchere;
     }
 
-    public int getNo_utilisateur() {
-        return no_utilisateur;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
-    public void setNo_utilisateur(int no_utilisateur) {
-        this.no_utilisateur = no_utilisateur;
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
-    public int getNo_article() {
-        return no_article;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setNo_article(int no_article) {
-        this.no_article = no_article;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
-    public Timestamp getDate_enchere() {
-        return date_enchere;
+    public Timestamp getDateEnchere() {
+        return dateEnchere;
     }
 
-    public void setDate_enchere(Timestamp date_enchere) {
-        this.date_enchere = date_enchere;
+    public void setDateEnchere(Timestamp dateEnchere) {
+        this.dateEnchere = dateEnchere;
     }
 
-    public int getMontant_enchere() {
-        return montant_enchere;
+    public int getMontantEnchere() {
+        return montantEnchere;
     }
 
-    public void setMontant_enchere(int montant_enchere) {
-        this.montant_enchere = montant_enchere;
+    public void setMontantEnchere(int montantEnchere) {
+        this.montantEnchere = montantEnchere;
     }
 
     @Override
     public String toString() {
         return "Enchere{" +
-                "no_utilisateur=" + no_utilisateur +
-                ", no_article=" + no_article +
-                ", date_enchere=" + date_enchere +
-                ", montant_enchere=" + montant_enchere +
+                "utilisateur=" + utilisateur +
+                ", article=" + article +
+                ", dateEnchere=" + dateEnchere +
+                ", montantEnchere=" + montantEnchere +
                 '}';
     }
 }

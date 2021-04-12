@@ -25,7 +25,7 @@
 
     <label for="mdp">Mot de passe :</label>
     <input type="text" id="mdp" name="mot_de_passe" ><br>
-
+    <a> ${message} </a> <br><br>
     <input type="submit" value="Connexion"  ><br>
 
     <input type="checkbox" id="keepConnected" value="Connexion">
@@ -36,10 +36,14 @@
 
 </form>
 
-<form action="<%=request.getContextPath() %>/profil" method="POST">
+<form action="<%=request.getContextPath() %>/creation_compte" method="get">
     <input type="submit" value="Créer un compte" >
 </form>
-</div>
 
+<form action="<%=request.getContextPath() %>/deconnexion" method="post">
+    <input type="submit" value="se déconnecter" >
+</form>
+
+</div>
 </body>
 </html>

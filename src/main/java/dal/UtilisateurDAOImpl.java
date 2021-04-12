@@ -13,7 +13,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String SELECBYID = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateurs = ? ";
     private static final String SELECTALL = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
     private static final String SELECBYPSEUDO = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? ";
-
+    private static final String CHECKUSER = "SELECT * FROM UTILISATEURS WHERE pseudo=? and mot_de_passe=?";
     public UtilisateurDAOImpl(){
 
     }
@@ -161,6 +161,28 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             e.printStackTrace();
             throw new DALException("impossible de récupérer l'utilisateur par le pseudo");
         }
+        return user;
+    }
+
+    @Override
+    public Utilisateur checkLogin(String login, String mdp) {
+        Utilisateur user = null;
+        try(Connection cnx = ConnectionProvider.getConnection()){
+            PreparedStatement stmt = cnx.prepareStatement(CHECKUSER);
+            //stmt.setString(1, login);
+            stmt.setString(1, login);
+            stmt.setString(2, mdp);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
+                user = new Utilisateur(rs.getString("pseudo"),
+                        rs.getString("mot_de_passe"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
         return user;
     }
 }

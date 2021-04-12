@@ -5,7 +5,6 @@
   Time: 11:03
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="<%=request.getContextPath()%>/">Encheres</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -25,7 +24,7 @@
                 <a class="nav-link" href="<%=request.getContextPath() %>/Article">Vendre un Article</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/profil">Mon profil</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/creation_compte">Mon profil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
@@ -37,7 +36,7 @@
                 <a class="nav-link" href="<%=request.getContextPath() %>/Categories">Gestion des Categories</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/profil">Mon profil</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/creation_compte">Mon profil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>

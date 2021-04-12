@@ -1,6 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="bo.Article" %>
 <%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +9,11 @@
 </head>
 <body>
 <%@include file="/WEB-INF/navbar.jsp" %>
+
 <div class="wrapper">
     <div class="container">
         <div class="row">
-            <form method="post">
+            <form action="<%=request.getContextPath() %>/" method="POST">
                 <div class="form-group">
                     <label for="filtres">Filtres :</label>
                     <input type="text" class="form-control" id="filtres" name="filtres" placeholder="Le nom de l'article contient">
@@ -27,11 +28,16 @@
             </form>
         </div>
 
-        <div class="row">
-           <% List<Article> listeArticles = (List<Article>) request.getAttribute("liste");
+        <div class="wrapper">
+           <%
+               List<Article> listeArticles = (List<Article>) request.getAttribute("listeArticles");
                if(listeArticles == null || listeArticles.isEmpty()) {
+           %>
+            <p>Aucune Catégories pour l'instant</p>
+
+            <%
                } else {
-               %>
+            %>
 
             <%for(Article article : listeArticles) { %>
             <div class="card" style="width: 18rem;">

@@ -1,15 +1,16 @@
 package bll;
 
+import bo.Article;
 import bo.Enchere;
-import dal.DALException;
-import dal.DAOFactory;
-import dal.EnchereDAO;
+import bo.Utilisateur;
+import dal.*;
 
 import java.util.List;
 
 public class EnchereManagerImpl implements EnchereManager {
 
     private final EnchereDAO enchereDAO ;
+
 
     public EnchereManagerImpl(){ enchereDAO= DAOFactory.getEnchereDAO(); }
 
@@ -24,7 +25,7 @@ public class EnchereManagerImpl implements EnchereManager {
     }
 
     @Override
-    public List<Enchere> selectAll() throws BLLException {
+    public List<Enchere> selectAll() throws Exception {
         List<Enchere> lesEncheres = null;
         try {
             lesEncheres = enchereDAO.selectAll();
@@ -35,23 +36,24 @@ public class EnchereManagerImpl implements EnchereManager {
     }
 
     @Override
-    public Enchere selectById(Integer noUtilisateurs, Integer noArticle) throws BLLException {
+    public Enchere selectById(int idUser, int idArticle) throws Exception {
 
         try {
-            return enchereDAO.selectById(noUtilisateurs,noArticle);
+
+            return enchereDAO.selectById(idUser, idArticle);
         } catch (DALException e) {
-            throw new BLLException("Erreur lors du selectById enchere dans BLL");
+            throw new BLLException("Erreur lors du selectById enchere dans BLL :" +idUser +" et " + idArticle);
         }
 
     }
 
     @Override
-    public void delete(Integer noUtilisateurs, Integer noArticle) throws BLLException {
+    public void delete(int idUser, int idArticle) throws BLLException {
         try {
-            enchereDAO.delete(noUtilisateurs,noArticle);
+            enchereDAO.delete(idUser, idArticle);
         } catch (DALException e) {
             e.printStackTrace();
-            throw new BLLException("Erreur lors du delete retrait dans BLL");
+            throw new BLLException("Erreur lors du delete retrait dans BLL:" +idUser +" et " + idArticle);
         }
     }
 

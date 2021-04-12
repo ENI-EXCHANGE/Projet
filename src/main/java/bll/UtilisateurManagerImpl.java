@@ -50,7 +50,7 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
     }
 
     @Override
-    public Utilisateur selectByPseudo(String pseudo) throws BLLException, DALException {
+    public Utilisateur selectByPseudo(String pseudo) throws DALException {
         return dao.selectByPseudo(pseudo);
     }
 
@@ -71,5 +71,10 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
         } catch (DALException e) {
             throw new BLLException("Echec de la suppression de l'utilisateur - ");
         }
+    }
+
+    @Override
+    public Utilisateur checkLogin(String pseudo, String mdp)  {
+        return dao.checkLogin(pseudo, mdp);
     }
 }

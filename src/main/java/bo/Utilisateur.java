@@ -15,30 +15,12 @@ public class Utilisateur {
     private Integer credit;
     private int administrateur;
 
-    /**
-     * vérifie si l'adresse email est correcte
-     */
-    public void validationEmail( String email ) throws Exception {
-        if ( email != null && !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
-            throw new Exception( "Merci de saisir une adresse mail valide." );
-        }
+
+    public boolean checkuser(){
+       /*TODO : verifier le pseudo unique, format email, tel, cp, ect..
+        */
+        return true;
     }
-
-    /**
-     * vérifie si le mot de passe saisi et correct.
-     */
-    public void validationMotDePasse( String motDePasse ) throws Exception {
-        if ( motDePasse != null ) {
-            if ( motDePasse.length() < 3 ) {
-                throw new Exception( "Le mot de passe doit contenir au moins 3 caractères." );
-            }
-        } else {
-            throw new Exception( "Merci de saisir votre mot de passe." );
-        }
-    }
-
-
-
     public Utilisateur() {   }
 
     public Utilisateur(Integer noUtilisateur, String pseudo,
@@ -58,10 +40,12 @@ public class Utilisateur {
         this.administrateur = administrateur;
     }
 
-    public Utilisateur(String pseudo, String motDePasse) {
-        this.pseudo = pseudo;
+    public Utilisateur(String login, String motDePasse) {
+        this.pseudo = login;
+        //this.email = login;
         this.motDePasse = motDePasse;
     }
+
 
     public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) {
         this.pseudo = pseudo;
