@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% Utilisateur ProfilSelectionne = (Utilisateur) request.getAttribute("ProfilSelectionne"); %>
+<%
+    Utilisateur ProfilSelectionne = (Utilisateur) request.getAttribute("ProfilSelectionne");
+%>
 <html>
 <head>
     <title><%= ProfilSelectionne.getPseudo() %></title>

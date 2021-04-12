@@ -18,8 +18,15 @@ public class ServletCompte extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
-            Utilisateur UtilisateurArticle = usr.selectByPseudo(request.getParameter("pseudo"));
-            request.setAttribute("ProfilSelectionne", UtilisateurArticle);
+            if (request.getParameter("pseudo") != null){
+                Utilisateur UtilisateurArticle = usr.selectByPseudo(request.getParameter("pseudo"));
+                request.setAttribute("ProfilSelectionne", UtilisateurArticle);
+            }else{
+                HttpSession session = request.getSession();
+                Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecte");
+                request.setAttribute("ProfilSelectionne", usr);
+            }
+
         } catch (Exception e){
             e.printStackTrace();
         }

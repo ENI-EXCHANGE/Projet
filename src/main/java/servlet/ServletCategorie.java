@@ -27,7 +27,7 @@ public class ServletCategorie extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecté");
+        Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecte");
         request.setAttribute("usr",usr);
         try {
             List<Categorie> listeCategorie = cat.selectAll();

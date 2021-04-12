@@ -1,7 +1,5 @@
 <%@ page import="bo.Utilisateur" %>
 <%@ page pageEncoding="UTF-8" %>
-
-
 <%--
   Created by IntelliJ IDEA.
   User: micha
@@ -25,10 +23,10 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/">Enchères</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath() %>/Article">Vendre un Article</a>
+                <a class="nav-link" href="<%=request.getContextPath() %>/CreerEnchere">Vendre un Article</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/creationCompte">Mon profil</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/Compte">Mon profil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
@@ -40,7 +38,7 @@
                 <a class="nav-link" href="<%=request.getContextPath() %>/Categories">Gestion des Categories</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/creationCompte">Mon profil</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/Compte">Mon profil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
