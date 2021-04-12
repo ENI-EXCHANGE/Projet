@@ -12,27 +12,27 @@ public class Article {
         int prixInitial;
         int prixVente;
         Utilisateur utilisateur ;
-        Categorie categorire ;
+        Categorie categorie;
 
-    public Article(String nom_article, String description, Date date_debut_encheres, int prix_initial, Utilisateur utilisateur, Categorie categorire) {
-        this.nomArticle = nom_article;
+    public Article(String nom, String description, Date dateDebutEncheres, int prixInitial, Utilisateur utilisateur, Categorie categorie) {
+        this.nomArticle = nom;
         this.description = description;
-        this.dateDebutEncheres = date_debut_encheres;
-        this.prixInitial = prix_initial;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.prixInitial = prixInitial;
         this.utilisateur = utilisateur;
-        this.categorire = categorire;
+        this.categorie = categorie;
     }
 
-    public Article(int no_article, String nom_article, String description, Date date_debut_encheres, Date date_fin_encheres, int prix_initial, int prix_vente, Utilisateur utilisateur, Categorie categorire) {
+    public Article(int no_article, String nom, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
         this.noArticle = no_article;
-        this.nomArticle = nom_article;
+        this.nomArticle = nom;
         this.description = description;
-        this.dateDebutEncheres = date_debut_encheres;
-        this.dateFinEncheres = date_fin_encheres;
-        this.prixInitial = prix_initial;
-        this.prixVente = prix_vente;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.dateFinEncheres = dateFinEncheres;
+        this.prixInitial = prixInitial;
+        this.prixVente = prixVente;
         this.utilisateur = utilisateur;
-        this.categorire = categorire;
+        this.categorie = categorie;
     }
 
     public Article() {
@@ -46,7 +46,7 @@ public class Article {
         this.prixInitial = i;
         this.prixVente = i1;
         this.utilisateur = i2;
-        this.categorire = i3;
+        this.categorie = i3;
     }
 
     @Override
@@ -59,8 +59,8 @@ public class Article {
                 ", date_fin_encheres=" + dateFinEncheres +
                 ", prix_initial=" + prixInitial +
                 ", prix_vente=" + prixVente +
-                ", no_utilisateur=" + utilisateur +
-                ", no_categorire=" + categorire +
+                ", Utilisateur=" + utilisateur +
+                ", Categorie=" + categorie +
                 '}';
     }
 
@@ -126,11 +126,11 @@ public class Article {
         this.utilisateur = utilisateur;
     }
 
-    public Categorie getCategorire() {
-        return categorire;
+    public Categorie getCategorie() {
+        return categorie;
     }
 
-    public void setCategorire(Categorie categorire) {
-        this.categorire = categorire;
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
     }
 }

@@ -33,7 +33,7 @@ public class ArticleDAOImpl implements ArticleDAO{
             pStmtArticle.setInt(5, nouvelArticle.getPrixInitial());
             pStmtArticle.setInt(6, nouvelArticle.getPrixVente());
             pStmtArticle.setInt(7, nouvelArticle.getUtilisateur().getNoUtilisateur());
-            pStmtArticle.setInt(8, nouvelArticle.getCategorire().getNoCategorie());
+            pStmtArticle.setInt(8, nouvelArticle.getCategorie().getNoCategorie());
 
             pStmtArticle.executeUpdate();
 
@@ -114,7 +114,7 @@ public class ArticleDAOImpl implements ArticleDAO{
             stmt.setInt(5, art.getPrixInitial());
             stmt.setInt(6, art.getPrixVente());
             stmt.setInt(7, art.getUtilisateur().getNoUtilisateur());
-            stmt.setInt(8, art.getCategorire().getNoCategorie());
+            stmt.setInt(8, art.getCategorie().getNoCategorie());
             stmt.setInt(9, art.getNoArticle());
             stmt.executeUpdate();
 
