@@ -39,4 +39,9 @@ public class ArticleManagerImpl implements ArticleManager{
     public void supprimerArticle(int id) throws Exception {
         articleDAO.delete(id);
     }
+
+    @Override
+    public List<Article> selectByUtilisateur(int id) throws Exception {
+        return articleDAO.selectByUtilisateur(id);
+    }
 }

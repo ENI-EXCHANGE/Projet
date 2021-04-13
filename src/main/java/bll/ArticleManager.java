@@ -14,4 +14,5 @@ public interface ArticleManager {
 
     public void supprimerArticle(int id) throws Exception ;
 
+    public  List<Article> selectByUtilisateur(int id) throws Exception;
 }
