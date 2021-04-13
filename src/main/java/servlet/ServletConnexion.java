@@ -42,7 +42,7 @@ TODO : gérer les sessions User/admin
                     session.removeAttribute("utilisateurConnecte");
                     String message = "Vous êtes maintenant déconnecté";
                     request.setAttribute("message", message);
-                    RequestDispatcher rd3 = request.getRequestDispatcher("/index.jsp");
+                    RequestDispatcher rd3 = request.getRequestDispatcher("/WEB-INF/index.jsp");
                     rd3.forward(request, response);
                 }
                 break;
@@ -76,7 +76,7 @@ TODO : gérer les sessions User/admin
                         session.setAttribute("utilisateurConnecte", user);
                         userTest.addUser(user);
 
-                        destPage = "/index.jsp";
+                        destPage = "/WEB-INF/index.jsp";
                     }else {
                         String message = "champs vides ou incomplets, veuillez recommencer";
                         request.setAttribute("message", message);
@@ -100,7 +100,7 @@ TODO : gérer les sessions User/admin
                     if (checkuser != null ){
                         HttpSession session = request.getSession();
                         session.setAttribute("utilisateurConnecte", user);
-                        destPage = "/index.jsp";
+                        destPage = "/WEB-INF/index.jsp";
                     } else {
                         String message = "la connexion à votre compte a échoué, vérifiez votre login et/ou mot de passe";
                         request.setAttribute("message", message);

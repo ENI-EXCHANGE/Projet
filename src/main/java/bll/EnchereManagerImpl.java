@@ -48,6 +48,13 @@ public class EnchereManagerImpl implements EnchereManager {
     }
 
     @Override
+    public List<Enchere> selectByUtilisateur(int id) throws Exception {
+        List<Enchere> lesEncheres = null;
+        lesEncheres = enchereDAO.selectByUtilisateur(id);
+        return lesEncheres;
+    }
+
+    @Override
     public void delete(int idUser, int idArticle) throws BLLException {
         try {
             enchereDAO.delete(idUser, idArticle);

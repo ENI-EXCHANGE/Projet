@@ -15,6 +15,8 @@ public interface EnchereManager {
 
     public Enchere selectById (int idUser, int idArticle) throws Exception;
 
+    public List<Enchere> selectByUtilisateur(int id) throws Exception;
+
     public void delete( int idUser, int idArticle) throws BLLException;
 
     public void update(Enchere enchere) throws BLLException;
