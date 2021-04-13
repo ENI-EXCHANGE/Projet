@@ -21,7 +21,6 @@ public class ServletCreerEnchere extends HttpServlet {
     public ServletCreerEnchere() throws BLLException, DALException {
     }
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
