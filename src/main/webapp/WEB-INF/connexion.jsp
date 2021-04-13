@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>connexion</title>
@@ -13,45 +14,35 @@
 </head>
 <body>
 <%@include file="navbar.jsp" %>
-<div class="wrapper">
-<h1>Se connecter :</h1>
 
-<form action="<%=request.getContextPath() %>/connexion" method="POST">
-    <%
-        Utilisateur auth = ((Utilisateur) session.getAttribute("utilisateurConnecte"));
-        if ( auth != null ){
+<div class="wrapper text-center ">
+    <div class="container" ></div>
+        <h1>Se connecter :</h1><br>
 
-    %>
-    <a>Bienvenue, ${sessionScope.utilisateurConnecté.prenom}</a><br><br>
-    <%
+        <form action="<%=request.getContextPath() %>/connexion" method="POST">
 
-        }
+           <%-- <a>bonjour  ${ !empty utilisateurConnecte.prenom ? utilisateurConnecte.prenom : '' }</a><br><br> --%>
 
-    %>
-    <label for="pseudo">Identifiant :</label>
-    <input type="text" id="pseudo" name="pseudo" ><br>
+            <label for="login">Identifiant :</label>
+            <input type="text" id="login" name="login" ><br>
 
-    <label for="mdp">Mot de passe :</label>
-    <input type="text" id="mdp" name="mot_de_passe" ><br>
-    <a> ${message} </a> <br><br>
-    <input type="submit" value="Connexion"  ><br>
+            <label for="mdp">Mot de passe :</label>
+            <input type="text" id="mdp" name="mot_de_passe" ><br>
+            <p style="color: #ff0000"> ${message} </p> <br><br>
+            <input type="submit" value="Connexion"  ><br>
 
-    <input type="checkbox" id="keepConnected" value="Connexion">
-    <label for="keepConnected">se souvenir de moi</label><br>
+            <input type="checkbox" id="keepConnected" value="Connexion">
+            <label for="keepConnected">se souvenir de moi</label><br>
 
-    <a href="" > Mot de passe oublié</a><br>
+            <a href="" > Mot de passe oublié</a><br>
 
 
-</form>
+        </form>
 
-<form action="<%=request.getContextPath() %>/creationCompte" method="get">
-    <input type="submit" value="Créer un compte" >
-</form>
-
-<form action="<%=request.getContextPath() %>/deconnexion" method="post">
-    <input type="submit" value="se déconnecter" >
-</form>
-
+        <form action="<%=request.getContextPath() %>/creationCompte" method="get">
+            <input type="submit" value="Créer un compte" >
+        </form>
+    </div>
 </div>
 </body>
 </html>

@@ -14,10 +14,13 @@
 </head>
 <body>
 <%@include file="navbar.jsp" %>
-<div class="wrapper">
-    <h1> Créer mon profil :</h1>
+
+<div class="wrapper text-center ">
+    <div class="container" >
+    <h1> Créer mon profil :</h1><br>
 
     <form action="<%=request.getContextPath() %>/creationCompte" method="POST">
+        <p style="color: red"> ${messageErreur}</p><br>
 
         <label for="pseudo">Pseudo :</label>
         <input type="text" id="pseudo" name="pseudo" ><br>
@@ -52,7 +55,7 @@
         <input type="submit" value="Créer" class="btn btn-primary" >
         <a  class="btn btn-danger" href="<%=request.getContextPath() %>/connexion" > Annuler</a>
     </form >
-
+    </div>
 </div>
 
 

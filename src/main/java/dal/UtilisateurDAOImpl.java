@@ -1,5 +1,6 @@
 package dal;
 
+import bll.BLLException;
 import bo.Utilisateur;
 
 import java.sql.*;
@@ -12,14 +13,19 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SELECBYID = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateurs = ? ";
     private static final String SELECTALL = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
+    private static final String SELECBYEMAIL = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email = ? ";
     private static final String SELECBYPSEUDO = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? ";
-    private static final String CHECKUSER = "SELECT * FROM UTILISATEURS WHERE pseudo=? and mot_de_passe=?";
+    private static final String CHECK_USER_BY_LOGIN = "SELECT * FROM UTILISATEURS WHERE (pseudo=? and mot_de_passe=?) or (email=? and mot_de_passe=?) ";
+    private static final String CHECK_PSEUDO_IS_UNIQUE = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
+    private static final String CHECK_EMAIL_IS_UNIQUE = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
+
+
     public UtilisateurDAOImpl(){
 
     }
 
     @Override
-    public void insert(Utilisateur user) throws DALException {
+    public void insert(Utilisateur user) throws Exception {
         try ( Connection cnx = ConnectionProvider.getConnection();){
 
                 PreparedStatement pStmt = cnx.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
@@ -38,16 +44,13 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
                 pStmt.executeUpdate();
                 ResultSet rs = pStmt.getGeneratedKeys();
-
                 if (rs.next()) {
                     user.setNoUtilisateur(rs.getInt(1));
                 }
 
-
             } catch (SQLException e) {
-                e.printStackTrace();
-                throw new DALException("l'utilisateur " + user + " n'a pas été inséré ..");
 
+                throw new Exception(e.getMessage());
             }
 
     }
@@ -135,7 +138,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         }
         return user;
     }
-
     @Override
     public Utilisateur selectByPseudo(String pseudo) throws DALException {
         Utilisateur user = null;
@@ -144,6 +146,106 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             stmt.setString(1, pseudo);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                if(pseudo.equals( rs.getString("pseudo"))){
+                    throw new DALException("Ce pseudo existe déjà !!");
+                }else {
+                    user = new Utilisateur(rs.getInt("no_utilisateurs"),
+                            rs.getString("pseudo"),
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("email"),
+                            rs.getString("telephone"),
+                            rs.getString("rue"),
+                            rs.getString("code_postal"),
+                            rs.getString("ville"),
+                            rs.getString("mot_de_passe"),
+                            rs.getInt("credit"),
+                            rs.getByte("administrateur"));
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new DALException("impossible de récupérer l'utilisateur par le pseudo");
+        }
+        return user;
+    }
+    @Override
+    public Utilisateur selectByEmail(String email) throws DALException {
+        Utilisateur user = null;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(SELECBYEMAIL);
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if(email.equals( rs.getString("email"))){
+                    throw new DALException("Cet email existe déjà !!");
+                }else {
+                    user = new Utilisateur(rs.getInt("no_utilisateurs"),
+                            rs.getString("pseudo"),
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("email"),
+                            rs.getString("telephone"),
+                            rs.getString("rue"),
+                            rs.getString("code_postal"),
+                            rs.getString("ville"),
+                            rs.getString("mot_de_passe"),
+                            rs.getInt("credit"),
+                            rs.getByte("administrateur"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("impossible de récupérer l'utilisateur par l'email");
+        }
+        return user;
+    }
+
+    public boolean pseudoExist(String pseudo){
+        boolean resulat = false;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(CHECK_PSEUDO_IS_UNIQUE);
+            stmt.setString(1,pseudo);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
+                resulat = rs.getString("pseudo") == pseudo;
+            }
+
+        }catch (SQLException throwables) {
+            throwables.getMessage();
+        }
+        return resulat;
+    }
+    public boolean emailExist(String email){
+        boolean resulat = false;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(CHECK_EMAIL_IS_UNIQUE);
+            stmt.setString(1,email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
+                resulat = rs.getString("email") == email;
+            }
+
+        }catch (SQLException throwables) {
+            throwables.getMessage();
+        }
+        return resulat;
+    }
+    @Override
+    public Utilisateur authentification(String pseudo, String mdp) {
+        Utilisateur user = null;
+        try(Connection cnx = ConnectionProvider.getConnection()){
+            PreparedStatement stmt = cnx.prepareStatement(CHECK_USER_BY_LOGIN);
+            stmt.setString(1, pseudo);
+            stmt.setString(2, mdp);
+            stmt.setString(3, pseudo);
+            stmt.setString(4, mdp);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
                 user = new Utilisateur(rs.getInt("no_utilisateurs"),
                         rs.getString("pseudo"),
                         rs.getString("nom"),
@@ -156,33 +258,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                         rs.getString("mot_de_passe"),
                         rs.getInt("credit"),
                         rs.getByte("administrateur"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DALException("impossible de récupérer l'utilisateur par le pseudo");
-        }
-        return user;
-    }
 
-    @Override
-    public Utilisateur checkLogin(String login, String mdp) {
-        Utilisateur user = null;
-        try(Connection cnx = ConnectionProvider.getConnection()){
-            PreparedStatement stmt = cnx.prepareStatement(CHECKUSER);
-            //stmt.setString(1, login);
-            stmt.setString(1, login);
-            stmt.setString(2, mdp);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()){
-                user = new Utilisateur(rs.getString("pseudo"),
-                        rs.getString("mot_de_passe"));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
         return user;
     }
 }

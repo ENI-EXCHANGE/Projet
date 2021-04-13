@@ -29,17 +29,52 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
         }
         return users;
     }
+    /**
+     * Valide l'adresse email saisie.
+     */
+    public void validationEmail( String email ) throws Exception {
+        if ( email != null && !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
+            if ( dao.emailExist(email) == true ){
+                throw new Exception( "cet email existe déjà." );
+            }
+            throw new Exception( "Merci de saisir une adresse mail valide." );
+        }
+    }
 
-    /*
-     * TODO : mettre en place un try catch qui verifie si l'utilisateur existe déjà via son email
-     * */
+    /**
+     * Valide si le pseudo saisi existe déjà.
+     */
+    public void validationPseudo( String pseudo ) throws Exception {
+        if ( pseudo != null && !pseudo.matches( "[a-zA-Z_0-9]" ) ) {
+            if (dao.pseudoExist(pseudo) == true) {
+                throw new Exception("ce pseudo existe déjà.");
+            }
+        }
+    }
+    /**
+     * Valide le mot de passe saisi.
+     */
+    public void validationMotDePasse( String motDePasse ) throws Exception {
+        if ( motDePasse != null ) {
+            if ( motDePasse.length() < 6 ) {
+                throw new Exception( "Le mot de passe doit contenir au moins 6 caractères." );
+            }
+        } else {
+            throw new Exception( "Merci de saisir votre mot de passe." );
+        }
+    }
+
     @Override
     public void addUser(Utilisateur user) throws BLLException {
         try {
+
+            validationPseudo(user.getPseudo());
+            validationEmail(user.getEmail());
+            validationMotDePasse(user.getMotDePasse());
             dao.insert(user);
 
-        } catch (DALException e) {
-            throw new BLLException(" l'insertion de l'utilisateur à échoué !");
+        } catch (Exception e) {
+            throw new BLLException(e.getMessage());
         }
     }
 
@@ -49,6 +84,10 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
 
     }
 
+    @Override
+    public Utilisateur selectByEmail(String email) throws DALException {
+        return dao.selectByEmail(email);
+    }
     @Override
     public Utilisateur selectByPseudo(String pseudo) throws DALException {
         return dao.selectByPseudo(pseudo);
@@ -74,7 +113,7 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
     }
 
     @Override
-    public Utilisateur checkLogin(String pseudo, String mdp)  {
-        return dao.checkLogin(pseudo, mdp);
+    public Utilisateur authentification(String pseudo, String mdp)  {
+        return dao.authentification(pseudo, mdp);
     }
 }

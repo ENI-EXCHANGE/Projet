@@ -16,11 +16,10 @@ public class Utilisateur {
     private int administrateur;
 
 
-    public boolean checkuser(){
-       /*TODO : verifier le pseudo unique, format email, tel, cp, ect..
-        */
-        return true;
+    public boolean checkuser(Utilisateur user) throws Exception{
+              return true;
     }
+
     public Utilisateur() {   }
 
     public Utilisateur(Integer noUtilisateur, String pseudo,
