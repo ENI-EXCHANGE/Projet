@@ -12,6 +12,12 @@ public interface ArticleManager {
 
     public Article selectById(int id) throws Exception ;
 
+    public List<Article> selectByName(String name) throws Exception;
+
+    public List<Article> selectByCategorie(int noCategorie) throws Exception;
+
+    public List<Article> selectByNameCategorie(String name,int noCategorie) throws Exception;
+
     public void supprimerArticle(int id) throws Exception ;
 
     public  List<Article> selectByUtilisateur(int id) throws Exception;

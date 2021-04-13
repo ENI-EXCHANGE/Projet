@@ -36,6 +36,23 @@ public class ArticleManagerImpl implements ArticleManager{
     }
 
     @Override
+    public List<Article> selectByName(String name) throws Exception {
+        return articleDAO.selectByName(name);
+    }
+
+    @Override
+    public List<Article> selectByCategorie(int noCategorie) throws Exception {
+        return articleDAO.selectByCategorie(noCategorie);
+    }
+
+    @Override
+    public List<Article> selectByNameCategorie(String name,int noCategorie) throws Exception {
+        return articleDAO.selectByNameCategorie(name, noCategorie);
+    }
+
+
+
+    @Override
     public void supprimerArticle(int id) throws Exception {
         articleDAO.delete(id);
     }

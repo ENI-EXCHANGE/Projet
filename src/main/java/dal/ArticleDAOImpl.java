@@ -15,6 +15,9 @@ public class ArticleDAOImpl implements ArticleDAO{
     private static final String sqlInsert ="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
     private static final String sqlSelectAll ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS";
     private static final String sqlSelectById ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article=?";
+    private static final String sqlSelectByName ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE nom_article LIKE ?";
+    private static final String sqlSelectByCategorie ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = ?";
+    private static final String sqlSelectByNameCategorie ="SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE nom_article LIKE ? AND no_categorie = ?";
     private static final String sqlDelete = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?" ;
     private static final String sqlUpdate = "UPDATE ARTICLES_VENDUS SET nom_article=?,description=?,date_debut_encheres=?,date_fin_encheres=?,prix_initial=?,prix_vente=?,no_utilisateur=?, no_categorie=? WHERE no_article=?";
     private static final String sqlSelectByUtilisateur = "SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_utilisateur=?";
@@ -71,6 +74,74 @@ public class ArticleDAOImpl implements ArticleDAO{
             e.printStackTrace();
             throw new DALException("impossible de récuperer la liste des articles");
         }
+        return liste;
+    }
+
+    @Override
+    public List<Article> selectByName(String name) throws DALException {
+        List<Article> liste = new ArrayList<Article>();
+        Article art = null;
+        try (Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlSelectByName);
+            stmt.setString(1, "%"+name+"%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Utilisateur user = usr.selectById(rs.getInt("no_utilisateur"));
+                Categorie cate = cat.selectById(rs.getInt("no_categorie"));
+                art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), user,cate);
+                liste.add(art);
+            }
+        } catch (SQLException | BLLException e) {
+            e.printStackTrace();
+            throw new DALException("impossible de récuperer la liste des articles");
+        }
+
+        return liste;
+    }
+
+    @Override
+    public List<Article> selectByCategorie(int noCategorie) throws DALException {
+        List<Article> liste = new ArrayList<Article>();
+        Article art = null;
+        try (Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlSelectByCategorie);
+            stmt.setInt(1, noCategorie);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Utilisateur user = usr.selectById(rs.getInt("no_utilisateur"));
+                Categorie cate = cat.selectById(rs.getInt("no_categorie"));
+                art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), user,cate);
+                liste.add(art);
+            }
+        } catch (SQLException | BLLException e) {
+            e.printStackTrace();
+            throw new DALException("impossible de récuperer la liste des articles");
+        }
+
+        return liste;
+    }
+
+    @Override
+    public List<Article> selectByNameCategorie(String name, int noCategorie) throws DALException {
+        List<Article> liste = new ArrayList<Article>();
+        Article art = null;
+        try (Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlSelectByNameCategorie);
+            stmt.setString(1, "%"+name+"%");
+            stmt.setInt(2, noCategorie);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Utilisateur user = usr.selectById(rs.getInt("no_utilisateur"));
+                Categorie cate = cat.selectById(rs.getInt("no_categorie"));
+                art = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"), rs.getInt("prix_vente"), user,cate);
+                liste.add(art);
+            }
+        } catch (SQLException | BLLException e) {
+            e.printStackTrace();
+            throw new DALException("impossible de récuperer la liste des articles");
+        }
+
         return liste;
     }
 
