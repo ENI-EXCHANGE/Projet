@@ -31,7 +31,7 @@
                 <input type="text" id="prenom" name="prenom"  required><br>
 
                 <label for="email">email :</label>
-                <input type="text" id="email" name="email" required><br>
+                <input type="email" id="email" name="email" required><br>
 
                 <label for="telephone">téléphone :</label>
                 <input type="text" id="telephone" name="telephone" required><br>
@@ -46,10 +46,10 @@
                 <input type="text" id="ville" name="ville" required><br>
 
                 <label for="mdp">mot de passe :</label>
-                <input type="text" id="mdp" name="mot_de_passe" required><br>
+                <input type="password" id="mdp" name="mot_de_passe" required><br>
 
                 <label for="mdp2">confirmation du mot de passe :</label>
-                <input type="text" id="mdp2" name="mot_de_passe2" required><br>
+                <input type="password" id="mdp2" name="mot_de_passe2" required><br>
 
                 <input type="submit" value="Créer" class="btn btn-primary" >
                 <a  class="btn btn-danger" href="<%=request.getContextPath() %>/connexion" > Annuler</a>

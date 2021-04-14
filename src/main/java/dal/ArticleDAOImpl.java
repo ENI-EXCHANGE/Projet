@@ -29,7 +29,7 @@ public class ArticleDAOImpl implements ArticleDAO{
 
     @Override
     public Article insert(Article nouvelArticle) throws DALException {
-
+        System.out.println(nouvelArticle.getUtilisateur());
         try(Connection cnx = ConnectionProvider.getConnection()) {
 
             PreparedStatement pStmtArticle = cnx.prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);

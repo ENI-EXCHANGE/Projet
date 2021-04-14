@@ -81,29 +81,88 @@
                 <%}%>
             </div>
         </div>
+
+        <hr>
+
         <div class="container">
-            <hr>
             <h3 class="text-center">-Mes Ventes-</h3>
+        </div>
+
+        <div class="container">
+            <h2 class="text-center">Ventes en attente</h2>
             <%
-                    List<Article> listeArt = (List<Article>) request.getAttribute("listeArt");
-                    if(listeArt == null || listeArt.isEmpty()) {
+                List<Article> listeArtAtt = (List<Article>) request.getAttribute("listeArtAtt");
+                if(listeArtAtt == null || listeArtAtt.isEmpty()) {
 
             %>
-            <h5 class="text-center">Aucunes ventes associées à ce compte</h5>
+            <h5 class="text-center">Aucunes ventes en attente</h5>
             <% }else {%>
             <div class="row">
-                <%for(Article art : listeArt) { %>
-                    <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
-                        <div class="card-body">
-                            <h5 class=card-title"><%= art.getNomArticle()%></h5>
-                            <p class="card-text"><%= art.getDescription()%></p>
-                            <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
-                            <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
-                            <a href="#" class="btn btn-primary">Detail</a>
-                        </div>
+                <%for(Article art : listeArtAtt) { %>
+                <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
+                    <div class="card-body">
+                        <h5 class=card-title"><%= art.getNomArticle()%></h5>
+                        <p class="card-text"><%= art.getDescription()%></p>
+                        <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
+                        <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
+                        <a href="#" class="btn btn-primary">Detail</a>
                     </div>
+                </div>
                 <%}%>
-            <%}%>
+                <%}%>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="container">
+
+            <h2 class="text-center">Ventes en cours</h2>
+            <%
+                List<Article> listeArtCours = (List<Article>) request.getAttribute("listeArtCours");
+                if(listeArtCours == null || listeArtCours.isEmpty()) {
+
+            %>
+            <h5 class="text-center">Aucunes ventes en cours</h5>
+            <% }else {%>
+            <div class="row">
+                <%for(Article art : listeArtCours) { %>
+                <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
+                    <div class="card-body">
+                        <h5 class=card-title"><%= art.getNomArticle()%></h5>
+                        <p class="card-text"><%= art.getDescription()%></p>
+                        <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
+                        <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
+                        <a href="#" class="btn btn-primary">Detail</a>
+                    </div>
+                </div>
+                <%}%>
+                <%}%>
+            </div>
+            <hr>
+            <div class="container">
+                <h2 class="text-center">Ventes terminées</h2>
+                <%
+                        List<Article> listeArt = (List<Article>) request.getAttribute("listeArt");
+                        if(listeArt == null || listeArt.isEmpty()) {
+
+                %>
+                <h5 class="text-center">Aucunes ventes terminées</h5>
+                <% }else {%>
+                <div class="row">
+                    <%for(Article art : listeArt) { %>
+                        <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
+                            <div class="card-body">
+                                <h5 class=card-title"><%= art.getNomArticle()%></h5>
+                                <p class="card-text"><%= art.getDescription()%></p>
+                                <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
+                                <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
+                                <a href="#" class="btn btn-primary">Detail</a>
+                            </div>
+                        </div>
+                    <%}%>
+                <%}%>
+                </div>
             </div>
         </div>
         <%}%>

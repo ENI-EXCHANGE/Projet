@@ -167,9 +167,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             stmt.setString(1, pseudo);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                if(pseudo.equals( rs.getString("pseudo"))){
-                    throw new DALException("Ce pseudo existe déjà !!");
-                }else {
                     user = new Utilisateur(rs.getInt("no_utilisateurs"),
                             rs.getString("pseudo"),
                             rs.getString("nom"),
@@ -182,7 +179,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                             rs.getString("mot_de_passe"),
                             rs.getInt("credit"),
                             rs.getByte("administrateur"));
-                }
 
             }
         } catch (SQLException e) {

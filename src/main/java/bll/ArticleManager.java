@@ -21,4 +21,10 @@ public interface ArticleManager {
     public void supprimerArticle(int id) throws Exception ;
 
     public  List<Article> selectByUtilisateur(int id) throws Exception;
+
+    List<Article> selectByUtilisateurAtt(Integer noUtilisateur) throws Exception;
+
+    List<Article> selectByUtilisateurCours(Integer noUtilisateur) throws Exception;
+
+    List<Article> selectByUtilisateurTermine(Integer noUtilisateur) throws Exception;
 }

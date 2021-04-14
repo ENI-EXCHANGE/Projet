@@ -31,12 +31,16 @@ public class ServletCompte extends HttpServlet {
                     request.setAttribute("ProfilSelectionne", UtilisateurArticle);
                 } else {
                     HttpSession session = request.getSession();
-                    Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecte");
-                    List<Article> listeArticles = art.selectByUtilisateur(usr.getNoUtilisateur());
-                    List<Enchere> listeEncheres = ench.selectByUtilisateur(usr.getNoUtilisateur());
+                    Utilisateur user = (Utilisateur) session.getAttribute("utilisateurConnecte");
+                    List<Article> ListeArticleAttente = art.selectByUtilisateurAtt(user.getNoUtilisateur());
+                    List<Article> ListeArticleEnCours = art.selectByUtilisateurCours(user.getNoUtilisateur());
+                    List<Article> listeArticlesTermine = art.selectByUtilisateurTermine(user.getNoUtilisateur());
+                    List<Enchere> listeEncheres = ench.selectByUtilisateur(user.getNoUtilisateur());
+                    request.setAttribute("listeArtAtt", ListeArticleAttente);
+                    request.setAttribute("listeArtCours", ListeArticleEnCours);
                     request.setAttribute("listeEnch", listeEncheres);
-                    request.setAttribute("listeArt", listeArticles);
-                    request.setAttribute("ProfilSelectionne", usr);
+                    request.setAttribute("listeArt", listeArticlesTermine);
+                    request.setAttribute("ProfilSelectionne", user);
                 }
 
             } catch (Exception e) {

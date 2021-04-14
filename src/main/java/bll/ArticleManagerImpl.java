@@ -5,6 +5,9 @@ import dal.ArticleDAO;
 import dal.DALException;
 import dal.DAOFactory;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleManagerImpl implements ArticleManager{
@@ -60,5 +63,44 @@ public class ArticleManagerImpl implements ArticleManager{
     @Override
     public List<Article> selectByUtilisateur(int id) throws Exception {
         return articleDAO.selectByUtilisateur(id);
+    }
+
+    @Override
+    public List<Article> selectByUtilisateurAtt(Integer noUtilisateur) throws Exception {
+        List<Article> laListeAtt = new ArrayList<>();
+        List<Article> laListe = articleDAO.selectByUtilisateur(noUtilisateur);
+        Date date = Date.valueOf(LocalDate.now());
+        for (Article art : laListe){
+            if (art.getDateDebutEncheres().after(date)){
+                laListeAtt.add(art);
+            }
+        }
+        return laListeAtt;
+    }
+
+    @Override
+    public List<Article> selectByUtilisateurCours(Integer noUtilisateur) throws Exception {
+        List<Article> laListeAtt = new ArrayList<>();
+        List<Article> laListe = articleDAO.selectByUtilisateur(noUtilisateur);
+        Date date = Date.valueOf(LocalDate.now());
+        for (Article art : laListe){
+            if (art.getDateDebutEncheres().before(date) && art.getDateFinEncheres().after(date)){
+                laListeAtt.add(art);
+            }
+        }
+        return laListeAtt;
+    }
+
+    @Override
+    public List<Article> selectByUtilisateurTermine(Integer noUtilisateur) throws Exception {
+        List<Article> laListeAtt = new ArrayList<>();
+        List<Article> laListe = articleDAO.selectByUtilisateur(noUtilisateur);
+        Date date = Date.valueOf(LocalDate.now());
+        for (Article art : laListe){
+            if (art.getDateFinEncheres().before(date)){
+                laListeAtt.add(art);
+            }
+        }
+        return laListeAtt;
     }
 }

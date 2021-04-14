@@ -50,7 +50,7 @@ public class ServletArticle extends HttpServlet {
 
         try {
             HttpSession session = request.getSession();
-            Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecté");
+            Utilisateur user = (Utilisateur) session.getAttribute("utilisateurConnecte");
             String nom = request.getParameter("nom");
             String desc = request.getParameter("description");
             Categorie categorie = cat.selectByLibelle(request.getParameter("categorie"));
@@ -74,9 +74,9 @@ public class ServletArticle extends HttpServlet {
             String cp = request.getParameter("cp");
 
             //Timestamp dateFinal = new Timestamp(LocalDate.now().getLong());
-
-            Article nouvelArticle = new Article(nom, desc, dateDeb, dateFi, prix, prix, usr, categorie);
-            Enchere nouvelEnchere = new Enchere(usr, nouvelArticle, dateFi, prix);
+            System.out.println(user.getPseudo());
+            Article nouvelArticle = new Article(nom, desc, dateDeb, dateFi, prix, prix, user, categorie);
+            Enchere nouvelEnchere = new Enchere(user, nouvelArticle, dateFi, prix);
             Retrait nouveauRetrait = new Retrait(nouvelArticle, rue, ville, cp);
             art.ajouterArticle(nouvelArticle);
             ret.insert(nouveauRetrait);
