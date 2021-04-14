@@ -18,6 +18,8 @@ public interface UtilisateurDAO {
 
     public Utilisateur selectByPseudo(String pseudo) throws DALException;
 
+    public Utilisateur checkLogin(String login, String mdp) throws Exception;
+
     public Utilisateur selectByEmail(String email) throws DALException;
 
     public Utilisateur authentification(String pseudo, String mdp) ;
@@ -25,7 +27,6 @@ public interface UtilisateurDAO {
     public boolean pseudoExist(String pseudo);
 
     public boolean emailExist(String email);
-
 
     void ajouterCredit(int id, int credit);
 }
