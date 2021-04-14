@@ -38,6 +38,9 @@
                 <a class="nav-link" href="<%=request.getContextPath() %>/Categories">Gestion des Categories</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath() %>/Utilisateurs">Gestion des Utilisateurs</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/Compte">Mon profil</a>
             </li>
             <li class="nav-item">

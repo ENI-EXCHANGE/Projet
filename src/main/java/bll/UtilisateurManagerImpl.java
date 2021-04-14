@@ -77,4 +77,9 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
     public Utilisateur checkLogin(String pseudo, String mdp)  {
         return dao.checkLogin(pseudo, mdp);
     }
+
+    @Override
+    public void ajouterCredit(int id, int credit) throws Exception {
+        dao.ajouterCredit(id, credit);
+    }
 }

@@ -31,13 +31,10 @@ public class ServletIndex extends HttpServlet {
 
 
         try {
-            System.out.println("Je passe dans le try");
             listeArticles = article.selectAll();
             request.setAttribute("articles",listeArticles );
             listeCategories = categorie.selectAll();
             request.setAttribute("categories",listeCategories);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -20,4 +20,5 @@ public interface UtilisateurDAO {
 
     public Utilisateur checkLogin(String pseudo, String mdp) ;
 
+    void ajouterCredit(int id, int credit);
 }

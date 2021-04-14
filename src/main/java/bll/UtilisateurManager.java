@@ -36,7 +36,7 @@ public interface UtilisateurManager {
 
     public Utilisateur checkLogin( String pseudo, String mdp);
 
-
+    public void ajouterCredit(int id, int credit) throws Exception;
 
 
 

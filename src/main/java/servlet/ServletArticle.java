@@ -29,10 +29,8 @@ public class ServletArticle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        
-
         try {
-            Article ArticleSelectionne = art.selectById(2);
+            Article ArticleSelectionne = art.selectById(Integer.parseInt(request.getParameter("id")));
             Categorie CategorieArticle = cat.selectById(ArticleSelectionne.getCategorie().getNoCategorie());
             Utilisateur UtilisateurArticle = usr.selectById(ArticleSelectionne.getUtilisateur().getNoUtilisateur());
             request.setAttribute("ArticleSelectionne",ArticleSelectionne );

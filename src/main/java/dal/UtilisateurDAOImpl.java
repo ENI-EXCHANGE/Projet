@@ -14,6 +14,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String SELECTALL = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
     private static final String SELECBYPSEUDO = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? ";
     private static final String CHECKUSER = "SELECT * FROM UTILISATEURS WHERE pseudo=? and mot_de_passe=?";
+    private static final String UPDATE ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE pseudo=?";
+    private static final String AJOUTERCREDIT ="UPDATE UTILISATEURS SET credit=? WHERE no_utilisateurs=?";
     public UtilisateurDAOImpl(){
 
     }
@@ -105,7 +107,24 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     @Override
     public void update(Utilisateur user) throws DALException {
+        try (Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(UPDATE);
+            stmt.setString(1, user.getPseudo());
+            stmt.setString(2, user.getNom());
+            stmt.setString(3, user.getPrenom());
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getTelephone());
+            stmt.setString(6, user.getRue());
+            stmt.setString(7, user.getCodePostal());
+            stmt.setString(8, user.getVille());
+            stmt.setString(9, user.getMotDePasse());
+            stmt.setString(10, user.getPseudo());
+            stmt.executeUpdate();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DALException("probleme dans la modification d'un article");
+        }
     }
 
     @Override
@@ -181,8 +200,22 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
         return user;
+    }
+
+    @Override
+    public void ajouterCredit(int id, int credit) {
+        try(Connection cnx = ConnectionProvider.getConnection()){
+            Utilisateur util = selectById(id);
+            int creditUser = util.getCredit();
+            int resultat = creditUser+credit;
+            PreparedStatement stmt = cnx.prepareStatement(AJOUTERCREDIT);
+            stmt.setInt(1, resultat);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        } catch (SQLException | DALException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }

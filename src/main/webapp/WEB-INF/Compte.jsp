@@ -40,12 +40,21 @@
             if (resu.getPseudo().equals(ProfilSelectionne.getPseudo())){
                 %>
         <hr>
+        <script>
+            function envoyer(a)
+            {
+                if (a==1) document.formulaire.action="<%=request.getContextPath() %>/ModifierCompte";
+                if (a==2) document.formulaire.action="<%=request.getContextPath() %>/AjouterCredits";
+                if (a==3) document.formulaire.action="<%=request.getContextPath() %>/Suppression";
+                document.formulaire.submit()
+            }
+        </script>
         <div class="container">
-            <form class="" method="post" action="<%=request.getContextPath() %>/Compte">
+            <form name="formulaire" method="post">
                 <input type="hidden" id="no_utilisateur" name="no_utilisateur" value=<%= resu.getNoUtilisateur() %>>
-                <input class="btn btn-primary" type="submit" value="Modifier vos Informations" >
-                <input class="btn btn-primary" type="submit" value="Ajouter des Crédits" >
-                <input class="btn btn-primary alert-danger" type="submit" value="Supprimer le Compte" >
+                <input class="btn btn-primary" type="button" id="modifier" name="modifier" value="Modifier vos Informations" onClick="envoyer(1)">
+                <input class="btn btn-primary" type="button" id="Ajouter" name="modifier" value="Ajouter des Crédits" onClick="envoyer(2)">
+                <input class="btn btn-primary alert-danger" id="Supprimer" name="modifier" type="button" value="Supprimer le Compte" onClick="envoyer(3)">
             </form>
         </div>
         <div class="container">
