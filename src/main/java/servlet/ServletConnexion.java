@@ -19,7 +19,7 @@ TODO : gérer le mot de passe oublié
 TODO : gérer les sessions User/admin
   */
     UtilisateurManagerImpl userTest = new UtilisateurManagerImpl();
-    String destPage = null;
+    String destinationPage = null;
 
 
 
@@ -71,46 +71,46 @@ TODO : gérer les sessions User/admin
                     //int credit = Integer.parseInt(request.getParameter("credit"));
                     //int admin = Integer.parseInt(request.getParameter("admin"));
                     Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, admin);
-                    if ( user.checkuser()==true){
+                    if ( user!=null){
                         HttpSession session = request.getSession();
                         session.setAttribute("utilisateurConnecte", user);
                         userTest.addUser(user);
 
-                        destPage = "/WEB-INF/index.jsp";
+                        destinationPage = "/WEB-INF/index.jsp";
                     }else {
                         String message = "champs vides ou incomplets, veuillez recommencer";
                         request.setAttribute("message", message);
-                        destPage = "/WEB-INF/creationCompte.jsp";
+                        destinationPage = "/WEB-INF/creationCompte.jsp";
                     }
 
                 } catch (BLLException e) {
-                    e.printStackTrace();
+                    request.setAttribute("messageErreur", e.getMessage());
+                    destinationPage = "/WEB-INF/creationCompte.jsp";
                 }
-                RequestDispatcher rd = request.getRequestDispatcher(destPage);
+                RequestDispatcher rd = request.getRequestDispatcher(destinationPage);
                 rd.forward(request, response);
                 break;
 
             case "/connexion":
                 try {
-                    String login = request.getParameter("pseudo");
+                    String login = request.getParameter("login");
                     String mot_de_passe = request.getParameter("mot_de_passe");
-                    Utilisateur user = userTest.selectByPseudo(login);
-                    Utilisateur checkuser = userTest.checkLogin(login,mot_de_passe);
+                    Utilisateur checkuser = userTest.authentification(login,mot_de_passe);
 
                     if (checkuser != null ){
                         HttpSession session = request.getSession();
-                        session.setAttribute("utilisateurConnecte", user);
-                        destPage = "/WEB-INF/index.jsp";
+                        session.setAttribute("utilisateurConnecte", checkuser);
+                        destinationPage = "/WEB-INF/index.jsp";
                     } else {
                         String message = "la connexion à votre compte a échoué, vérifiez votre login et/ou mot de passe";
                         request.setAttribute("message", message);
-                        destPage = "/WEB-INF/connexion.jsp";
+                        destinationPage = "/WEB-INF/connexion.jsp";
                     }
 
-                } catch (DALException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
+                RequestDispatcher dispatcher = request.getRequestDispatcher(destinationPage);
                 System.out.println(dispatcher);
                 dispatcher.forward(request, response);
                 break;
@@ -118,10 +118,10 @@ TODO : gérer les sessions User/admin
             case "/deconnexion":
                 HttpSession session = request.getSession(false);
                 if (session != null) {
-                    session.removeAttribute("utilisateurConnecte");
+                    session.invalidate();
                     String message = "Vous êtes maintenant déconnecté";
                     request.setAttribute("message", message);
-                    RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/index.jsp");
+                    RequestDispatcher rd2 = request.getRequestDispatcher("ServletIndex");
                     rd2.forward(request, response);
                 }
                 break;

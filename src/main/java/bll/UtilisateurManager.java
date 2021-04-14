@@ -28,13 +28,16 @@ public interface UtilisateurManager {
 
     public Utilisateur selectById(int id) throws BLLException, DALException;
 
-    Utilisateur selectByPseudo(String pseudo) throws  DALException;
+    Utilisateur selectByEmail(String email) throws  DALException;
+
+    public Utilisateur selectByPseudo(String pseudo) throws DALException;
 
     public void updateUser(Utilisateur user) throws BLLException;
 
     public void removeUser(Utilisateur user) throws BLLException;
 
-    public Utilisateur checkLogin( String pseudo, String mdp);
+    public Utilisateur authentification( String pseudo, String mdp);
+
 
     public void ajouterCredit(int id, int credit) throws Exception;
 

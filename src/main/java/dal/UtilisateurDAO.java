@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UtilisateurDAO {
 
-    public void insert(Utilisateur user)throws DALException;
+    public void insert(Utilisateur user)throws Exception;
 
     public List<Utilisateur> selectAll() throws DALException;
 
@@ -18,7 +18,14 @@ public interface UtilisateurDAO {
 
     public Utilisateur selectByPseudo(String pseudo) throws DALException;
 
-    public Utilisateur checkLogin(String pseudo, String mdp) ;
+    public Utilisateur selectByEmail(String email) throws DALException;
+
+    public Utilisateur authentification(String pseudo, String mdp) ;
+
+    public boolean pseudoExist(String pseudo);
+
+    public boolean emailExist(String email);
+
 
     void ajouterCredit(int id, int credit);
 }
