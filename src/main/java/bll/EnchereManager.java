@@ -20,4 +20,8 @@ public interface EnchereManager {
     public void delete( int idUser, int idArticle) throws BLLException;
 
     public void update(Enchere enchere) throws BLLException;
+
+    Enchere dernierUtilisateur(int art) throws Exception ;
+
+    boolean gagne(Utilisateur uti, Article art) throws Exception ;
 }

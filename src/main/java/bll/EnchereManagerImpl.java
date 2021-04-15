@@ -5,6 +5,8 @@ import bo.Enchere;
 import bo.Utilisateur;
 import dal.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class EnchereManagerImpl implements EnchereManager {
@@ -72,4 +74,20 @@ public class EnchereManagerImpl implements EnchereManager {
             throw new BLLException("Erreur lors de la modif d'un retrait dans BLL");
         }
     }
+
+    @Override
+    public Enchere dernierUtilisateur(int art) throws Exception {
+        List<Enchere> list = enchereDAO.selectByArticle(art);
+        return list.get(0);
+    }
+
+    @Override
+    public boolean gagne(Utilisateur uti, Article art) throws Exception {
+        Enchere derniere = (Enchere) enchereDAO.selectByArticle(art.getNoArticle());
+        if (uti.getNoUtilisateur().equals(derniere.getUtilisateur().getNoUtilisateur()))
+            return true;
+        else
+            return false;
+    }
+
 }

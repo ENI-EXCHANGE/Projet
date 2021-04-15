@@ -1,5 +1,6 @@
 package bll;
 
+import bo.Article;
 import bo.Utilisateur;
 import dal.DALException;
 
@@ -37,7 +38,6 @@ public interface UtilisateurManager {
     public void removeUser(Utilisateur user) throws BLLException;
 
     public Utilisateur authentification( String pseudo, String mdp);
-
 
     public void ajouterCredit(int id, int credit) throws Exception;
 

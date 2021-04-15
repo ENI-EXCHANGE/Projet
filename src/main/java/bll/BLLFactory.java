@@ -6,7 +6,7 @@ public class BLLFactory {
 
     public static ArticleManager getArticleBLL() throws BLLException, DALException { return new ArticleManagerImpl();}
 
-    public static UtilisateurManager getUtilisateurBLL(){ return new UtilisateurManagerImpl();}
+    public static UtilisateurManager getUtilisateurBLL() throws BLLException, DALException { return new UtilisateurManagerImpl();}
 
     public static RetraitManager getRetraitManager() throws BLLException, DALException { return new RetraitManagerImpl();}
 

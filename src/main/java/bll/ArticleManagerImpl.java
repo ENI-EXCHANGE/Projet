@@ -29,6 +29,11 @@ public class ArticleManagerImpl implements ArticleManager{
     }
 
     @Override
+    public Article modifierArticle(Article art) throws Exception {
+        return dao.update(art);
+    }
+
+    @Override
     public List<Article> selectAll() throws Exception {
         return articleDAO.selectAll();
     }

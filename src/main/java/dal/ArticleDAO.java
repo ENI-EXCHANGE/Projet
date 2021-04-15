@@ -22,5 +22,5 @@ public interface ArticleDAO {
 
     public void delete(int id) throws DALException ;
 
-    void update(Article art) throws  DALException;
+    Article update(Article art) throws  DALException;
 }

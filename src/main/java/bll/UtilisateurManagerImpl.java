@@ -1,8 +1,11 @@
 package bll;
 
+import bo.Article;
+import bo.Enchere;
 import bo.Utilisateur;
 import dal.DALException;
 import dal.DAOFactory;
+import dal.EnchereDAO;
 import dal.UtilisateurDAO;
 
 import java.util.List;
@@ -17,6 +20,9 @@ import java.util.List;
 public class UtilisateurManagerImpl  implements UtilisateurManager {
 
     private UtilisateurDAO  dao =  DAOFactory.getUtilisateurDAO();
+
+    public UtilisateurManagerImpl() throws BLLException, DALException {
+    }
 
     @Override
     public List<Utilisateur> getListUsers() throws BLLException {

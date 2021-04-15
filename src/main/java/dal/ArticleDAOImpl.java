@@ -201,7 +201,7 @@ public class ArticleDAOImpl implements ArticleDAO{
     }
 
     @Override
-    public void update(Article art) throws DALException {
+    public Article update(Article art) throws DALException {
         try (Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlUpdate);
             stmt.setString(1, art.getNomArticle());
@@ -219,5 +219,6 @@ public class ArticleDAOImpl implements ArticleDAO{
             e.printStackTrace();
             throw new DALException("probleme dans la modification d'un article");
         }
+        return art;
     }
 }

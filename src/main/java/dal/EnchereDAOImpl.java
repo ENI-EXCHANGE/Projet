@@ -20,6 +20,7 @@ public class EnchereDAOImpl implements EnchereDAO {
     private static final String sqlUpdate = "UPDATE ENCHERES set date_enchere=?,montant_enchere=? where no_utilisateur=? AND no_article=?";
     private static final String sqlSelectById = "SELECT date_enchere,montant_enchere from ENCHERES where no_utilisateur=? AND no_article=?";
     private static final String sqlSelectByUtilisateur = "SELECT * FROM ENCHERES INNER JOIN UTILISATEURS ON ENCHERES.no_utilisateur = UTILISATEURS.no_utilisateurs INNER JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE no_utilisateurs=?";
+    private static final String sqlSelectByArticle = "SELECT * FROM ENCHERES WHERE no_article=? order by date_enchere DESC";
 
 
     private UtilisateurManager usr = new UtilisateurManagerImpl();
@@ -127,6 +128,29 @@ public class EnchereDAOImpl implements EnchereDAO {
                 lesEncheres.add(enchere);
             }
 
+        } catch (SQLException | BLLException e) {
+            e.printStackTrace();
+            throw new DALException("probleme dans la sélection d'une catégorie par l'id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lesEncheres;
+    }
+
+    @Override
+    public List<Enchere> selectByArticle(int id) throws Exception {
+        List<Enchere> lesEncheres = new ArrayList<Enchere>();
+        Enchere enchere = null;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = cnx.prepareStatement(sqlSelectByArticle);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Utilisateur idUser1 = usr.selectById(rs.getInt("no_utilisateur"));
+                Article idArticle1 = art.selectById(rs.getInt("no_article"));
+                enchere = new Enchere(idUser1,idArticle1, rs.getDate("date_enchere"),rs.getInt("montant_enchere"));
+                lesEncheres.add(enchere);
+            }
         } catch (SQLException | BLLException e) {
             e.printStackTrace();
             throw new DALException("probleme dans la sélection d'une catégorie par l'id");
