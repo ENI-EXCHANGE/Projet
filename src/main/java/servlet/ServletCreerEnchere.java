@@ -51,4 +51,5 @@ public class ServletCreerEnchere extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Article.jsp");
         rd.forward(request, response);
     }
+    
 }

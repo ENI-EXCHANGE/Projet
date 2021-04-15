@@ -173,12 +173,10 @@ public class EnchereDAOImpl implements EnchereDAO {
                 Article idArticle1 = art.selectById(idArticle);
                 enchere = new Enchere(idUser1,idArticle1, rs.getDate("date_enchere"),rs.getInt("montant_enchere"));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DALException("probleme dans la sélection d'une catégorie par l'id");
         }
         return enchere;
     }
-
 }

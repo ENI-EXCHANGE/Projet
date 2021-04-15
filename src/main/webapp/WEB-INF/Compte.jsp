@@ -1,6 +1,10 @@
 <%@ page import="bo.Article" %>
 <%@ page import="java.util.List" %>
-<%@ page import="bo.Enchere" %><%--
+<%@ page import="bo.Enchere" %>
+<%@ page import="bll.EnchereManager" %>
+<%@ page import="bll.EnchereManagerImpl" %>
+<%@ page import="bll.BLLException" %>
+<%@ page import="dal.DALException" %><%--
   Created by IntelliJ IDEA.
   User: micha
   Date: 11/04/2021
@@ -74,7 +78,23 @@
                         <h5 class=card-title">Article : <%= ench.getArticle().getNomArticle()%></h5>
                         <p class="card-text">Date de <%= ench.getDateEnchere()%></p>
                         <p class="card-text">Prix actuel: <%= ench.getMontantEnchere()%></p>
-                        <a href="<%=request.getContextPath() %>/Article?id=<%= ench.getArticle().getNoArticle()%>" class="btn btn-primary">Detail</a>
+                        <%
+                            try {
+                                EnchereManager enchere = new EnchereManagerImpl();
+                                if (enchere.gagne(ProfilSelectionne, ench.getArticle())){
+                                    %>
+                                        <p class="card-text">Vous Gagnez cette enchere !</p>
+                                        <a href="<%=request.getContextPath() %>/Article?id=<%= ench.getArticle().getNoArticle()%>" class="btn btn-primary">Detail</a>
+                                    <%
+                                    }else{
+                                        %>
+                                        <p class="card-text">Vous n'etes plus le premier encherisseur de cette enchere !</p>
+                                        <a href="<%=request.getContextPath() %>/Article?id=<%= ench.getArticle().getNoArticle()%>" class="btn btn-primary">ENCHERIR</a>
+                                    <%}
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        %>
                     </div>
                 </div>
                 <%}%>
