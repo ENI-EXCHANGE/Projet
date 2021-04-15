@@ -20,7 +20,7 @@
     Utilisateur usr = (Utilisateur) request.getAttribute("usr");
 %>
 <div class="wrapper">
-    <h1> Créer une Enchère :</h1>
+    <h1> Nouvelle Vente :</h1>
 
     <form action="<%=request.getContextPath() %>/Article" method="POST">
 

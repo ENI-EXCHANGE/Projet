@@ -27,24 +27,51 @@
         <%
         } else {
         %>
-        <h1>Fiche de l'article : <%= ArticleSelectionne.getNomArticle() %></h1>
+        <h1>Fiche de l'article :
+            <a href="<%=request.getContextPath() %>/Article?id=<%= ArticleSelectionne.getNoArticle() %>"> </a>
+            <%= ArticleSelectionne.getNomArticle() %></h1>
         <ul class="list-group">
 
             <li type="hidden" class="list-group-item">Numéro d'identification de l'article <%= ArticleSelectionne.getNoArticle() %></li>
             <li class="list-group-item">Nom : <%= ArticleSelectionne.getNomArticle() %></li>
             <li class="list-group-item">Description : <%= ArticleSelectionne.getDescription() %></li>
-            <li class="list-group-item">Date de mise aux enchères : <%= ArticleSelectionne.getDateDebutEncheres() %></li>
-            <li class="list-group-item">Date de fin de l'enchère : <%= ArticleSelectionne.getDateFinEncheres() %></li>
-            <li class="list-group-item">Prix de départ : <%= ArticleSelectionne.getPrixInitial() %></li>
-            <li class="list-group-item">Prix : <%= ArticleSelectionne.getPrixVente() %></li>
+            <li class="list-group-item">Mis en vente le <%= ArticleSelectionne.getDateDebutEncheres() %></li>
+            <li class="list-group-item">Fin de l'enchère le <%= ArticleSelectionne.getDateFinEncheres() %></li>
+            <li class="list-group-item">Mise à Prix : <%= ArticleSelectionne.getPrixInitial() %> points</li>
+            <li class="list-group-item">Meilleure Offre : <%= ArticleSelectionne.getPrixVente() %> points par <%= UtilisateurArticle.getPseudo() %></li>
             <li class="list-group-item">Catégorie : <%= CategorieArticle.getLibelle() %></li>
-            <li class="list-group-item">Vendeur : <a href="<%=request.getContextPath() %>/Compte?pseudo=<%= UtilisateurArticle.getPseudo() %>"> <%= UtilisateurArticle.getPseudo() %></a></li>
+            <li class="list-group-item">Vendeur : <a href="<%=request.getContextPath() %>/Compte?pseudo=<%= UtilisateurArticle.getPseudo() %>">
+                <%= UtilisateurArticle.getPseudo() %></a>
+            </li>
 
         </ul>
+
+        <form action="<%=request.getContextPath() %>/encherir" method="post">
+            <input type="hidden" name="idArticleEnch" id="idArticleEnch" value="<%= ArticleSelectionne.getNoArticle() %>">
+
+            <div class="row">
+                <div class="offset-md-4 col-md-3">
+                    <label for="point"> Ma Proposition</label>
+                    <input class="point" type="number"  id="point" name="point">
+                </div>
+                <div class="offset-md-4 col-md-3">
+                    <button type="submit"
+                            class="btn btn-primary btn-block"
+                            name=encherir"
+                            href="<%=request.getContextPath() %>/Article?idArticleEnch=<%= ArticleSelectionne.getNoArticle() %>" >
+                        Encherir </button>
+                </div>
+
+            </div>
+        </form>
         <%
             }
         %>
+
+
     </div>
+
+
 
 </body>
 

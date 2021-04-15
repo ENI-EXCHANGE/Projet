@@ -27,6 +27,7 @@ public class ServletCompte extends HttpServlet {
 
             try {
                 if (request.getParameter("pseudo") != null) {
+
                     Utilisateur UtilisateurArticle = usr.selectByPseudo(request.getParameter("pseudo"));
                     request.setAttribute("ProfilSelectionne", UtilisateurArticle);
                 } else {

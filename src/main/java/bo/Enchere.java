@@ -63,4 +63,5 @@ public class Enchere {
                 ", montantEnchere=" + montantEnchere +
                 '}';
     }
+
 }

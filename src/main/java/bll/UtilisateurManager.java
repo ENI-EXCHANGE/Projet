@@ -39,6 +39,8 @@ public interface UtilisateurManager {
 
     public Utilisateur authentification( String pseudo, String mdp);
 
+    public void debiterCredit(int id, int credit) throws Exception;
+
     public void ajouterCredit(int id, int credit) throws Exception;
 
 
