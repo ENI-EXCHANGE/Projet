@@ -45,7 +45,7 @@
                         Utilisateur dernierEncherisseur = (Utilisateur) request.getAttribute("dernierEncherisseur");
                         if (dernierEncherisseur!= null){
                     %>
-                    <a href="<%=request.getContextPath() %>/Compte?id=<%= dernierEncherisseur.getNoUtilisateur() %>"> faite par <%= dernierEncherisseur.getPseudo() %> </a>
+                    faite par <a href="<%=request.getContextPath() %>/Compte?id=<%= dernierEncherisseur.getNoUtilisateur() %>"> <%= dernierEncherisseur.getPseudo() %> </a>
                     <%
                     } else {
                     %>

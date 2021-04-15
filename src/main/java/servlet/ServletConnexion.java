@@ -75,8 +75,7 @@ TODO : gérer les sessions User/admin
                     rd3.forward(request, response);
                 }
                 break;
-        }
-
+           }
     }
 
     @Override
@@ -137,21 +136,15 @@ TODO : gérer les sessions User/admin
                     cookiemdp.setMaxAge(60*60);
                     response.addCookie(cookieLogin);
                     response.addCookie(cookiemdp);
-                    // voir comment faire pour récupéré la valeur de si c'est coché ou non
+
                     if (rememberMe){
-                        System.out.println("la checkbox remember est cochée");
                         Cookie[] cookies = request.getCookies();
 
                         if(cookies != null ) {
-                            System.out.println("liste des cookies = " + cookies);
                             for(Cookie c : cookies) {
-                                System.out.println("dans le for des cookies");
-                                System.out.println(c.getName());
-                                if(c.getName().equals("login") ) {
+                               if(c.getName().equals("login") ) {
                                     cookieLogin = c;
-                                    System.out.println(cookieLogin);
                                     log = cookieLogin.getValue();
-
                                 }
                                 else if(c.getName().equals("mdp")) {
                                     cookiemdp = c;
@@ -201,9 +194,6 @@ TODO : gérer les sessions User/admin
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher(destinationPage);
                 System.out.println(dispatcher);

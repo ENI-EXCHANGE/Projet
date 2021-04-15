@@ -136,7 +136,7 @@
                     <p class="card-text">Fin de l'enchère :<br> <%= article.getDateFinEncheres()%></p>
                     <p class="card-text">Vendeur : <% if( resu != null ){%><a href="Compte?pseudo=<%=article.getUtilisateur().getPseudo()%>"><%=article.getUtilisateur().getPseudo() %></a>
                         <%}else{%><%=article.getUtilisateur().getPseudo()%><%}%></p>
-                    <a href="Article?id=<%= article.getNoArticle()%>" class="btn btn-primary">Detail</a>
+                    <a href="Article?id=<%=article.getNoArticle()%>" class="btn btn-primary">Detail</a>
                 </div>
             </div>
 

@@ -40,6 +40,7 @@
             <li class="list-group-item">Crédit : <%= ProfilSelectionne.getCredit() %></li>
             <li class="list-group-item">Administrateur : <%= ProfilSelectionne.getAdministrateur() %></li>
         </ul>
+
         <%
             if (resu.getPseudo().equals(ProfilSelectionne.getPseudo())){
                 %>

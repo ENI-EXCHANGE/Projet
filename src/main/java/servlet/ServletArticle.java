@@ -101,24 +101,22 @@ public class ServletArticle extends HttpServlet {
                     Categorie CategorieArticle = cat.selectById(ArtSelectedEnch.getCategorie().getNoCategorie());
                     int proposition = Integer.parseInt(request.getParameter("point"));
                     Utilisateur UtilisateurArticle = usr.selectById(ArtSelectedEnch.getUtilisateur().getNoUtilisateur());
+                    Enchere nouvelleEnchere = new Enchere(utilisateurConnected, ArtSelectedEnch, proposition);
+                    Enchere echereExistante = ench.selectById(utilisateurConnected.getNoUtilisateur(),ArtSelectedEnch.getNoArticle());
                     Utilisateur dernierEncherisseur = ench.dernierUtilisateur(ArtSelectedEnch.getNoArticle()).getUtilisateur();
 
 
                     request.setAttribute("ArticleSelectionne", ArtSelectedEnch);
                     request.setAttribute("UtilisateurArticle", UtilisateurArticle);
                     request.setAttribute("CategorieArticle", CategorieArticle);
-                    request.setAttribute("dernierEncherisseur", UtilisateurArticle);
+                    request.setAttribute("dernierEncherisseur", nouvelleEnchere.getUtilisateur());
+
 
 
 
                     if (proposition > ArtSelectedEnch.getPrixVente() && (utilisateurConnected.getCredit()- proposition)>0 ) {
                         System.out.println("condtions pour encherir validées");
-
-
-                        Enchere nouvelleEnchere = new Enchere(utilisateurConnected, ArtSelectedEnch, proposition);
-                        Enchere echereExistante = ench.selectById(utilisateurConnected.getNoUtilisateur(),ArtSelectedEnch.getNoArticle());
-
-                        if(echereExistante != null){
+                         if(echereExistante != null){
                             if ((nouvelleEnchere.getUtilisateur().getNoUtilisateur()).equals(echereExistante.getUtilisateur().getNoUtilisateur())){
 
                                 ench.update(nouvelleEnchere);
