@@ -18,6 +18,9 @@ public class ServletUtilisateurs extends HttpServlet {
 
     UtilisateurManager usr = new UtilisateurManagerImpl();
 
+    public ServletUtilisateurs() throws BLLException, DALException {
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

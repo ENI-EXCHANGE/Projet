@@ -19,8 +19,8 @@
     List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("listeCategories");
     Utilisateur usr = (Utilisateur) request.getAttribute("usr");
 %>
-<div class="wrapper">
-    <h1> Nouvelle Vente :</h1>
+<div class="container">
+    <h1 class="text-center"> Nouvelle Vente :</h1>
 
     <form action="<%=request.getContextPath() %>/Article" method="POST">
 

@@ -108,10 +108,4 @@ public class ArticleManagerImpl implements ArticleManager{
         }
         return laListeAtt;
     }
-
-    @Override
-    public void modifierArticle(Article article) throws Exception {
-        articleDAO.update(article);
-    }
-
 }

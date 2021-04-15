@@ -15,7 +15,7 @@
 </head>
 <body>
 <%@include file="navbar.jsp" %>
-    <div class="wrapper">
+    <div class="container">
         <%
             Article ArticleSelectionne = (Article) request.getAttribute("ArticleSelectionne");
             Categorie CategorieArticle = (Categorie) request.getAttribute("CategorieArticle");

@@ -21,6 +21,8 @@ TODO : gérer les sessions User/admin
     UtilisateurManagerImpl userTest = new UtilisateurManagerImpl();
     String destinationPage = null;
 
+    public ServletConnexion() throws BLLException, DALException {
+    }
 
 
     @Override

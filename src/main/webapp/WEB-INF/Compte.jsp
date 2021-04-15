@@ -74,7 +74,7 @@
                         <h5 class=card-title">Article : <%= ench.getArticle().getNomArticle()%></h5>
                         <p class="card-text">Date de <%= ench.getDateEnchere()%></p>
                         <p class="card-text">Prix actuel: <%= ench.getMontantEnchere()%></p>
-                        <a href="#" class="btn btn-primary">Detail</a>
+                        <a href="<%=request.getContextPath() %>/Article?id=<%= ench.getArticle().getNoArticle()%>" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
                 <%}%>
@@ -105,7 +105,7 @@
                         <p class="card-text"><%= art.getDescription()%></p>
                         <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
                         <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
-                        <a href="#" class="btn btn-primary">Detail</a>
+                        <a href="<%=request.getContextPath() %>/Enchere?id=<%= art.getNoArticle()%>" class="btn btn-primary">Modifier/supprimer</a>
                     </div>
                 </div>
                 <%}%>
@@ -133,7 +133,7 @@
                         <p class="card-text"><%= art.getDescription()%></p>
                         <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
                         <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
-                        <a href="#" class="btn btn-primary">Detail</a>
+                        <a href="<%=request.getContextPath() %>/Article?id=<%= art.getNoArticle()%>" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
                 <%}%>
@@ -157,7 +157,7 @@
                                 <p class="card-text"><%= art.getDescription()%></p>
                                 <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
                                 <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
-                                <a href="#" class="btn btn-primary">Detail</a>
+                                <a href="<%=request.getContextPath() %>/Article?id=<%= art.getNoArticle()%>" class="btn btn-primary">Detail</a>
                             </div>
                         </div>
                     <%}%>

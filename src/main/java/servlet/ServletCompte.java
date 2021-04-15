@@ -121,7 +121,6 @@ public class ServletCompte extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 RequestDispatcher rd1 = request.getRequestDispatcher("/WEB-INF/Compte.jsp");
                 rd1.forward(request, response);
                 break;
@@ -143,7 +142,6 @@ public class ServletCompte extends HttpServlet {
                 RequestDispatcher rd3 = request.getRequestDispatcher("/WEB-INF/index.jsp");
                 rd3.forward(request, response);
                 break;
-
         }
     }
 }
