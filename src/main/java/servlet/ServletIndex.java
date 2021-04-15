@@ -206,6 +206,14 @@ public class ServletIndex extends HttpServlet {
                 {
                    // listeArticles = listeArticlesDeb;
                 }
+                else
+                {
+                    try {
+                        listeArticles = article.selectByCours(listeArticles);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
     /*
                 else if (request.getParameter("ventesTerminees") != null)
                 {
@@ -262,6 +270,8 @@ public class ServletIndex extends HttpServlet {
                     }
                 }
 
+                // Concatenation des listes
+
                 if (request.getParameter("ventesCours") != null & request.getParameter("ventesTerminees") != null & request.getParameter("ventesNonDebutees") != null)
                 {
                     try {
@@ -270,7 +280,7 @@ public class ServletIndex extends HttpServlet {
                         e.printStackTrace();
                     }
                 }
-                if (request.getParameter("ventesCours") != null & request.getParameter("ventesTerminees") != null)
+                else if (request.getParameter("ventesCours") != null & request.getParameter("ventesTerminees") != null)
                 {
                     try {
                         listeArticles = article.concat(listeArticlesOuv,listeArticlesDeb,listeArticlesTerm);
@@ -278,7 +288,7 @@ public class ServletIndex extends HttpServlet {
                         e.printStackTrace();
                     }
                 }
-                if (request.getParameter("ventesCours") != null & request.getParameter("ventesNonDebutees") != null)
+                else if (request.getParameter("ventesCours") != null & request.getParameter("ventesNonDebutees") != null)
                 {
                     try {
                         listeArticles = article.concat(listeArticlesOuv,listeArticlesDeb,listeArticlesTerm);
@@ -286,7 +296,7 @@ public class ServletIndex extends HttpServlet {
                         e.printStackTrace();
                     }
                 }
-                if (request.getParameter("ventesTerminees") != null & request.getParameter("ventesNonDebutees") != null)
+                else if (request.getParameter("ventesTerminees") != null & request.getParameter("ventesNonDebutees") != null)
                 {
                     try {
                         listeArticles = article.concat(listeArticlesOuv,listeArticlesDeb,listeArticlesTerm);
@@ -421,7 +431,7 @@ public class ServletIndex extends HttpServlet {
             e.printStackTrace();
         }*/
 
-
+        request.setAttribute("noCategorie",cat);
         request.setAttribute("noCategorie",cat);
         request.setAttribute("categories",listeCategories);
         request.setAttribute("articles",listeArticles);
