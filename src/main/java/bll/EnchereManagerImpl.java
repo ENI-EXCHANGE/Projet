@@ -7,6 +7,7 @@ import dal.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EnchereManagerImpl implements EnchereManager {
@@ -78,7 +79,15 @@ public class EnchereManagerImpl implements EnchereManager {
     @Override
     public Enchere dernierUtilisateur(int art) throws Exception {
         List<Enchere> list = enchereDAO.selectByArticle(art);
-        return list.get(0);
+       if (list.size() != 0)
+       {
+           return list.get(0);
+       }
+       else
+       {
+           return null;
+       }
+
     }
 
     @Override
@@ -93,6 +102,38 @@ public class EnchereManagerImpl implements EnchereManager {
             return true;
         else
             return false;
+    }
+
+    @Override
+    public List<Article> selectByUtilisateurWithList(int noUtilisateur, List<Article> list) throws Exception {
+
+        List<Article> laListeAtt = new ArrayList<>();
+
+        for (Article art : list){
+            Enchere dernier = dernierUtilisateur(art.getNoArticle());
+            if(dernier != null)
+            {
+                if ( dernier.getUtilisateur().getNoUtilisateur() == noUtilisateur){
+                    laListeAtt.add(art);
+                }
+            }
+
+        }
+        return laListeAtt;
+    }
+
+    public List<Article> gagneWithList(Utilisateur uti, List<Article> list) throws Exception {
+
+        List<Article> laListeAtt = new ArrayList<>();
+
+        for (Article art : list){
+            /*
+            if (gagne(uti,art))
+            {
+                laListeAtt.add(art);
+            }*/
+        }
+        return laListeAtt;
     }
 
 }

@@ -23,4 +23,5 @@ public interface EnchereDAO {
     List<Enchere> selectByUtilisateur(int id) throws DALException;
 
     List<Enchere> selectByArticle (int id) throws Exception;
+
 }

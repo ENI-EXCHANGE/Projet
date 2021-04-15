@@ -17,6 +17,8 @@ public interface EnchereManager {
 
     public List<Enchere> selectByUtilisateur(int id) throws Exception;
 
+
+
     public void delete( int idUser, int idArticle) throws BLLException;
 
     public void update(Enchere enchere) throws BLLException;
@@ -26,4 +28,8 @@ public interface EnchereManager {
     public List<Enchere> selectByArticle(int id) throws Exception;
 
     boolean gagne(Utilisateur uti, Article art) throws Exception ;
+
+    public List<Article> selectByUtilisateurWithList(int noUtilisateur, List<Article> list) throws Exception;
+
+    public List<Article> gagneWithList(Utilisateur uti, List<Article> list) throws Exception;
 }

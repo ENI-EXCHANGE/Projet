@@ -10,6 +10,8 @@ public interface ArticleDAO {
 
     public List<Article> selectAll() throws DALException ;
 
+    public List<Article> selectAllDate() throws DALException ;
+
     public List<Article> selectByName(String name) throws DALException ;
 
     public List<Article> selectByCategorie(int noCategorie) throws DALException ;
