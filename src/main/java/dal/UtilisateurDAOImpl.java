@@ -135,11 +135,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     }
 
     @Override
-    public Utilisateur selectById(int id ) throws DALException {
+    public Utilisateur selectById(int id) throws DALException {
         Utilisateur user = null;
         try(Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(SELECBYID);
             stmt.setInt(1, id);
+            System.out.println();
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 user = new Utilisateur(rs.getInt("no_utilisateurs"),
@@ -157,7 +158,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DALException("impossible de récupérer l'utilisateur par le pseudo");
+            throw new DALException("impossible de récupérer l'utilisateur par l'ID");
         }
         return user;
     }
@@ -170,9 +171,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             stmt.setString(1, pseudo);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                if(pseudo.equals( rs.getString("pseudo"))){
-                    throw new DALException("Ce pseudo existe déjà !!");
-                }else {
                     user = new Utilisateur(rs.getInt("no_utilisateurs"),
                             rs.getString("pseudo"),
                             rs.getString("nom"),
@@ -185,8 +183,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                             rs.getString("mot_de_passe"),
                             rs.getInt("credit"),
                             rs.getInt("administrateur"));
-                }
-
             }
         } catch (SQLException e) {
             throw new DALException("impossible de récupérer l'utilisateur par le pseudo");
@@ -266,11 +262,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             PreparedStatement stmt = cnx.prepareStatement(CHECK_PSEUDO_IS_UNIQUE);
             stmt.setString(1,pseudo);
             ResultSet rs = stmt.executeQuery();
-
             if (rs.next()){
-                resulat = rs.getString("pseudo") == pseudo;
+                resulat = rs.getString("pseudo").equals(pseudo);
             }
-
         }catch (SQLException throwables) {
             throwables.getMessage();
         }

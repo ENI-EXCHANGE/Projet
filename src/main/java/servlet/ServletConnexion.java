@@ -1,8 +1,10 @@
 package servlet;
 
-import bll.BLLException;
+import bll.*;
 
-import bll.UtilisateurManagerImpl;
+import bo.Article;
+import bo.Categorie;
+import bo.Enchere;
 import bo.Utilisateur;
 import dal.DALException;
 
@@ -10,6 +12,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "ServletConnexion", value = {"/connexion", "/creationCompte", "/deconnexion"})
 public class ServletConnexion extends HttpServlet {
@@ -20,6 +23,14 @@ TODO : gérer les sessions User/admin
   */
     UtilisateurManagerImpl userTest = new UtilisateurManagerImpl();
     String destinationPage = null;
+
+    ArticleManager article = new ArticleManagerImpl();
+    CategorieManager categorie = new CategorieManagerImpl();
+    EnchereManager enchere = new EnchereManagerImpl();
+
+    List<Article> listeArticles;
+    List<Categorie> listeCategories;
+    List<Enchere> listeEncheres;
 
     public ServletConnexion() throws BLLException, DALException {
     }
@@ -44,6 +55,22 @@ TODO : gérer les sessions User/admin
                     session.removeAttribute("utilisateurConnecte");
                     String message = "Vous êtes maintenant déconnecté";
                     request.setAttribute("message", message);
+                    try {
+                        //    System.out.println("Je passe dans le try DOGET de index");
+
+                        listeArticles = article.selectAllDate();
+                        request.setAttribute("articles",listeArticles );
+
+                        listeCategories = categorie.selectAll();
+                        request.setAttribute("categories",listeCategories);
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    request.setAttribute("encheres",null);
+                    request.setAttribute("noCategorie",0);
                     RequestDispatcher rd3 = request.getRequestDispatcher("/WEB-INF/index.jsp");
                     rd3.forward(request, response);
                 }
@@ -145,6 +172,24 @@ TODO : gérer les sessions User/admin
                         } else {
                             HttpSession session = request.getSession();
                             session.setAttribute("utilisateurConnecte", checkuser);
+
+                            try {
+                                //    System.out.println("Je passe dans le try DOGET de index");
+
+                                listeArticles = article.selectAllDate();
+                                request.setAttribute("articles",listeArticles );
+
+                                listeCategories = categorie.selectAll();
+                                request.setAttribute("categories",listeCategories);
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            request.setAttribute("encheres",null);
+                            request.setAttribute("noCategorie",0);
+
                             destinationPage = "/WEB-INF/index.jsp";
                         }
                     } else {
@@ -171,7 +216,7 @@ TODO : gérer les sessions User/admin
                     session.invalidate();
                     String message = "Vous êtes maintenant déconnecté";
                     request.setAttribute("message", message);
-                    RequestDispatcher rd2 = request.getRequestDispatcher("ServletIndex");
+                    RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/index.jsp");
                     rd2.forward(request, response);
                 }
                 break;

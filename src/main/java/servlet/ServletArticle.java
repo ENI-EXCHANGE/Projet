@@ -35,12 +35,14 @@ public class ServletArticle extends HttpServlet {
             Article ArticleSelectionneGet = art.selectById(Integer.parseInt(request.getParameter("id")));
             Categorie CategorieArticle = cat.selectById(ArticleSelectionneGet.getCategorie().getNoCategorie());
             Utilisateur UtilisateurArticle = usr.selectById(ArticleSelectionneGet.getUtilisateur().getNoUtilisateur());
-            Utilisateur dernierEncherisseur = ench.dernierUtilisateur(ArticleSelectionneGet.getNoArticle()).getUtilisateur();
+            if (ench.dernierUtilisateur(ArticleSelectionneGet.getNoArticle()) != null){
+                Utilisateur dernierEncherisseur = ench.dernierUtilisateur(ArticleSelectionneGet.getNoArticle()).getUtilisateur();
+                request.setAttribute("dernierEncherisseur", dernierEncherisseur);
+            }
 
             request.setAttribute("ArticleSelectionne",ArticleSelectionneGet );
             request.setAttribute("CategorieArticle", CategorieArticle);
             request.setAttribute("UtilisateurArticle", UtilisateurArticle);
-            request.setAttribute("dernierEncherisseur", dernierEncherisseur);
 
         } catch (Exception e) {
             e.printStackTrace();
