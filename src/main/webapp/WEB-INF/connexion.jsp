@@ -38,7 +38,7 @@
             <input type="checkbox" id="rememberMe" value="true" name="rememberMe" checked>
             <label for="rememberMe">se souvenir de moi</label><br>
 
-            <a href="" > Mot de passe oublié</a><br>
+            <a href="<%=request.getContextPath() %>/MotDePasse" > Mot de passe oublié</a><br>
 
 
         </form>

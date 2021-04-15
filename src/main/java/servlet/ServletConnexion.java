@@ -138,10 +138,15 @@ TODO : gérer les sessions User/admin
                     request.setAttribute("mdp", pwd);
 
                     if (checkuser != null ){
-                        HttpSession session = request.getSession();
-                        session.setAttribute("utilisateurConnecte", checkuser);
-                        destinationPage = "/WEB-INF/index.jsp";
-
+                        if (checkuser.getAdministrateur()==2){
+                            String message = "Ce compte est invalide, désolé...";
+                            request.setAttribute("message", message);
+                            destinationPage = "/WEB-INF/connexion.jsp";
+                        } else {
+                            HttpSession session = request.getSession();
+                            session.setAttribute("utilisateurConnecte", checkuser);
+                            destinationPage = "/WEB-INF/index.jsp";
+                        }
                     } else {
                         String message = "la connexion à votre compte a échoué, vérifiez votre login et/ou mot de passe";
                         request.setAttribute("message", message);

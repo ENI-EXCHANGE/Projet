@@ -43,6 +43,5 @@ public interface UtilisateurManager {
 
     public void ajouterCredit(int id, int credit) throws Exception;
 
-
-
+    void invalider(Utilisateur id) throws Exception;
 }

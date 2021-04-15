@@ -13,7 +13,6 @@
 </head>
 <body>
 <%@include file="navbar.jsp" %>
-
 <%
     if( resu == null || resu.getAdministrateur()==0) {
 %>
@@ -28,7 +27,6 @@
         if(listeUtilisateurs == null || listeUtilisateurs.isEmpty()) {
     %>
     <p>Pas d'Utilisateurs pour l'instant</p>
-
     <%
     } else {
     %>
@@ -54,10 +52,15 @@
             <td><%= usr.getEmail() %></td>
             <td><%= usr.getAdministrateur() %></td>
             <td>
-                <form action="<%=request.getContextPath() %>/Utilisateurs"
-                      method="post">
+                <form action="<%=request.getContextPath() %>/SupprimerUtil" method="post">
+                    <input type="hidden" id="no_utilisateur2" name="no_utilisateur" value=<%= usr.getNoUtilisateur() %>>
+                    <input class="btn btn-primary" type="submit" id="Supprimer" name="Supprimer" value="Supprimer">
+                </form>
+            </td>
+            <td>
+                <form action="<%=request.getContextPath() %>/Invalider" method="post">
                     <input type="hidden" id="no_utilisateur" name="no_utilisateur" value=<%= usr.getNoUtilisateur() %>>
-                    <input class="btn btn-primary" type="submit" value="Supprimer" >
+                    <input class="btn btn-primary" type="submit" id="Invalider" name="Invalider" value="Invalider">
                 </form>
             </td>
             <% } %>
