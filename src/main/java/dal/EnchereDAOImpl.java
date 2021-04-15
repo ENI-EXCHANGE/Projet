@@ -14,10 +14,10 @@ import java.util.List;
 
 public class EnchereDAOImpl implements EnchereDAO {
 
-    private static final String sqlInsert = "INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere) VALUES(?,?,?,?)";
+    private static final String sqlInsert = "INSERT INTO ENCHERES(no_utilisateur, no_article, montant_enchere) VALUES(?,?,?)";
     private static final String sqlSelectAll = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES";
     private static final String sqlDelete = "DELETE from ENCHERES where no_utilisateur=? AND no_article=?";
-    private static final String sqlUpdate = "UPDATE ENCHERES set date_enchere=?,montant_enchere=? where no_utilisateur=? AND no_article=?";
+    private static final String sqlUpdate = "UPDATE ENCHERES set montant_enchere=? where no_utilisateur=? AND no_article=?";
     private static final String sqlSelectById = "SELECT date_enchere,montant_enchere from ENCHERES where no_utilisateur=? AND no_article=?";
     private static final String sqlSelectByUtilisateur = "SELECT * FROM ENCHERES INNER JOIN UTILISATEURS ON ENCHERES.no_utilisateur = UTILISATEURS.no_utilisateurs INNER JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE no_utilisateurs=?";
     private static final String sqlSelectByArticle = "SELECT * FROM ENCHERES WHERE no_article=? order by date_enchere DESC";
@@ -35,8 +35,7 @@ public class EnchereDAOImpl implements EnchereDAO {
             PreparedStatement stmt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, enchere.getUtilisateur().getNoUtilisateur());
             stmt.setInt(2, enchere.getArticle().getNoArticle());
-            stmt.setDate(3, enchere.getDateEnchere());
-            stmt.setInt(4, enchere.getMontantEnchere());
+            stmt.setInt(3, enchere.getMontantEnchere());
 
             int nbRows = stmt.executeUpdate();
             if (nbRows == 1) {
@@ -100,10 +99,9 @@ public class EnchereDAOImpl implements EnchereDAO {
         try (Connection cnx = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = cnx.prepareStatement(sqlUpdate);
 
-            stmt.setDate(1, enchere.getDateEnchere());
-            stmt.setInt(2, enchere.getMontantEnchere());
-            stmt.setInt(3, enchere.getUtilisateur().getNoUtilisateur());
-            stmt.setInt(4, enchere.getArticle().getNoArticle());
+            stmt.setInt(1, enchere.getMontantEnchere());
+            stmt.setInt(2, enchere.getUtilisateur().getNoUtilisateur());
+            stmt.setInt(3, enchere.getArticle().getNoArticle());
             stmt.executeUpdate();
 
         } catch (Exception e) {

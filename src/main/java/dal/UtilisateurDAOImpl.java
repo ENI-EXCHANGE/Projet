@@ -21,6 +21,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String CHECK_PSEUDO_IS_UNIQUE = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
     private static final String CHECK_EMAIL_IS_UNIQUE = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
     private static final String SELECBYEMAIL = "SELECT no_utilisateurs, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email = ? ";
+
+
     public UtilisateurDAOImpl(){
 
     }

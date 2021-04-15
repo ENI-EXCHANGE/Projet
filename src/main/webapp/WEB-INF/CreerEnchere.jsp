@@ -41,10 +41,10 @@
         <input type="text" id="image" name="image"  ><br>
 
         <label for="dateDebut">Date de début de l'enchère :</label>
-        <input type="date" id="dateDebut" name="dateDebut"  ><br>
+        <input type="datetime-local" id="dateDebut" name="dateDebut"  ><br>
 
         <label for="dateFin">Date de fin de l'enchère :</label>
-        <input type="date" id="dateFin" name="dateFin" ><br>
+        <input type="datetime-local" id="dateFin" name="dateFin" ><br>
 
         <label for="prix">Prix de base :</label>
         <input type="text" id="prix" name="prix" ><br>

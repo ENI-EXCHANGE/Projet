@@ -23,5 +23,7 @@ public interface EnchereManager {
 
     Enchere dernierUtilisateur(int art) throws Exception ;
 
+    public List<Enchere> selectByArticle(int id) throws Exception;
+
     boolean gagne(Utilisateur uti, Article art) throws Exception ;
 }

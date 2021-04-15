@@ -100,49 +100,46 @@ TODO : gérer les sessions User/admin
                     String loguser = request.getParameter("login");
                     String mdpuser = request.getParameter("mot_de_passe");
                     Utilisateur checkuser = userTest.authentification(loguser,mdpuser);
+
                     boolean rememberMe = "true".equals(request.getParameter("rememberMe"));
+                    Cookie cookieLogin = new Cookie("login",loguser);
+                    Cookie cookiemdp = new Cookie("mdp",mdpuser);
+                    String log = null;
+                    String pwd = null;
+                    cookieLogin.setMaxAge(60*60);
+                    cookiemdp.setMaxAge(60*60);
+                    response.addCookie(cookieLogin);
+                    response.addCookie(cookiemdp);
+                    // voir comment faire pour récupéré la valeur de si c'est coché ou non
+                    if (rememberMe){
+                        System.out.println("la checkbox remember est cochée");
+                        Cookie[] cookies = request.getCookies();
+
+                        if(cookies != null ) {
+                            System.out.println("liste des cookies = " + cookies);
+                            for(Cookie c : cookies) {
+                                System.out.println("dans le for des cookies");
+                                System.out.println(c.getName());
+                                if(c.getName().equals("login") ) {
+                                    cookieLogin = c;
+                                    System.out.println(cookieLogin);
+                                    log = cookieLogin.getValue();
+
+                                }
+                                else if(c.getName().equals("mdp")) {
+                                    cookiemdp = c;
+                                    pwd = cookiemdp.getValue();
+
+                                }
+                            }
+                        }
+                    }
+                    request.setAttribute("login", log);
+                    request.setAttribute("mdp", pwd);
 
                     if (checkuser != null ){
                         HttpSession session = request.getSession();
                         session.setAttribute("utilisateurConnecte", checkuser);
-
-                        Cookie cookieLogin = new Cookie("login",loguser);
-                        Cookie cookiemdp = new Cookie("mdp",mdpuser);
-                        String log = null;
-                        String pwd = null;
-                        cookieLogin.setMaxAge(60*60);
-                        cookiemdp.setMaxAge(60*60);
-                        response.addCookie(cookieLogin);
-                        response.addCookie(cookiemdp);
-                        // voir comment faire pour récupéré la valeur de si c'est coché ou non
-                        if (rememberMe){
-                            System.out.println("la checkbox remember est cochée");
-                            Cookie[] cookies = request.getCookies();
-
-                            if(cookies != null ) {
-                                System.out.println("liste des cookies = " +cookies);
-                                for(Cookie c : cookies) {
-                                    System.out.println("dans le for des cookies");
-                                    System.out.println(c.getName());
-                                    if(c.getName().equals("login") ) {
-                                        cookieLogin = c;
-                                        log = c.getValue();
-                                        cookieLogin.setValue(log);
-
-                                    }
-                                    else if(c.getName().equals("mdp") ) {
-                                        cookiemdp = c;
-                                        pwd = c.getValue();
-                                        cookiemdp.setValue(pwd);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        request.setAttribute("login", log);
-                        request.setAttribute("mdp", pwd);
-
                         destinationPage = "/WEB-INF/index.jsp";
 
                     } else {

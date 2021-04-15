@@ -15,22 +15,21 @@ public class ArticleManagerImpl implements ArticleManager{
     private ArticleManager articleManager ;
     //public ArticleManagerImpl() { articleManager = BLLFactory.getArticleBLL(); }
 
-    private ArticleDAO articleDAO =  DAOFactory.getArticleDAO();
+    private final ArticleDAO articleDAO ;
 
-    private ArticleDAO dao;
 
     public ArticleManagerImpl() throws BLLException, DALException {
-        dao = DAOFactory.getArticleDAO();
+        articleDAO = DAOFactory.getArticleDAO();
     }
 
     @Override
     public void ajouterArticle(Article nouvelArticle) throws DALException {
-        dao.insert(nouvelArticle);
+        articleDAO.insert(nouvelArticle);
     }
 
     @Override
     public Article modifierArticle(Article art) throws Exception {
-        return dao.update(art);
+        return articleDAO.update(art);
     }
 
     @Override

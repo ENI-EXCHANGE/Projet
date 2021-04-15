@@ -68,6 +68,7 @@ public class ServletArticle extends HttpServlet {
                     LocalDate dateFin = LocalDate.parse(f, DateTimeFormatter.ISO_DATE);
                     Date dateDeb = Date.valueOf(dateDebut);
                     Date dateFi = Date.valueOf(dateFin);
+
                     String rue = request.getParameter("rue");
                     String ville = request.getParameter("ville");
                     String cp = request.getParameter("cp");
@@ -96,6 +97,7 @@ public class ServletArticle extends HttpServlet {
                     int proposition = Integer.parseInt(request.getParameter("point"));
                     Utilisateur UtilisateurArticle = usr.selectById(ArtSelectedEnch.getUtilisateur().getNoUtilisateur());
 
+
                     request.setAttribute("ArticleSelectionne", ArtSelectedEnch);
                     request.setAttribute("UtilisateurArticle", UtilisateurArticle);
                     request.setAttribute("CategorieArticle", CategorieArticle);
@@ -105,13 +107,20 @@ public class ServletArticle extends HttpServlet {
 
                     if (proposition > ArtSelectedEnch.getPrixVente() && (utilisateurConnected.getCredit()- proposition)>0 ) {
                         System.out.println("condtions pour encherir validées");
-                        Enchere nouvelleEnchere = new Enchere(utilisateurConnected, ArtSelectedEnch, Date.valueOf(LocalDate.now()), proposition);
+                        //System.out.println(Date.valueOf(LocalDateTime.now());
+
+                        Enchere nouvelleEnchere = new Enchere(utilisateurConnected, ArtSelectedEnch, proposition);
                         ench.insert(nouvelleEnchere); //ok
-                        usr.debiterCredit(nouvelleEnchere.getUtilisateur().getNoUtilisateur(), proposition);//ok
+                        Enchere enchUpdate = ench.selectById(utilisateurConnected.getNoUtilisateur(),ArtSelectedEnch.getNoArticle());
+
+                        usr.debiterCredit(enchUpdate.getUtilisateur().getNoUtilisateur(), proposition);//ok
                         usr.ajouterCredit(UtilisateurArticle.getNoUtilisateur(), ArtSelectedEnch.getPrixVente()); // ne prend pas le bon user
 
                         ArtSelectedEnch.setPrixVente(proposition);//ok
                         art.modifierArticle(ArtSelectedEnch);//ok
+                    }else {
+                        throw new Exception(" vous n'avez pas assez de crédit");
+
                     }
 
                 } catch (Exception e) {

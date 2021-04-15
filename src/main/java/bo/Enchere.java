@@ -1,6 +1,7 @@
 package bo;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.sql.Date;
 
@@ -19,6 +20,12 @@ public class Enchere {
         this.utilisateur = utilisateur;
         this.article = article;
         this.dateEnchere = dateEnchere;
+        this.montantEnchere = montantEnchere;
+    }
+
+    public Enchere(Utilisateur utilisateur, Article article, int montantEnchere) {
+        this.utilisateur = utilisateur;
+        this.article = article;
         this.montantEnchere = montantEnchere;
     }
 

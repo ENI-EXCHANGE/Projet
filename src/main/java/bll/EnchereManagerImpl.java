@@ -82,6 +82,11 @@ public class EnchereManagerImpl implements EnchereManager {
     }
 
     @Override
+    public List<Enchere> selectByArticle(int id) throws Exception {
+        return null;
+    }
+
+    @Override
     public boolean gagne(Utilisateur uti, Article art) throws Exception {
         Enchere derniere = (Enchere) enchereDAO.selectByArticle(art.getNoArticle());
         if (uti.getNoUtilisateur().equals(derniere.getUtilisateur().getNoUtilisateur()))
