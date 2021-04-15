@@ -31,7 +31,7 @@
             <input type="text" id="login" name="login" placeholder="<%=login %>" ><br>
 
             <label for="mdp">Mot de passe :</label>
-            <input type="text" id="mdp" name="mot_de_passe" placeholder="<%=mdp %>"><br>
+            <input type="password" id="mdp" name="mot_de_passe" placeholder="<%=mdp %>"><br>
             <p style="color: #ff0000"> ${message} </p> <br><br>
             <input type="submit" value="Connexion"  ><br>
 
