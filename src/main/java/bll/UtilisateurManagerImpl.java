@@ -127,6 +127,12 @@ public class UtilisateurManagerImpl  implements UtilisateurManager {
     public void ajouterCredit(int id, int point) throws Exception {
         dao.ajouterCredit(id, point);
     }
+
+    @Override
+    public void invalider(Utilisateur id) throws Exception {
+        dao.invalider(id);
+    }
+
     @Override
     public void debiterCredit(int id, int point) throws Exception {
         dao.debiterCredit(id, point);

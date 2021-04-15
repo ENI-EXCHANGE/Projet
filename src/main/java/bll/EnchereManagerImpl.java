@@ -136,4 +136,12 @@ public class EnchereManagerImpl implements EnchereManager {
         return laListeAtt;
     }
 
+    @Override
+    public boolean enchereRemporte(Utilisateur uti, Article art) throws Exception {
+        Date date = Date.valueOf(LocalDate.now());
+        if (gagne(uti, art) && art.getDateFinEncheres().before(date))
+            return true;
+        else
+            return false;
+    }
 }

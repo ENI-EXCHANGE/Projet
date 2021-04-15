@@ -1,8 +1,7 @@
 package servlet;
 
-import bll.BLLException;
-import bll.UtilisateurManager;
-import bll.UtilisateurManagerImpl;
+import bll.*;
+import bo.Article;
 import bo.Categorie;
 import bo.Utilisateur;
 import dal.DALException;
@@ -13,10 +12,11 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ServletUtilisateurs", value = "/Utilisateurs")
+@WebServlet(name = "ServletUtilisateurs", value = {"/Utilisateurs", "/SupprimerUtil", "/Invalider"})
 public class ServletUtilisateurs extends HttpServlet {
 
     UtilisateurManager usr = new UtilisateurManagerImpl();
+    ArticleManager art = new ArticleManagerImpl();
 
     public ServletUtilisateurs() throws BLLException, DALException {
     }
@@ -46,17 +46,41 @@ public class ServletUtilisateurs extends HttpServlet {
         Utilisateur user = (Utilisateur) session.getAttribute("utilisateurConnecté");
         request.setAttribute("usr", user);
 
-        try {
-            if (request.getParameter("no_utilisateur") != null) {
-                int no = Integer.parseInt(request.getParameter("no_utilisateur"));
-                usr.removeUser(usr.selectById(no));
-            }
+        switch(request.getServletPath()) {
+            case "/SupprimerUtil" :
 
-            List<Utilisateur> listeUtilisateurs = usr.getListUsers();
-            request.setAttribute("listeUtilisateurs", listeUtilisateurs);
+                try {
+                    if (request.getParameter("no_utilisateur") != null) {
+                        int no = Integer.parseInt(request.getParameter("no_utilisateur"));
+                        usr.removeUser(usr.selectById(no));
+                    }
 
-        } catch (BLLException | DALException e) {
-            e.printStackTrace();
+                    List<Utilisateur> listeUtilisateurs = usr.getListUsers();
+                    request.setAttribute("listeUtilisateurs", listeUtilisateurs);
+
+                } catch (BLLException | DALException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "/Invalider" :
+
+                try {
+                    if (request.getParameter("no_utilisateur") != null) {
+                        int no = Integer.parseInt(request.getParameter("no_utilisateur"));
+                        usr.invalider(usr.selectById(no));
+                        for (Article arti : art.selectByUtilisateur(no)){
+                            art.supprimerArticle(arti.getNoArticle());
+                        }
+                    }
+
+                    List<Utilisateur> listeUtilisateurs = usr.getListUsers();
+                    request.setAttribute("listeUtilisateurs", listeUtilisateurs);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/GestionDesUtilisateurs.jsp");

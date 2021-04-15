@@ -32,7 +32,7 @@
             <%= ArticleSelectionne.getNomArticle() %></h1>
         <ul class="list-group">
 
-            <li type="hidden" class="list-group-item">Numéro d'identification de l'article <%= ArticleSelectionne.getNoArticle() %></li>
+            <li type="hidden" class="list-group-item">Numéro d'identification de l'article : <%= ArticleSelectionne.getNoArticle() %></li>
             <li class="list-group-item">Nom : <%= ArticleSelectionne.getNomArticle() %></li>
             <li class="list-group-item">Description : <%= ArticleSelectionne.getDescription() %></li>
             <li class="list-group-item">Mis en vente le <%= ArticleSelectionne.getDateDebutEncheres() %></li>
