@@ -21,7 +21,6 @@ public class EnchereDAOImpl implements EnchereDAO {
     private static final String sqlSelectById = "SELECT date_enchere,montant_enchere from ENCHERES where no_utilisateur=? AND no_article=?";
     private static final String sqlSelectByUtilisateur = "SELECT * FROM ENCHERES INNER JOIN UTILISATEURS ON ENCHERES.no_utilisateur = UTILISATEURS.no_utilisateurs INNER JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE no_utilisateurs=?";
 
-
     private UtilisateurManager usr = new UtilisateurManagerImpl();
     private ArticleManager art = new ArticleManagerImpl();
 
@@ -159,4 +158,5 @@ public class EnchereDAOImpl implements EnchereDAO {
         }
         return enchere;
     }
+
 }

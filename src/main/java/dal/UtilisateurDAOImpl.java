@@ -16,6 +16,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String CHECKUSER = "SELECT * FROM UTILISATEURS WHERE pseudo=? and mot_de_passe=?";
     private static final String UPDATE ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE pseudo=?";
     private static final String AJOUTERCREDIT ="UPDATE UTILISATEURS SET credit=? WHERE no_utilisateurs=?";
+    private static final String DEBITER_CREDIT ="UPDATE UTILISATEURS SET credit=? WHERE no_utilisateurs=?";
     private static final String CHECK_USER_BY_LOGIN = "SELECT * FROM UTILISATEURS WHERE (pseudo=? and mot_de_passe=?) or (email=? and mot_de_passe=?) ";
     private static final String CHECK_PSEUDO_IS_UNIQUE = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
     private static final String CHECK_EMAIL_IS_UNIQUE = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
@@ -167,6 +168,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             stmt.setString(1, pseudo);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                if(pseudo.equals( rs.getString("pseudo"))){
+                    throw new DALException("Ce pseudo existe déjà !!");
+                }else {
                     user = new Utilisateur(rs.getInt("no_utilisateurs"),
                             rs.getString("pseudo"),
                             rs.getString("nom"),
@@ -179,6 +183,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
                             rs.getString("mot_de_passe"),
                             rs.getInt("credit"),
                             rs.getByte("administrateur"));
+                }
 
             }
         } catch (SQLException e) {
@@ -308,12 +313,25 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     }
 
     @Override
-    public void ajouterCredit(int id, int credit) {
+    public void ajouterCredit(int id, int point) {
         try(Connection cnx = ConnectionProvider.getConnection()){
             Utilisateur util = selectById(id);
-            int creditUser = util.getCredit();
-            int resultat = creditUser+credit;
+            int resultat = util.getCredit() + point;
             PreparedStatement stmt = cnx.prepareStatement(AJOUTERCREDIT);
+            stmt.setInt(1, resultat);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        } catch (SQLException | DALException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+    @Override
+    public void debiterCredit(int id, int point) {
+        try(Connection cnx = ConnectionProvider.getConnection()){
+            Utilisateur util = selectById(id);
+            int resultat = util.getCredit() - point;
+            PreparedStatement stmt = cnx.prepareStatement(DEBITER_CREDIT);
             stmt.setInt(1, resultat);
             stmt.setInt(2, id);
             stmt.executeUpdate();

@@ -3,7 +3,6 @@ package bll;
 import bo.Article;
 import bo.Enchere;
 import bo.Utilisateur;
-import dal.DALException;
 
 import java.util.List;
 
@@ -20,4 +19,6 @@ public interface EnchereManager {
     public void delete( int idUser, int idArticle) throws BLLException;
 
     public void update(Enchere enchere) throws BLLException;
+
+
 }

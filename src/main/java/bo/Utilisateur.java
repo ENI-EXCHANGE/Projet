@@ -78,6 +78,12 @@ public class Utilisateur {
         this.administrateur = administrateur;
     }
 
+    public void debitCredit(int point){
+        this.credit = this.getCredit()-point;
+    }
+    public void ajoutCredit(int point){
+        this.credit = this.getCredit()+point;
+    }
     public Integer getNoUtilisateur() {
         return noUtilisateur;
     }

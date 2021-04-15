@@ -72,4 +72,6 @@ public class EnchereManagerImpl implements EnchereManager {
             throw new BLLException("Erreur lors de la modif d'un retrait dans BLL");
         }
     }
+
+
 }

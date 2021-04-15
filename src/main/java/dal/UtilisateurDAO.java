@@ -29,4 +29,6 @@ public interface UtilisateurDAO {
     public boolean emailExist(String email);
 
     void ajouterCredit(int id, int credit);
+
+    public void debiterCredit(int id, int credit);
 }

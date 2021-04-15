@@ -22,6 +22,9 @@ public interface ArticleManager {
 
     public  List<Article> selectByUtilisateur(int id) throws Exception;
 
+    void modifierArticle (Article article) throws Exception;
+
+
     List<Article> selectByUtilisateurAtt(Integer noUtilisateur) throws Exception;
 
     List<Article> selectByUtilisateurCours(Integer noUtilisateur) throws Exception;

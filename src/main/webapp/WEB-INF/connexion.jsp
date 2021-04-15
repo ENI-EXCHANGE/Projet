@@ -22,17 +22,21 @@
         <form action="<%=request.getContextPath() %>/connexion" method="POST">
 
            <%-- <a>bonjour  ${ !empty utilisateurConnecte.prenom ? utilisateurConnecte.prenom : '' }</a><br><br> --%>
+               <%
+                   String login = (String) request.getAttribute("compteurAcces");
+                   String mdp = (String) request.getAttribute("compteurAcces");
 
+               %>
             <label for="login">Identifiant :</label>
-            <input type="text" id="login" name="login" ><br>
+            <input type="text" id="login" name="login" placeholder="<%=login %>" ><br>
 
             <label for="mdp">Mot de passe :</label>
-            <input type="text" id="mdp" name="mot_de_passe" ><br>
+            <input type="text" id="mdp" name="mot_de_passe" placeholder="<%=mdp %>"><br>
             <p style="color: #ff0000"> ${message} </p> <br><br>
             <input type="submit" value="Connexion"  ><br>
 
-            <input type="checkbox" id="keepConnected" value="Connexion">
-            <label for="keepConnected">se souvenir de moi</label><br>
+            <input type="checkbox" id="rememberMe" value="true" name="rememberMe" checked>
+            <label for="rememberMe">se souvenir de moi</label><br>
 
             <a href="" > Mot de passe oublié</a><br>
 

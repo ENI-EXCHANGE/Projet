@@ -1,16 +1,16 @@
 package servlet;
 
-import bll.BLLException;
-import bll.CategorieManager;
-import bll.CategorieManagerImpl;
-import bo.Categorie;
-import bo.Utilisateur;
+import bll.*;
+import bo.*;
 import dal.DALException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @WebServlet(name = "ServletCreerEnchere", value = "/CreerEnchere")
@@ -20,6 +20,11 @@ public class ServletCreerEnchere extends HttpServlet {
 
     public ServletCreerEnchere() throws BLLException, DALException {
     }
+
+    ArticleManager art = new ArticleManagerImpl();
+    UtilisateurManager usr = new UtilisateurManagerImpl();
+    EnchereManager ench = new EnchereManagerImpl();
+    RetraitManager ret = new RetraitManagerImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,7 +47,8 @@ public class ServletCreerEnchere extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/CreerEnchere.jsp");
+
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Article.jsp");
         rd.forward(request, response);
     }
 }
