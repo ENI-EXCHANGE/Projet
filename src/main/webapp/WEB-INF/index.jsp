@@ -183,10 +183,9 @@
                 for(Article article : listeArticles) {
 
                 %>
-            <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
-                <img src="..." class="card-img-top" alt="...">
+            <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%; box-shadow: 1px 10px 12px #555;">
                 <div class="card-body">
-                    <h5 class="card-title"><%= article.getNomArticle()%></h5>
+                    <h5 class="card-title text-center"><%= article.getNomArticle()%></h5>
                     <p class="card-text"><%= article.getDescription()%></p>
                     <p class="card-text">Prix : <%= article.getPrixVente()%></p>
                     <p class="card-text">Début : <%= article.getDateDebutEncheres()%></p>

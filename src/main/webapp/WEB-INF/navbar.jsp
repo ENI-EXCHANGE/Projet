@@ -9,7 +9,7 @@
   Time: 11:03
   To change this template use File | Settings | File Templates.
 --%>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm navbar-light bg-light" >
     <a class="navbar-brand" href="<%=request.getContextPath()%>/">Encheres</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
