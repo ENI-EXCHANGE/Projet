@@ -40,6 +40,7 @@
             <li class="list-group-item">Crédit : <%= ProfilSelectionne.getCredit() %></li>
             <li class="list-group-item">Administrateur : <%= ProfilSelectionne.getAdministrateur() %></li>
         </ul>
+
         <%
             if (resu.getPseudo().equals(ProfilSelectionne.getPseudo())){
                 %>
@@ -77,7 +78,7 @@
                 <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
                     <div class="card-body">
                         <h5 class=card-title">Article : <%= ench.getArticle().getNomArticle()%></h5>
-                        <p class="card-text">Date de <%= ench.getDateEnchere()%></p>
+                        <p class="card-text">Date de la dernière enchère : <br><%= ench.getDateEnchere()%></p>
                         <p class="card-text">Prix actuel: <%= ench.getMontantEnchere()%></p>
                         <%
                             try {
@@ -127,7 +128,7 @@
                 <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
                     <div class="card-body">
                         <h5 class=card-title"><%= art.getNomArticle()%></h5>
-                        <p class="card-text"><%= art.getDescription()%></p>
+                        <p class="card-text">L'enchère commence le : <br><%= art.getDateDebutEncheres()%></p>
                         <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
                         <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
                         <a href="<%=request.getContextPath() %>/Enchere?id=<%= art.getNoArticle()%>" class="btn btn-primary">Modifier/supprimer</a>
@@ -154,8 +155,8 @@
                 <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
                     <div class="card-body">
                         <h5 class=card-title"><%= art.getNomArticle()%></h5>
-                        <p class="card-text"><%= art.getDescription()%></p>
-                        <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
+                        <p class="card-text">Dernier enchérisseur : <%= art.getDescription()%></p>
+                        <p class="card-text">Fin de l'enchère : <%= art.getDateFinEncheres()%></p>
                         <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
                         <a href="<%=request.getContextPath() %>/Article?id=<%= art.getNoArticle()%>" class="btn btn-primary">Detail</a>
                     </div>
@@ -178,7 +179,7 @@
                         <div class="card col-md-3" style="margin-left: 8%;margin-bottom: 4%;">
                             <div class="card-body">
                                 <h5 class=card-title"><%= art.getNomArticle()%></h5>
-                                <p class="card-text"><%= art.getDescription()%></p>
+                                <p class="card-text">Gagnant de l'enchère : <br><%= art.getPrixInitial()%></p>
                                 <p class="card-text">Prix Initial: <%= art.getPrixInitial()%></p>
                                 <p class="card-text">Prix de vente : <%= art.getPrixVente()%></p>
                                 <a href="<%=request.getContextPath() %>/Article?id=<%= art.getNoArticle()%>" class="btn btn-primary">Detail</a>

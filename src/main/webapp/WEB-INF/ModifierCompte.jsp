@@ -46,10 +46,10 @@
         <input type="text" id="ville" name="ville" value="<%= ProfilSelectionne.getVille() %>"><br>
 
         <label for="mdp">Mot de passe :</label>
-        <input type="text" id="mdp" name="mot_de_passe" value="<%= ProfilSelectionne.getMotDePasse() %>"><br>
+        <input type="password" id="mdp" name="mot_de_passe" value="<%= ProfilSelectionne.getMotDePasse() %>"><br>
 
         <label for="mdp2">Confirmation du mot de passe :</label>
-        <input type="text" id="mdp2" name="mot_de_passe2"><br>
+        <input type="password" id="mdp2" name="mot_de_passe2"><br>
 
         <input type="submit" value="Modifier" class="btn btn-primary" >
         <a  class="btn btn-danger" href="<%=request.getContextPath() %>/Compte" > Annuler</a>

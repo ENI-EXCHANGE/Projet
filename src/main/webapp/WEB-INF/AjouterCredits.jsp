@@ -68,8 +68,8 @@
             <input type="hidden" name="ajout" id="ajout" value="<%= eight%>">
             <label for="CB">Numéro de Carte :</label>
             <input type="text" id="CB" name="CB" required>
-            <label for="expiration">Numéro de Carte :</label>
-            <input type="text" id="expiration" name="expiration" required>
+            <label for="expiration">Date d'éxpiration :</label>
+            <input type="date" id="expiration" name="expiration" required>
             <label for="CSV">CSV :</label>
             <input type="text" id="CSV" name="CSV" required>
         </div>

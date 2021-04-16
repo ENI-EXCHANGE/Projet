@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @WebServlet(name = "ServletArticle", value = {"/Article", "/encherir"})
 public class ServletArticle extends HttpServlet {
@@ -34,6 +35,11 @@ public class ServletArticle extends HttpServlet {
             Article ArticleSelectionneGet = art.selectById(Integer.parseInt(request.getParameter("id")));
             Categorie CategorieArticle = cat.selectById(ArticleSelectionneGet.getCategorie().getNoCategorie());
             Utilisateur UtilisateurArticle = usr.selectById(ArticleSelectionneGet.getUtilisateur().getNoUtilisateur());
+            if (ench.dernierUtilisateur(ArticleSelectionneGet.getNoArticle()) != null){
+                Utilisateur dernierEncherisseur = ench.dernierUtilisateur(ArticleSelectionneGet.getNoArticle()).getUtilisateur();
+                request.setAttribute("dernierEncherisseur", dernierEncherisseur);
+            }
+
             request.setAttribute("ArticleSelectionne",ArticleSelectionneGet );
             request.setAttribute("CategorieArticle", CategorieArticle);
             request.setAttribute("UtilisateurArticle", UtilisateurArticle);
@@ -48,6 +54,7 @@ public class ServletArticle extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String destinationPage = null;
         // recupération de la session :
         HttpSession session = request.getSession();
         // variables de session :
@@ -59,7 +66,7 @@ public class ServletArticle extends HttpServlet {
                 try {
 
 
-                    // request de CreerEnchere.jsp pour la création d'un nouvel article à mettre en vente :
+                // request de CreerEnchere.jsp pour la création d'un nouvel article à mettre en vente :
                     String nom = request.getParameter("nom");
                     String desc = request.getParameter("description");
                     String f = request.getParameter("dateFin");
@@ -73,11 +80,9 @@ public class ServletArticle extends HttpServlet {
                     String ville = request.getParameter("ville");
                     String cp = request.getParameter("cp");
                     Categorie categorie = cat.selectByLibelle(request.getParameter("categorie"));
-                    //Categorie CategorieArticle  = cat.selectById(ArticleSelectionnePost.getCategorie().getNoCategorie());
                     int prix = Integer.parseInt(request.getParameter("prix"));
 
                     Article nouvelArticle = new Article(nom, desc, dateDeb, dateFi, prix, prix, utilisateurConnected, categorie);
-                    //Enchere nouvelEnchere = new Enchere(utilisateurConnected, nouvelArticle, dateFi, prix);
                     Retrait nouveauRetrait = new Retrait(nouvelArticle, rue, ville, cp);
 
                     art.ajouterArticle(nouvelArticle);
@@ -91,35 +96,43 @@ public class ServletArticle extends HttpServlet {
 
             case "/encherir":
                 try {
-                    // request de Article.jsp pour encherir :
+                // request de Article.jsp pour encherir :
                     Article ArtSelectedEnch = art.selectById(Integer.parseInt(request.getParameter("idArticleEnch")));
                     Categorie CategorieArticle = cat.selectById(ArtSelectedEnch.getCategorie().getNoCategorie());
                     int proposition = Integer.parseInt(request.getParameter("point"));
                     Utilisateur UtilisateurArticle = usr.selectById(ArtSelectedEnch.getUtilisateur().getNoUtilisateur());
+                    Enchere nouvelleEnchere = new Enchere(utilisateurConnected, ArtSelectedEnch, proposition);
+                    Enchere echereExistante = ench.selectById(utilisateurConnected.getNoUtilisateur(),ArtSelectedEnch.getNoArticle());
+                    Utilisateur dernierEncherisseur = ench.dernierUtilisateur(ArtSelectedEnch.getNoArticle()).getUtilisateur();
 
 
                     request.setAttribute("ArticleSelectionne", ArtSelectedEnch);
                     request.setAttribute("UtilisateurArticle", UtilisateurArticle);
                     request.setAttribute("CategorieArticle", CategorieArticle);
+                    request.setAttribute("dernierEncherisseur", nouvelleEnchere.getUtilisateur());
 
-                    System.out.println("user connecté = " + utilisateurConnected.getPseudo() + " num= "+ utilisateurConnected.getNoUtilisateur());
-                    System.out.println("ancien encherisseur = " + UtilisateurArticle.getNoUtilisateur());
+
+
 
                     if (proposition > ArtSelectedEnch.getPrixVente() && (utilisateurConnected.getCredit()- proposition)>0 ) {
                         System.out.println("condtions pour encherir validées");
-                        //System.out.println(Date.valueOf(LocalDateTime.now());
+                         if(echereExistante != null){
+                            if ((nouvelleEnchere.getUtilisateur().getNoUtilisateur()).equals(echereExistante.getUtilisateur().getNoUtilisateur())){
 
-                        Enchere nouvelleEnchere = new Enchere(utilisateurConnected, ArtSelectedEnch, proposition);
-                        ench.insert(nouvelleEnchere); //ok
-                        Enchere enchUpdate = ench.selectById(utilisateurConnected.getNoUtilisateur(),ArtSelectedEnch.getNoArticle());
-
-                        usr.debiterCredit(enchUpdate.getUtilisateur().getNoUtilisateur(), proposition);//ok
-                        usr.ajouterCredit(UtilisateurArticle.getNoUtilisateur(), ArtSelectedEnch.getPrixVente()); // ne prend pas le bon user
-
-                        ArtSelectedEnch.setPrixVente(proposition);//ok
-                        art.modifierArticle(ArtSelectedEnch);//ok
+                                ench.update(nouvelleEnchere);
+                                usr.ajouterCredit(dernierEncherisseur.getNoUtilisateur(), ArtSelectedEnch.getPrixVente()); // ne prend pas le bon user
+                            }
+                        } else {
+                            ench.insert(nouvelleEnchere);
+                        }
+                        usr.debiterCredit(nouvelleEnchere.getUtilisateur().getNoUtilisateur(), proposition);
+                        ArtSelectedEnch.setPrixVente(proposition);
+                        art.modifierArticle(ArtSelectedEnch);
+                        String message = "Félicitation, votre enchère est validée !";
+                        request.setAttribute("message", message);
                     }else {
-                        throw new Exception(" vous n'avez pas assez de crédit");
+                        String message = "Enchère impossible, veuillez vérifier votre solde de points et vous assurer que votre proposition est supérieur à l'enchère en cours";
+                        request.setAttribute("message", message);
 
                     }
 

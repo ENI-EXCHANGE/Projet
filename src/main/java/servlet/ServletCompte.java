@@ -26,11 +26,17 @@ public class ServletCompte extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
             try {
-                if (request.getParameter("pseudo") != null) {
-
-                    Utilisateur UtilisateurArticle = usr.selectByPseudo(request.getParameter("pseudo"));
-                    request.setAttribute("ProfilSelectionne", UtilisateurArticle);
-                } else {
+                if (request.getParameter("id")!= null){
+                    Utilisateur userselect = usr.selectById(Integer.parseInt(request.getParameter("id")));
+                    System.out.println("userselect = " + userselect);
+                    if (userselect != null){
+                        request.setAttribute("ProfilSelectionne", userselect);
+                    }
+                } else if (request.getParameter("pseudo") != null) {
+                     Utilisateur UtilisateurArticle = usr.selectByPseudo(request.getParameter("pseudo"));
+                     request.setAttribute("ProfilSelectionne", UtilisateurArticle);
+                }
+                 else {
                     HttpSession session = request.getSession();
                     Utilisateur user = (Utilisateur) session.getAttribute("utilisateurConnecte");
                     List<Article> ListeArticleAttente = art.selectByUtilisateurAtt(user.getNoUtilisateur());

@@ -34,23 +34,23 @@ public class ServletMotDePasse extends HttpServlet {
         String email = request.getParameter("email");
 
         try {
-            usr.selectByPseudo(pseudo);
-            request.setAttribute("usr", usr);
-
+            Utilisateur user = usr.selectByPseudo(pseudo);
+            request.setAttribute("usr", user);
 
             if (request.getParameter("mdp") != null){
                 int nouser = Integer.parseInt(request.getParameter("nouser"));
-                Utilisateur user = usr.selectById(nouser);
-                user.setMotDePasse(request.getParameter("mdp"));
-                usr.updateUser(user);
+                Utilisateur user1 = usr.selectById(nouser);
+                user1.setMotDePasse(request.getParameter("mdp"));
+                usr.updateUser(user1);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+                rd.forward(request, response);
+            }else{
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/NouveauMotDePasse.jsp");
                 rd.forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/MotDePasseOublie.jsp");
-        rd.forward(request, response);
     }
 }
