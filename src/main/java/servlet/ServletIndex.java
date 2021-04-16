@@ -49,7 +49,6 @@ public class ServletIndex extends HttpServlet {
             e.printStackTrace();
         }
 
-        request.setAttribute("encheres",null);
         request.setAttribute("noCategorie",0);
         RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/index.jsp");
         rd.forward(request, response);
@@ -58,18 +57,8 @@ public class ServletIndex extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-/*
 
-
-        System.out.println("Achat ouvertes : "+request.getParameter("achatsOuvertes"));
-        System.out.println("Achat cours : "+request.getParameter("achatCours"));
-        System.out.println("Achat remportees : "+request.getParameter("achatRemportees"));
-
-        System.out.println("ventesCours : "+request.getParameter("ventesCours"));
-        System.out.println("ventes non debutes : "+request.getParameter("ventesNonDebutees"));
-        System.out.println("ventes termine : "+request.getParameter("ventesTerminees"));
-
-*/      HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         Utilisateur usr = (Utilisateur) session.getAttribute("utilisateurConnecte");
 
 
@@ -77,6 +66,19 @@ public class ServletIndex extends HttpServlet {
         String nom = request.getParameter("filtres");
         String radio = request.getParameter("radio");
         Integer cat = Integer.valueOf(request.getParameter("categorie"));
+
+
+        boolean radioVentes =false;
+
+        boolean achatOuvertes =false;
+        boolean achatCours =false;
+        boolean achatRemportees =false;
+
+        boolean ventesCours =false;
+        boolean ventesNonDebutees =false;
+        boolean ventesTerminees =false;
+
+
 
 
         if (nom != "") {
@@ -157,17 +159,17 @@ public class ServletIndex extends HttpServlet {
                 if (request.getParameter("achatCours") != null)
                 {
                     try {
-                        listeArticlesEnchCours = enchere.selectByUtilisateurWithList(usr.getNoUtilisateur(), listeArticles);
-
+                       // listeArticlesEnchCours = enchere.selectByUtilisateurWithList(usr.getNoUtilisateur(), listeArticles);
+                        listeArticlesEnchCours = enchere.selectByUtilisateurWithList(usr, listeArticles);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 List<Article> listeArticlesRempo = new ArrayList<>();
-                if (request.getParameter("encheresRemportees") != null)
+                if (request.getParameter("achatRemportees") != null)
                 {
                     try {
-                        listeArticlesRempo = enchere.gagneWithList(usr,listeArticles);
+                        listeArticlesRempo = enchere.enchereRemporteWithList(usr,listeArticles);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -176,35 +178,68 @@ public class ServletIndex extends HttpServlet {
 
                 if (request.getParameter("achatsOuvertes") != null & request.getParameter("achatCours") != null & request.getParameter("encheresRemportees") != null)
                 {
-                    /*
+
                     try {
-                        listeArticles = article.concat(listeArticlesOuv,listeArticlesDeb,listeArticlesTerm);
+                        listeArticles = article.concat(listeArticlesOuv,listeArticlesEnchCours,listeArticlesRempo);
+                        listeArticles = article.doublon(listeArticles);
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }*/
+                    }
+                    achatCours = true;
+                    achatRemportees = true;
+                    achatOuvertes = true;
                 }
-                if (request.getParameter("achatsOuvertes") != null & request.getParameter("achatCours") != null)
+                else if (request.getParameter("achatsOuvertes") != null & request.getParameter("achatCours") != null)
                 {
                     try {
-
 
                         listeArticles = article.concat(listeArticlesOuv,listeArticlesEnchCours,listeArticlesRempo);
                         listeArticles = article.doublon(listeArticles);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    achatCours = true;
+                    achatOuvertes = true;
+                }
+                else if (request.getParameter("achatRemportees") != null & request.getParameter("achatCours") != null)
+                {
+                    try {
+
+                        listeArticles = article.concat(listeArticlesOuv,listeArticlesEnchCours,listeArticlesRempo);
+                        listeArticles = article.doublon(listeArticles);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    achatCours = true;
+                    achatRemportees = true;
+                }
+                else if (request.getParameter("achatRemportees") != null & request.getParameter("achatsOuvertes") != null)
+                {
+                    try {
+
+                        listeArticles = article.concat(listeArticlesOuv,listeArticlesEnchCours,listeArticlesRempo);
+                        listeArticles = article.doublon(listeArticles);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    achatOuvertes = true;
+                    achatRemportees = true;
                 }
                 else if (request.getParameter("achatCours") != null)
                 {
                     listeArticles = listeArticlesEnchCours;
+                    achatCours = true;
                 }
                 else if (request.getParameter("achatsOuvertes") != null)
                 {
                     listeArticles = listeArticlesOuv;
+                    achatOuvertes = true;
                 }
-                else if (request.getParameter("encheresRemportees") != null)
+                else if (request.getParameter("achatRemportees") != null)
                 {
-                   // listeArticles = listeArticlesDeb;
+                    listeArticles = listeArticlesRempo;
+                    achatRemportees = true;
                 }
                 else
                 {
@@ -214,23 +249,12 @@ public class ServletIndex extends HttpServlet {
                         e.printStackTrace();
                     }
                 }
-    /*
-                else if (request.getParameter("ventesTerminees") != null)
-                {
-                    listeArticles = listeArticlesTerm;
-                }
-                else if (request.getParameter("encheresRemportees") != null)
-                {
-                    listeArticles = listeArticlesDeb;
-                }
-
-                */
 
             }
 
             else if (radio.equals("ventes")) {
 
-
+                radioVentes = true;
                 try {
                     listeArticles = article.selectByUtilisateurWithList(usr.getNoUtilisateur(),listeArticles);
                 } catch (Exception e) {
@@ -279,6 +303,10 @@ public class ServletIndex extends HttpServlet {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    ventesCours = true;
+                    ventesTerminees = true;
+                    ventesNonDebutees = true;
+
                 }
                 else if (request.getParameter("ventesCours") != null & request.getParameter("ventesTerminees") != null)
                 {
@@ -287,6 +315,9 @@ public class ServletIndex extends HttpServlet {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    ventesCours = true;
+                    ventesTerminees = true;
+
                 }
                 else if (request.getParameter("ventesCours") != null & request.getParameter("ventesNonDebutees") != null)
                 {
@@ -295,6 +326,8 @@ public class ServletIndex extends HttpServlet {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    ventesCours = true;
+                    ventesNonDebutees = true;
                 }
                 else if (request.getParameter("ventesTerminees") != null & request.getParameter("ventesNonDebutees") != null)
                 {
@@ -303,135 +336,59 @@ public class ServletIndex extends HttpServlet {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    ventesTerminees = true;
+                    ventesNonDebutees = true;
                 }
                 else if (request.getParameter("ventesCours") != null)
                 {
                     listeArticles = listeArticlesOuv;
+                    ventesCours = true;
+
                 }
 
                 else if (request.getParameter("ventesTerminees") != null)
                 {
                     listeArticles = listeArticlesTerm;
+                    ventesTerminees = true;
                 }
                 else if (request.getParameter("ventesNonDebutees") != null)
                 {
                     listeArticles = listeArticlesDeb;
+                    ventesNonDebutees= true;
                 }
             }
         }
         else
         {
+            request.setAttribute( "filtre",nom);
+            request.setAttribute( "radioVentes",radioVentes);
+
+            request.setAttribute( "achatOuvertes",achatOuvertes);
+            request.setAttribute( "achatCours",achatCours);
+            request.setAttribute( "achatRemportees",achatRemportees);
+
+            request.setAttribute( "ventesCours",ventesCours);
+            request.setAttribute( "ventesNonDebutees",ventesNonDebutees);
+            request.setAttribute( "ventesTerminees",ventesTerminees);
+
             request.setAttribute("noCategorie",cat);
             request.setAttribute("categories",listeCategories);
             request.setAttribute("articles",listeArticles);
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/index.jsp");
             rd.forward(request, response);
         }
-/*
-        try {
-            listeArticles = article.selectAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        request.setAttribute( "filtre",nom);
 
-   //     request.setAttribute("filtres",nom);
+        request.setAttribute( "radioVentes",radioVentes);
 
-        int noCategorie = 0;
+        request.setAttribute( "achatOuvertes",achatOuvertes);
+        request.setAttribute( "achatCours",achatCours);
+        request.setAttribute( "achatRemportees",achatRemportees);
 
-        if (request.getParameter("categorie") !=null)
-        {
-            noCategorie = Integer.parseInt(request.getParameter("categorie"));
-        }
+        request.setAttribute( "ventesCours",ventesCours);
+        request.setAttribute( "ventesNonDebutees",ventesNonDebutees);
+        request.setAttribute( "ventesTerminees",ventesTerminees);
 
-
-
-
-      //  int noCategorie = Integer.parseInt(request.getParameter("categorie"));
-/*
-        if (radio !=null)
-        {
-            System.out.println("a");
-            System.out.println(radio);
-            String achats = "achats";
-           if (radio.equals(achats) )
-           {
-               System.out.println("b");
-
-               if (request.getParameter("achatCours") == "on")
-               {
-                   System.out.println("c");
-                   try {
-                       System.out.println("d");
-                       listeEncheres = enchere.selectByUtilisateurDate(usr.getNoUtilisateur());
-                       listeArticles = article.selectAllDate();
-                       for(Enchere enchere : listeEncheres) {
-                        //   System.out.println("Nom de l'article :"+enchere.getArticle().getNomArticle());
-                       }
-                       request.setAttribute("encheres", listeEncheres);
-                       request.setAttribute("articles", listeArticles);
-                       request.setAttribute("noCategorie",noCategorie);
-                       request.setAttribute("categories",listeCategories);
-
-                       RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/index.jsp");
-                       rd.forward(request, response);
-
-                   } catch (Exception e) {
-                       e.printStackTrace();
-                   }
-
-               }
-           }
-           else
-           {
-
-           }
-        }
-        else {
-
-            if (nom != "") {
-                if (noCategorie == 0) {
-                    try {
-                        listeArticles = article.selectByName(nom);
-                        request.setAttribute("articles", listeArticles);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        listeArticles = article.selectByNameCategorie(nom, noCategorie);
-                        request.setAttribute("articles", listeArticles);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            } else {
-                if (noCategorie == 0) {
-                    try {
-                        listeArticles = article.selectAllDate();
-                        request.setAttribute("articles", listeArticles);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        listeArticles = article.selectByCategorie(noCategorie);
-                        request.setAttribute("articles", listeArticles);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        }
-
-        try {
-            listeCategories = categorie.selectAll();
-        } catch (BLLException e) {
-            e.printStackTrace();
-        }*/
-
-        request.setAttribute("noCategorie",cat);
         request.setAttribute("noCategorie",cat);
         request.setAttribute("categories",listeCategories);
         request.setAttribute("articles",listeArticles);

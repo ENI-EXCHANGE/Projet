@@ -219,6 +219,9 @@ public class ArticleManagerImpl implements ArticleManager{
         return laListeAtt;
     }
 
+
+
+
     public List<Article> doublon(List<Article> list) throws Exception {
 
         Set set = new HashSet() ;

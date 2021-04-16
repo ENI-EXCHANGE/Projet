@@ -27,9 +27,9 @@ public interface EnchereManager {
 
     boolean gagne(Utilisateur uti, Article art) throws Exception ;
 
-    public List<Article> selectByUtilisateurWithList(int noUtilisateur, List<Article> list) throws Exception;
-
-    public List<Article> gagneWithList(Utilisateur uti, List<Article> list) throws Exception;
+    public List<Article> selectByUtilisateurWithList(Utilisateur uti, List<Article> list) throws Exception;
 
     boolean enchereRemporte(Utilisateur uti, Article art) throws Exception;
+
+    public List<Article> enchereRemporteWithList(Utilisateur uti, List<Article> list) throws Exception;
 }

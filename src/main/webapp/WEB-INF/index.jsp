@@ -3,6 +3,62 @@
 <%@ page import="bo.Categorie" %>
 <%@ page import="bo.Enchere" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String nom = "";
+    boolean radioVentes= false;
+    boolean achatOuvertes= false;
+    boolean achatCours= false;
+    boolean achatRemportees= false;
+    boolean ventesCours= false;
+    boolean ventesNonDebutees= false;
+    boolean ventesTerminees= false;
+
+    if (request.getAttribute("filtre") != null)
+    {
+        nom = (String) request.getAttribute("filtre");
+    }
+
+    if (request.getAttribute("radioVentes") != null)
+    {
+         radioVentes= (boolean) request.getAttribute("radioVentes");
+    }
+
+
+    if (request.getAttribute("achatOuvertes") != null)
+    {
+         achatOuvertes= (boolean) request.getAttribute("achatOuvertes");
+    }
+
+    if (request.getAttribute("achatCours") != null)
+    {
+         achatCours= (boolean) request.getAttribute("achatCours");
+    }
+
+    if (request.getAttribute("achatRemportees") != null)
+    {
+         achatRemportees= (boolean) request.getAttribute("achatRemportees");
+    }
+
+
+    if (request.getAttribute("ventesCours") != null)
+    {
+         ventesCours= (boolean) request.getAttribute("ventesCours");
+    }
+
+
+    if (request.getAttribute("ventesNonDebutees") != null)
+    {
+         ventesNonDebutees= (boolean) request.getAttribute("ventesNonDebutees");
+    }
+
+
+    if (request.getAttribute("ventesTerminees") != null)
+    {
+         ventesTerminees= (boolean) request.getAttribute("ventesTerminees");
+    }
+
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +78,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="filtres">Filtres :</label>
-                        <input type="text" class="form-control" id="filtres" name="filtres" placeholder="Le nom de l'article contient" >
+                        <input type="text" class="form-control" id="filtres" name="filtres" placeholder="Le nom de l'article contient" value="<% if(nom != null){%><%=nom%><%}%>">
                     </div>
                     <div class="form-group">
                         <label for="categorie">Catégorie :</label>
@@ -30,7 +86,7 @@
                             <% int noCategorie;
                                 if(request.getAttribute("noCategorie") == null){ noCategorie = 0;}else{
                                  noCategorie = (int) request.getAttribute("noCategorie");} %>
-                            <option value="0" <%if(noCategorie == 0){%>selected<%} %>>Toutes</option>
+                            <option value="0" >Toutes</option>
                                 <% List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("categories");
                                     if(listeCategories != null) {
                                         for(Categorie categorie : listeCategories) {%>
@@ -48,27 +104,27 @@
                 <div class="col-md-6" style="margin-top: 4%;">
                     <div class="row">
                 <div class="col-md-6" id="achats">
-                    <input class="form-check-input" type="radio" name="radio" value="achats" id="radioAchats" onclick="disabledFile(1)" checked>
+                    <input class="form-check-input" type="radio" name="radio" value="achats" id="radioAchats" onclick="disabledFile(1)" <% if(radioVentes == false){%>checked<%}%>>
                     <label class="form-check-label" for="radioAchats">
                         Achats
                     </label>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="achatsOuvertes" id="achatsOuvertes">
+                        <input class="form-check-input" type="checkbox" name="achatsOuvertes" id="achatsOuvertes" <% if(achatOuvertes == true){%>checked<%}%>>
                         <label class="form-check-label" for="achatsOuvertes">
                             enchères ouvertes
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="achatCours" name="achatCours">
+                        <input class="form-check-input" type="checkbox" id="achatCours" name="achatCours"  <% if(achatCours == true){%>checked<%}%>>
                         <label class="form-check-label" for="achatCours">
                             mes enchères en cours
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="achatRemportees" name="achatRemportees">
+                        <input class="form-check-input" type="checkbox" id="achatRemportees" name="achatRemportees" <% if(achatRemportees == true){%>checked<%}%>>
                         <label class="form-check-label" for="achatRemportees">
                             mes enchères remportées
                         </label>
@@ -77,24 +133,24 @@
 
 
                 <div class="col-md-6 " >
-                    <input class="form-check-input" type="radio" name="radio" value="ventes" id="radioVentes" onclick="disabledFile(2)">
+                    <input class="form-check-input" type="radio" name="radio" value="ventes" id="radioVentes" onclick="disabledFile(2)" <% if(radioVentes == true){%>checked<%}%>>
                     <label class="form-check-label" for="radioVentes">
                         Mes ventes
                     </label>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="ventesCours" name="ventesCours">
+                        <input class="form-check-input" type="checkbox" id="ventesCours" name="ventesCours" <% if(ventesCours == true){%>checked<%}%>>
                         <label class="form-check-label" for="ventesCours">
                             mes ventes en cours
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox"  id="ventesNonDebutees" name="ventesNonDebutees" >
+                        <input class="form-check-input" type="checkbox"  id="ventesNonDebutees" name="ventesNonDebutees" <% if(ventesNonDebutees == true){%>checked<%}%>>
                         <label class="form-check-label" for="ventesNonDebutees">
                             ventes non débutées
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="ventesTerminees" name="ventesTerminees" >
+                        <input class="form-check-input" type="checkbox" id="ventesTerminees" name="ventesTerminees" <% if(ventesTerminees == true){%>checked<%}%> >
                         <label class="form-check-label" for="ventesTerminees">
                             ventes terminées
                         </label>
@@ -133,10 +189,11 @@
                     <h5 class="card-title"><%= article.getNomArticle()%></h5>
                     <p class="card-text"><%= article.getDescription()%></p>
                     <p class="card-text">Prix : <%= article.getPrixVente()%></p>
+                    <p class="card-text">Début : <%= article.getDateDebutEncheres()%></p>
                     <p class="card-text">Fin de l'enchère : <%= article.getDateFinEncheres()%></p>
                     <p class="card-text">Vendeur : <% if( resu != null ){%><a href="Compte?pseudo=<%=article.getUtilisateur().getPseudo()%>"><%=article.getUtilisateur().getPseudo() %></a>
                         <%}else{%><%=article.getUtilisateur().getPseudo()%><%}%></p>
-                    <a href="#" class="btn btn-primary">Detail</a>
+                    <a href="<%=request.getContextPath() %>/Article?id=<%= article.getNoArticle()%>" class="btn btn-primary">Detail</a>
                 </div>
             </div>
 

@@ -98,43 +98,40 @@ public class EnchereManagerImpl implements EnchereManager {
     @Override
     public boolean gagne(Utilisateur uti, Article art) throws Exception {
         Enchere derniere = dernierUtilisateur(art.getNoArticle());
-        if (uti.getNoUtilisateur().equals(derniere.getUtilisateur().getNoUtilisateur()))
-            return true;
+        if (derniere != null) {
+            if (uti.getNoUtilisateur().equals(derniere.getUtilisateur().getNoUtilisateur()))
+                return true;
+            else
+                return false;
+        }
         else
+        {
             return false;
+        }
     }
 
     @Override
-    public List<Article> selectByUtilisateurWithList(int noUtilisateur, List<Article> list) throws Exception {
+    public List<Article> selectByUtilisateurWithList(Utilisateur uti, List<Article> list) throws Exception {
 
         List<Article> laListeAtt = new ArrayList<>();
-
+        Date date = Date.valueOf(LocalDate.now());
         for (Article art : list){
-            Enchere dernier = dernierUtilisateur(art.getNoArticle());
-            if(dernier != null)
+
+            if(gagne(uti,art))
             {
-                if ( dernier.getUtilisateur().getNoUtilisateur() == noUtilisateur){
+
+                if (art.getDateFinEncheres().after(date))
+                {
                     laListeAtt.add(art);
                 }
+
             }
 
         }
         return laListeAtt;
     }
 
-    public List<Article> gagneWithList(Utilisateur uti, List<Article> list) throws Exception {
 
-        List<Article> laListeAtt = new ArrayList<>();
-
-        for (Article art : list){
-            /*
-            if (gagne(uti,art))
-            {
-                laListeAtt.add(art);
-            }*/
-        }
-        return laListeAtt;
-    }
 
     @Override
     public boolean enchereRemporte(Utilisateur uti, Article art) throws Exception {
@@ -143,5 +140,16 @@ public class EnchereManagerImpl implements EnchereManager {
             return true;
         else
             return false;
+    }
+
+    public List<Article> enchereRemporteWithList(Utilisateur uti, List<Article> list) throws Exception {
+        List<Article> laListeAtt = new ArrayList<>();
+        for (Article art : list){
+
+            if (enchereRemporte(uti,art)){
+                laListeAtt.add(art);
+            }
+        }
+        return laListeAtt;
     }
 }
